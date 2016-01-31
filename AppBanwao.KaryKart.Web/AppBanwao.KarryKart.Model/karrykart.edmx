@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="karrykartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="karrykartModelStoreContainer">
+          <EntitySet Name="Brand" EntityType="karrykartModel.Store.Brand" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Category" EntityType="karrykartModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DeliverySlot" EntityType="karrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Logs" EntityType="karrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Offers" EntityType="karrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product" EntityType="karrykartModel.Store.Product" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductFeature" EntityType="karrykartModel.Store.ProductFeature" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductImage" EntityType="karrykartModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductPrice" EntityType="karrykartModel.Store.ProductPrice" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductShipping" EntityType="karrykartModel.Store.ProductShipping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductSizeMapping" EntityType="karrykartModel.Store.ProductSizeMapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Size" EntityType="karrykartModel.Store.Size" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SizeType" EntityType="karrykartModel.Store.SizeType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Slider" EntityType="karrykartModel.Store.Slider" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subcategory" EntityType="karrykartModel.Store.Subcategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Unit" EntityType="karrykartModel.Store.Unit" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DeliverySlot">
+          <Key>
+            <PropertyRef Name="DeliverySlotID" />
+          </Key>
+          <Property Name="DeliverySlotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Slot" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MessageType" Type="varchar" MaxLength="50" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="MethodName" Type="varchar" MaxLength="70" />
+          <Property Name="FileName" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="255" />
+          <Property Name="EventTimeStamp" Type="datetime" />
+          <Property Name="IpAddress" Type="varchar" MaxLength="20" />
+          <Property Name="Browser" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Offers">
+          <Key>
+            <PropertyRef Name="OfferID" />
+          </Key>
+          <Property Name="OfferID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OfferName" Type="varchar" MaxLength="50" />
+          <Property Name="ImageLink" Type="varchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="SubCategoryID" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="datetime" />
+          <Property Name="UpdatedBy" Type="datetime" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductFeature">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Name="FeatureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="Feature" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="ImageLink" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ProductPrice">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Name="PriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SizeID" Type="int" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="CurrencyID" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductShipping">
+          <Key>
+            <PropertyRef Name="ShippingCostID" />
+          </Key>
+          <Property Name="ShippingCostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SizeID" Type="int" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="Cost" Type="decimal" Precision="7" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductSizeMapping">
+          <Key>
+            <PropertyRef Name="ProductSizeMappingID" />
+          </Key>
+          <Property Name="ProductSizeMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SizeID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="UnitID" Type="int" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Name="SizeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="SizeTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="SizeType">
+          <Key>
+            <PropertyRef Name="SizeTypeID" />
+          </Key>
+          <Property Name="SizeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderID" />
+          </Key>
+          <Property Name="SliderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="OfferHeading" Type="varchar" MaxLength="100" />
+          <Property Name="ImageLink" Type="varchar" MaxLength="250" />
+          <Property Name="Offer" Type="varchar" MaxLength="300" />
+          <Property Name="SlideOrder" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Subcategory">
+          <Key>
+            <PropertyRef Name="SCategoryID" />
+          </Key>
+          <Property Name="SCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Name="UnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="karrykartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DeliverySlot">
+          <Key>
+            <PropertyRef Name="DeliverySlotID" />
+          </Key>
+          <Property Name="DeliverySlotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Slot" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="karrykartEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DeliverySlots" EntityType="Self.DeliverySlot" />
+          <EntitySet Name="Logs" EntityType="karrykartModel.Log" />
+          <EntitySet Name="Sliders" EntityType="karrykartModel.Slider" />
+          <EntitySet Name="Offers" EntityType="karrykartModel.Offer" />
+          <EntitySet Name="Brands" EntityType="karrykartModel.Brand" />
+          <EntitySet Name="Categories" EntityType="karrykartModel.Category" />
+          <EntitySet Name="Subcategories" EntityType="karrykartModel.Subcategory" />
+          <EntitySet Name="Products" EntityType="karrykartModel.Product" />
+          <EntitySet Name="ProductFeatures" EntityType="karrykartModel.ProductFeature" />
+          <EntitySet Name="ProductImages" EntityType="karrykartModel.ProductImage" />
+          <EntitySet Name="ProductPrices" EntityType="karrykartModel.ProductPrice" />
+          <EntitySet Name="ProductShippings" EntityType="karrykartModel.ProductShipping" />
+          <EntitySet Name="ProductSizeMappings" EntityType="karrykartModel.ProductSizeMapping" />
+          <EntitySet Name="Sizes" EntityType="karrykartModel.Size" />
+          <EntitySet Name="SizeTypes" EntityType="karrykartModel.SizeType" />
+          <EntitySet Name="Units" EntityType="karrykartModel.Unit" />
+        </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MethodName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EventTimeStamp" Type="DateTime" Precision="3" />
+          <Property Name="IpAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderID" />
+          </Key>
+          <Property Name="SliderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfferHeading" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ImageLink" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Offer" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="SlideOrder" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Offer">
+          <Key>
+            <PropertyRef Name="OfferID" />
+          </Key>
+          <Property Type="Int32" Name="OfferID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="OfferName" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Active" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Type="Int32" Name="BrandID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Type="Int32" Name="CategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Subcategory">
+          <Key>
+            <PropertyRef Name="SCategoryID" />
+          </Key>
+          <Property Type="Int32" Name="SCategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CategoryID" />
+          <Property Type="Int32" Name="SubCategoryID" />
+          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
+          <Property Type="DateTime" Name="CreatedBy" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedBy" Precision="3" />
+          <Property Type="Boolean" Name="Active" />
+        </EntityType>
+        <EntityType Name="ProductFeature">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Type="Int32" Name="FeatureID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="ProductID" />
+          <Property Type="String" Name="Feature" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Type="Guid" Name="ImageID" Nullable="false" />
+          <Property Type="Guid" Name="ProductID" />
+          <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductPrice">
+          <Key>
+            <PropertyRef Name="PriceID" />
+          </Key>
+          <Property Type="Int32" Name="PriceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SizeID" />
+          <Property Type="Guid" Name="ProductID" />
+          <Property Type="Decimal" Name="Price" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="CurrencyID" />
+        </EntityType>
+        <EntityType Name="ProductShipping">
+          <Key>
+            <PropertyRef Name="ShippingCostID" />
+          </Key>
+          <Property Type="Int32" Name="ShippingCostID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SizeID" />
+          <Property Type="Guid" Name="ProductID" />
+          <Property Type="Decimal" Name="Cost" Precision="7" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductSizeMapping">
+          <Key>
+            <PropertyRef Name="ProductSizeMappingID" />
+          </Key>
+          <Property Type="Int32" Name="ProductSizeMappingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SizeID" />
+          <Property Type="Int32" Name="ProductID" />
+          <Property Type="Int32" Name="UnitID" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="SizeID" />
+          </Key>
+          <Property Type="Int32" Name="SizeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SizeTypeID" />
+        </EntityType>
+        <EntityType Name="SizeType">
+          <Key>
+            <PropertyRef Name="SizeTypeID" />
+          </Key>
+          <Property Type="Int32" Name="SizeTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Type="Int32" Name="UnitID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="karrykartModelStoreContainer" CdmEntityContainer="karrykartEntities">
+          <EntitySetMapping Name="DeliverySlots">
+            <EntityTypeMapping TypeName="karrykartModel.DeliverySlot">
+              <MappingFragment StoreEntitySet="DeliverySlot">
+                <ScalarProperty Name="DeliverySlotID" ColumnName="DeliverySlotID" />
+                <ScalarProperty Name="Slot" ColumnName="Slot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="karrykartModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Browser" ColumnName="Browser" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="EventTimeStamp" ColumnName="EventTimeStamp" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="MethodName" ColumnName="MethodName" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="karrykartModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SlideOrder" ColumnName="SlideOrder" />
+                <ScalarProperty Name="Offer" ColumnName="Offer" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="OfferHeading" ColumnName="OfferHeading" />
+                <ScalarProperty Name="SliderID" ColumnName="SliderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Offers">
+            <EntityTypeMapping TypeName="karrykartModel.Offer">
+              <MappingFragment StoreEntitySet="Offers">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="OfferName" ColumnName="OfferName" />
+                <ScalarProperty Name="OfferID" ColumnName="OfferID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="karrykartModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="karrykartModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subcategories">
+            <EntityTypeMapping TypeName="karrykartModel.Subcategory">
+              <MappingFragment StoreEntitySet="Subcategory">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SCategoryID" ColumnName="SCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="karrykartModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductFeatures">
+            <EntityTypeMapping TypeName="karrykartModel.ProductFeature">
+              <MappingFragment StoreEntitySet="ProductFeature">
+                <ScalarProperty Name="Feature" ColumnName="Feature" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="karrykartModel.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPrices">
+            <EntityTypeMapping TypeName="karrykartModel.ProductPrice">
+              <MappingFragment StoreEntitySet="ProductPrice">
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductShippings">
+            <EntityTypeMapping TypeName="karrykartModel.ProductShipping">
+              <MappingFragment StoreEntitySet="ProductShipping">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="ShippingCostID" ColumnName="ShippingCostID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSizeMappings">
+            <EntityTypeMapping TypeName="karrykartModel.ProductSizeMapping">
+              <MappingFragment StoreEntitySet="ProductSizeMapping">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+                <ScalarProperty Name="ProductSizeMappingID" ColumnName="ProductSizeMappingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="karrykartModel.Size">
+              <MappingFragment StoreEntitySet="Size">
+                <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SizeTypes">
+            <EntityTypeMapping TypeName="karrykartModel.SizeType">
+              <MappingFragment StoreEntitySet="SizeType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="karrykartModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

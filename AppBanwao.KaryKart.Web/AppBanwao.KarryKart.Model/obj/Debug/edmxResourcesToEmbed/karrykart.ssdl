@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="karrykartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="karrykartModelStoreContainer">
+    <EntitySet Name="Brand" EntityType="karrykartModel.Store.Brand" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="karrykartModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeliverySlot" EntityType="karrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Logs" EntityType="karrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Offers" EntityType="karrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Slider" EntityType="karrykartModel.Store.Slider" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Subcategory" EntityType="karrykartModel.Store.Subcategory" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DeliverySlot">
+    <Key>
+      <PropertyRef Name="DeliverySlotID" />
+    </Key>
+    <Property Name="DeliverySlotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Slot" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MessageType" Type="varchar" MaxLength="50" />
+    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="MethodName" Type="varchar" MaxLength="70" />
+    <Property Name="FileName" Type="varchar" MaxLength="50" />
+    <Property Name="UserName" Type="varchar" MaxLength="255" />
+    <Property Name="EventTimeStamp" Type="datetime" />
+    <Property Name="IpAddress" Type="varchar" MaxLength="20" />
+    <Property Name="Browser" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Offers">
+    <Key>
+      <PropertyRef Name="OfferID" />
+    </Key>
+    <Property Name="OfferID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OfferName" Type="varchar" MaxLength="50" />
+    <Property Name="ImageLink" Type="varchar" MaxLength="255" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="SliderID" />
+    </Key>
+    <Property Name="SliderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="OfferHeading" Type="varchar" MaxLength="100" />
+    <Property Name="ImageLink" Type="varchar" MaxLength="250" />
+    <Property Name="Offer" Type="varchar" MaxLength="300" />
+    <Property Name="SlideOrder" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Subcategory">
+    <Key>
+      <PropertyRef Name="SCategoryID" />
+    </Key>
+    <Property Name="SCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+  </EntityType>
+</Schema>

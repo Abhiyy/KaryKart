@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="karrykartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DeliverySlot">
+    <Key>
+      <PropertyRef Name="DeliverySlotID" />
+    </Key>
+    <Property Name="DeliverySlotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Slot" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="karrykartEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DeliverySlots" EntityType="Self.DeliverySlot" />
+    <EntitySet Name="Logs" EntityType="karrykartModel.Log" />
+    <EntitySet Name="Sliders" EntityType="karrykartModel.Slider" />
+    <EntitySet Name="Offers" EntityType="karrykartModel.Offer" />
+    <EntitySet Name="Brands" EntityType="karrykartModel.Brand" />
+    <EntitySet Name="Categories" EntityType="karrykartModel.Category" />
+    <EntitySet Name="Subcategories" EntityType="karrykartModel.Subcategory" />
+  </EntityContainer>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MessageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MethodName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="EventTimeStamp" Type="DateTime" Precision="3" />
+    <Property Name="IpAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="SliderID" />
+    </Key>
+    <Property Name="SliderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OfferHeading" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ImageLink" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Offer" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="SlideOrder" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Offer">
+    <Key>
+      <PropertyRef Name="OfferID" />
+    </Key>
+    <Property Type="Int32" Name="OfferID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="OfferName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="Active" />
+  </EntityType>
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Type="Int32" Name="BrandID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Type="Int32" Name="CategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Subcategory">
+    <Key>
+      <PropertyRef Name="SCategoryID" />
+    </Key>
+    <Property Type="Int32" Name="SCategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="CategoryID" Nullable="false" />
+  </EntityType>
+</Schema>
