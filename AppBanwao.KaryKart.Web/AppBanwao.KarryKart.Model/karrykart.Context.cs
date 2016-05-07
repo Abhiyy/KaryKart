@@ -32,7 +32,6 @@ namespace AppBanwao.KarryKart.Model
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
-        public DbSet<Product> Products { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductPrice> ProductPrices { get; set; }
@@ -41,5 +40,8 @@ namespace AppBanwao.KarryKart.Model
         public DbSet<Size> Sizes { get; set; }
         public DbSet<SizeType> SizeTypes { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

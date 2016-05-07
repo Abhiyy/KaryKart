@@ -21,22 +21,31 @@ namespace AppBanwao.KaryKart.Web.Helpers
         public class Logger
         {
             karrykartEntities _dbContext = null;
-            public void WriteLog(string MessageType, string Message, string MethodName, string FileName, string UserName)
+            public void WriteLog(string messageType, string message, string methodName, string fileName, string userName)
             {
-                var log = new Log();
+                var log = new Log(){
+                EventTimeStamp = DateTime.UtcNow,
+                FileName = fileName,
+                IpAddress = GetIPAddress(),
+                Message = message,
+                MessageType = messageType,
+                MethodName = methodName,
+                UserName = userName,
+                Browser = HttpContext.Current.Request.UserAgent};
+                try
+                {
+                    _dbContext = new karrykartEntities();
+                    _dbContext.Logs.Add(log);
+                    _dbContext.SaveChanges();
 
-                log.EventTimeStamp = DateTime.UtcNow;
-                log.FileName = FileName;
-                log.IpAddress = GetIPAddress();
-                log.Message = Message;
-                log.MessageType = MessageType;
-                log.MethodName = MethodName;
-                log.UserName = UserName;
-                log.Browser = HttpContext.Current.Request.UserAgent;
-                _dbContext = new karrykartEntities();
-                _dbContext.Logs.Add(log);
-                _dbContext.SaveChanges();
-                _dbContext = null;
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally {
+                    _dbContext = null;
+                }
             }
         }
         

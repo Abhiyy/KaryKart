@@ -135,9 +135,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductSettingsController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -147,9 +149,15 @@
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\OfferModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\SizeModel.cs" />
+    <Compile Include="Models\SizeTypeModel.cs" />
     <Compile Include="Models\SliderModel.cs" />
     <Compile Include="Models\SubcategoryModel.cs" />
+    <Compile Include="Models\UnitModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1220,6 +1228,22 @@
     <Content Include="Views\Brand\Create.cshtml" />
     <Content Include="Views\Brand\Index.cshtml" />
     <Content Include="Views\Brand\Edit.cshtml" />
+    <Content Include="Views\ProductSettings\CreateSize.cshtml" />
+    <Content Include="Views\ProductSettings\CreateSizeType.cshtml" />
+    <Content Include="Views\ProductSettings\CreateUnit.cshtml" />
+    <Content Include="Views\ProductSettings\EditSizeType.cshtml" />
+    <Content Include="Views\ProductSettings\EditUnit.cshtml" />
+    <Content Include="Views\ProductSettings\SizeDetails.cshtml" />
+    <Content Include="Views\ProductSettings\SizeTypeDetails.cshtml" />
+    <Content Include="Views\ProductSettings\UnitDetails.cshtml" />
+    <Content Include="Views\Country\Create.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
+    <Content Include="Views\Product\AddImageFeatureDetails.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\ProductSettings\CreateCurrency.cshtml" />
+    <Content Include="Views\ProductSettings\CurrencyDetails.cshtml" />
+    <Content Include="Views\ProductSettings\EditCurrency.cshtml" />
+    <Content Include="Views\Product\AddStockPrice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

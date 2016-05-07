@@ -58,6 +58,12 @@
     <Compile Include="Category.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Currency.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelHelper.cs" />
     <Compile Include="DeliverySlot.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
@@ -83,11 +89,38 @@
     <Compile Include="Offer.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductFeature.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductImage.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductPrice.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductShipping.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSizeMapping.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Size.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SizeType.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Slider.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Subcategory.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Unit.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -15,6 +15,17 @@
     <EntitySet Name="Brands" EntityType="karrykartModel.Brand" />
     <EntitySet Name="Categories" EntityType="karrykartModel.Category" />
     <EntitySet Name="Subcategories" EntityType="karrykartModel.Subcategory" />
+    <EntitySet Name="ProductFeatures" EntityType="karrykartModel.ProductFeature" />
+    <EntitySet Name="ProductImages" EntityType="karrykartModel.ProductImage" />
+    <EntitySet Name="ProductPrices" EntityType="karrykartModel.ProductPrice" />
+    <EntitySet Name="ProductShippings" EntityType="karrykartModel.ProductShipping" />
+    <EntitySet Name="ProductSizeMappings" EntityType="karrykartModel.ProductSizeMapping" />
+    <EntitySet Name="Sizes" EntityType="karrykartModel.Size" />
+    <EntitySet Name="SizeTypes" EntityType="karrykartModel.SizeType" />
+    <EntitySet Name="Units" EntityType="karrykartModel.Unit" />
+    <EntitySet Name="Currencies" EntityType="karrykartModel.Currency" />
+    <EntitySet Name="Countries" EntityType="karrykartModel.Country" />
+    <EntitySet Name="Products" EntityType="karrykartModel.Product" />
   </EntityContainer>
   <EntityType Name="Log">
     <Key>
@@ -28,7 +39,7 @@
     <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="EventTimeStamp" Type="DateTime" Precision="3" />
     <Property Name="IpAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-    <Property Name="Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Browser" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
@@ -72,5 +83,103 @@
     <Property Type="Int32" Name="SCategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Type="Int32" Name="CategoryID" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductFeature">
+    <Key>
+      <PropertyRef Name="FeatureID" />
+    </Key>
+    <Property Type="Int32" Name="FeatureID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Guid" Name="ProductID" />
+    <Property Type="String" Name="Feature" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ProductImage">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Type="Guid" Name="ImageID" Nullable="false" />
+    <Property Type="Guid" Name="ProductID" />
+    <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ProductPrice">
+    <Key>
+      <PropertyRef Name="PriceID" />
+    </Key>
+    <Property Type="Int32" Name="PriceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="SizeID" />
+    <Property Type="Guid" Name="ProductID" />
+    <Property Type="Decimal" Name="Price" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="CurrencyID" />
+  </EntityType>
+  <EntityType Name="ProductShipping">
+    <Key>
+      <PropertyRef Name="ShippingCostID" />
+    </Key>
+    <Property Type="Int32" Name="ShippingCostID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="SizeID" />
+    <Property Type="Guid" Name="ProductID" />
+    <Property Type="Decimal" Name="Cost" Precision="7" Scale="2" />
+  </EntityType>
+  <EntityType Name="ProductSizeMapping">
+    <Key>
+      <PropertyRef Name="ProductSizeMappingID" />
+    </Key>
+    <Property Type="Int32" Name="ProductSizeMappingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="SizeID" />
+    <Property Type="Int32" Name="ProductID" />
+    <Property Type="Int32" Name="UnitID" />
+  </EntityType>
+  <EntityType Name="Size">
+    <Key>
+      <PropertyRef Name="SizeID" />
+    </Key>
+    <Property Type="Int32" Name="SizeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="SizeTypeID" />
+  </EntityType>
+  <EntityType Name="SizeType">
+    <Key>
+      <PropertyRef Name="SizeTypeID" />
+    </Key>
+    <Property Type="Int32" Name="SizeTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Type="Int32" Name="UnitID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Type="Int32" Name="CurrencyID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="CountryID" />
+    <Property Type="String" Name="Shortform" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CountryName" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Type="Guid" Name="ProductID" Nullable="false" />
+    <Property Type="String" Name="Name" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="CategoryID" />
+    <Property Type="Int32" Name="BrandID" />
+    <Property Type="Int32" Name="SubCategoryID" />
+    <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+    <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
+    <Property Type="String" Name="CreatedBy" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="UpdatedBy" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="Active" />
   </EntityType>
 </Schema>

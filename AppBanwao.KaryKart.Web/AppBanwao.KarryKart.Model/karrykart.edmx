@@ -8,6 +8,8 @@
         <EntityContainer Name="karrykartModelStoreContainer">
           <EntitySet Name="Brand" EntityType="karrykartModel.Store.Brand" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Category" EntityType="karrykartModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Country" EntityType="karrykartModel.Store.Country" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Currency" EntityType="karrykartModel.Store.Currency" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeliverySlot" EntityType="karrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Logs" EntityType="karrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Offers" EntityType="karrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
@@ -37,6 +39,22 @@
           <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Name="CurrencyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="Shortform" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="DeliverySlot">
           <Key>
             <PropertyRef Name="DeliverySlotID" />
@@ -56,7 +74,7 @@
           <Property Name="UserName" Type="varchar" MaxLength="255" />
           <Property Name="EventTimeStamp" Type="datetime" />
           <Property Name="IpAddress" Type="varchar" MaxLength="20" />
-          <Property Name="Browser" Type="varchar" MaxLength="100" />
+          <Property Name="Browser" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Offers">
           <Key>
@@ -75,11 +93,12 @@
           <Property Name="Name" Type="varchar" MaxLength="200" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CategoryID" Type="int" />
+          <Property Name="BrandID" Type="int" />
           <Property Name="SubCategoryID" Type="int" />
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="UpdatedOn" Type="datetime" />
-          <Property Name="CreatedBy" Type="datetime" />
-          <Property Name="UpdatedBy" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="255" />
+          <Property Name="UpdatedBy" Type="varchar" MaxLength="255" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="ProductFeature">
@@ -187,7 +206,6 @@
           <EntitySet Name="Brands" EntityType="karrykartModel.Brand" />
           <EntitySet Name="Categories" EntityType="karrykartModel.Category" />
           <EntitySet Name="Subcategories" EntityType="karrykartModel.Subcategory" />
-          <EntitySet Name="Products" EntityType="karrykartModel.Product" />
           <EntitySet Name="ProductFeatures" EntityType="karrykartModel.ProductFeature" />
           <EntitySet Name="ProductImages" EntityType="karrykartModel.ProductImage" />
           <EntitySet Name="ProductPrices" EntityType="karrykartModel.ProductPrice" />
@@ -196,6 +214,9 @@
           <EntitySet Name="Sizes" EntityType="karrykartModel.Size" />
           <EntitySet Name="SizeTypes" EntityType="karrykartModel.SizeType" />
           <EntitySet Name="Units" EntityType="karrykartModel.Unit" />
+          <EntitySet Name="Currencies" EntityType="karrykartModel.Currency" />
+          <EntitySet Name="Countries" EntityType="karrykartModel.Country" />
+          <EntitySet Name="Products" EntityType="karrykartModel.Product" />
         </EntityContainer>
         <EntityType Name="Log">
           <Key>
@@ -209,7 +230,7 @@
           <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EventTimeStamp" Type="DateTime" Precision="3" />
           <Property Name="IpAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Browser" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Slider">
           <Key>
@@ -253,21 +274,6 @@
           <Property Type="Int32" Name="SCategoryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="CategoryID" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Type="Guid" Name="ProductID" Nullable="false" />
-          <Property Type="String" Name="Name" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="CategoryID" />
-          <Property Type="Int32" Name="SubCategoryID" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
-          <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
-          <Property Type="DateTime" Name="CreatedBy" Precision="3" />
-          <Property Type="DateTime" Name="UpdatedBy" Precision="3" />
-          <Property Type="Boolean" Name="Active" />
         </EntityType>
         <EntityType Name="ProductFeature">
           <Key>
@@ -334,6 +340,38 @@
           </Key>
           <Property Type="Int32" Name="UnitID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Currency">
+          <Key>
+            <PropertyRef Name="CurrencyID" />
+          </Key>
+          <Property Type="Int32" Name="CurrencyID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="CountryID" />
+          <Property Type="String" Name="Shortform" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CountryName" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Type="Guid" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CategoryID" />
+          <Property Type="Int32" Name="BrandID" />
+          <Property Type="Int32" Name="SubCategoryID" />
+          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
+          <Property Type="String" Name="CreatedBy" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="UpdatedBy" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Active" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -412,22 +450,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="karrykartModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductFeatures">
             <EntityTypeMapping TypeName="karrykartModel.ProductFeature">
               <MappingFragment StoreEntitySet="ProductFeature">
@@ -499,6 +521,41 @@
               <MappingFragment StoreEntitySet="Unit">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Currencies">
+            <EntityTypeMapping TypeName="karrykartModel.Currency">
+              <MappingFragment StoreEntitySet="Currency">
+                <ScalarProperty Name="Shortform" ColumnName="Shortform" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyID" ColumnName="CurrencyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="karrykartModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="karrykartModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

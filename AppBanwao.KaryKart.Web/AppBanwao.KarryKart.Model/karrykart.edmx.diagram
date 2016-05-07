@@ -12,7 +12,6 @@
         <EntityTypeShape EntityType="karrykartModel.Brand" Width="1.5" PointX="9.2935169699105984" PointY="10.172176067797549" />
         <EntityTypeShape EntityType="karrykartModel.Category" Width="1.5" PointX="6.627768094943729" PointY="9.9842159943581628" />
         <EntityTypeShape EntityType="karrykartModel.Subcategory" Width="1.5" PointX="4.63371539704209" PointY="28.91630765652112" />
-        <EntityTypeShape EntityType="karrykartModel.Product" Width="1.5" PointX="1.9919065674729208" PointY="24.463808711834162" />
         <EntityTypeShape EntityType="karrykartModel.ProductFeature" Width="1.5" PointX="10.344168170515527" PointY="9.47082052075808" />
         <EntityTypeShape EntityType="karrykartModel.ProductImage" Width="1.5" PointX="9.4536339740518649" PointY="24.975517180271222" />
         <EntityTypeShape EntityType="karrykartModel.ProductPrice" Width="1.5" PointX="7.387595144746637" PointY="15.727076850704419" />
@@ -21,6 +20,9 @@
         <EntityTypeShape EntityType="karrykartModel.Size" Width="1.5" PointX="7.7230901120803743" PointY="23.304937239412656" />
         <EntityTypeShape EntityType="karrykartModel.SizeType" Width="1.5" PointX="2.7966257328151842" PointY="18.019256510780778" />
         <EntityTypeShape EntityType="karrykartModel.Unit" Width="1.5" PointX="3.407086429841391" PointY="9.6967010543200658" />
+        <EntityTypeShape EntityType="karrykartModel.Currency" Width="1.5" PointX="7.7118807638585016" PointY="31.981307893982766" />
+        <EntityTypeShape EntityType="karrykartModel.Country" Width="1.5" PointX="7.593589305688436" PointY="29.846245779584276" />
+        <EntityTypeShape EntityType="karrykartModel.Product" Width="1.5" PointX="9.9834306379703" PointY="23.3756283034457" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
