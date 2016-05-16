@@ -147,12 +147,14 @@
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\CustomHandleErrorAttribute .cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
+    <Compile Include="Helpers\ProductHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\OfferModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ProductStockPriceModel.cs" />
     <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Models\SizeTypeModel.cs" />
     <Compile Include="Models\SliderModel.cs" />
@@ -1244,6 +1246,8 @@
     <Content Include="Views\ProductSettings\CurrencyDetails.cshtml" />
     <Content Include="Views\ProductSettings\EditCurrency.cshtml" />
     <Content Include="Views\Product\AddStockPrice.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

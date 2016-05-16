@@ -20,12 +20,15 @@ namespace AppBanwao.KaryKart.Web.Models
         [Required]
         [Display(Name = "Price")]
         public double Price { get; set; }
+       
         [Required]
         [Display(Name = "Add Stock")]
         public int Stock { get; set; }
         [Required]
         [Display(Name = "Shipping Cost")]
         public double ShippingCost { get; set; }
+        [Display(Name = "Select Size Type")]
+        public int SizeTypeID { get; set; }
         [Display(Name = "Select Size")]
         public int SizeID { get; set; }
 

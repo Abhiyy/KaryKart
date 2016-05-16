@@ -16,8 +16,22 @@ namespace AppBanwao.KaryKart.Web.Controllers
         // GET: /Product/
         string _productImages = ConfigurationManager.AppSettings["ProductDirectory"].ToString();
 
+
         public ActionResult Index()
         {
+            using (_dbContext = new karrykartEntities())
+            {
+                return View(ProductHelper.GetAllProducts(_dbContext)); 
+            }
+            return View();
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                return View(ProductHelper.GetProduct(_dbContext, id));
+            }
             return View();
         }
 
@@ -108,9 +122,36 @@ namespace AppBanwao.KaryKart.Web.Controllers
             using (_dbContext = new karrykartEntities())
             {
                 var product = _dbContext.Products.Find(id);
+                CreateViewBagForStockPrice();
                 return View(new ProductStockPriceModel() { ProductID = product.ProductID, Name = product.Name });
             }
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddStockPrice(ProductStockPriceModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (_dbContext = new karrykartEntities())
+                {
+                    var productSizeMapping = new ProductSizeMapping() { ProductID = model.ProductID, SizeID = model.SizeID, UnitID = model.UnitID, Stock = model.Stock };
+                    _dbContext.ProductSizeMappings.Add(productSizeMapping);
+                    
+                    var productprice = new ProductPrice() { CurrencyID = model.CurrencyID, ProductID = model.ProductID, SizeID = model.SizeID, Price = Convert.ToDecimal(model.Price) };
+                    _dbContext.ProductPrices.Add(productprice);
+                    
+                    var productShipping = new ProductShipping() { ProductID = model.ProductID, SizeID = model.SizeID, Cost = Convert.ToDecimal(model.ShippingCost) };
+                    _dbContext.ProductShippings.Add(productShipping);
+                    _dbContext.SaveChanges();
+                    _logger.WriteLog(CommonHelper.MessageType.Success, "Product Stock and price added successfully with ID=" + model.Name, "AddStockPrice", "ProductController", User.Identity.Name);
+                    return RedirectToAction("Index", "Product");
+                }
+            }
+            CreateViewBagForStockPrice();
+            return View();
+
         }
 
         [HttpGet]
@@ -120,7 +161,18 @@ namespace AppBanwao.KaryKart.Web.Controllers
             var subcategories = _dbContext.Subcategories.Where(x => x.CategoryID == id).Select(x => new { x.SCategoryID,x.Name }).ToList();
             _dbContext = null;
             return Json(subcategories, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetSizes(int id) // its a GET, not a POST
+        {
+            _dbContext = new karrykartEntities();
+            var sizes = _dbContext.Sizes.Where(x => x.SizeTypeID == id).Select(x => new { x.SizeID, x.Name }).ToList();
+            _dbContext = null;
+            return Json(sizes, JsonRequestBehavior.AllowGet);
         }       
+
+        
         void CreateViewBagForProduct()
         {
             _dbContext = new karrykartEntities();
@@ -128,6 +180,17 @@ namespace AppBanwao.KaryKart.Web.Controllers
             ViewBag.SubcategoryID = new SelectList(_dbContext.Subcategories.ToList(), "SCategoryID", "Name");
             ViewBag.BrandID = new SelectList(_dbContext.Brands.ToList(), "BrandID", "Name");
 
+            _dbContext = null;
+
+        }
+
+        void CreateViewBagForStockPrice()
+        {
+            _dbContext = new karrykartEntities();
+            ViewBag.UnitID = new SelectList(_dbContext.Units.ToList(), "UnitID", "Name");
+            ViewBag.SizeTypeID = new SelectList(_dbContext.SizeTypes.ToList(), "SizeTypeID", "Name");
+            ViewBag.CurrencyID = new SelectList(_dbContext.Currencies.ToList(), "CurrencyID", "Shortform");
+            ViewBag.SizeID = new SelectList(_dbContext.Sizes.ToList(), "SizeID", "Name");
             _dbContext = null;
 
         }

@@ -54,7 +54,7 @@
 
                 @Html.LabelFor(m => m.CategoryID, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    @Html.DropDownListFor(m => m.CategoryID, (SelectList)ViewBag.CategoryID, new { @class = "form-control", @placeholder = "e.g. garments" })
+                    @Html.DropDownListFor(m => m.CategoryID, (SelectList)ViewBag.CategoryID, new { @class = "form-control"})
                     @Html.ValidationMessageFor(m => m.CategoryID, null, new { @class = "text-danger" })
                 </div>
             </div>

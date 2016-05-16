@@ -10,9 +10,8 @@
 namespace AppBanwao.KarryKart.Model
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Product
+    public partial class SP_Get_Product_Details_Result
     {
         public System.Guid ProductID { get; set; }
         public string Name { get; set; }
@@ -25,5 +24,23 @@ namespace AppBanwao.KarryKart.Model
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<bool> Active { get; set; }
+        public string CategoryName { get; set; }
+        public string SCategoryName { get; set; }
+        public string BrandName { get; set; }
+        public string FeatureID { get; set; }
+        public string Feature { get; set; }
+        public string ImageID { get; set; }
+        public string ImageLink { get; set; }
+        public int PriceID { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public int ShippingCostID { get; set; }
+        public Nullable<decimal> ShippingCost { get; set; }
+        public int SizeID { get; set; }
+        public string SizeName { get; set; }
+        public int UnitID { get; set; }
+        public string UnitName { get; set; }
+        public int SizeTypeID { get; set; }
+        public string SizeTypeName { get; set; }
+        public Nullable<int> Stock { get; set; }
     }
 }

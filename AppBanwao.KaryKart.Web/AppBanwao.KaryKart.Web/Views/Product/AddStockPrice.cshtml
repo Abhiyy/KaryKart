@@ -35,46 +35,70 @@
 
                 @Html.LabelFor(m => m.Name, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name, new {  @class = "form-control",@readonly="readonly"})
                     
                 </div>
             </div>
             <div class="form-group">
 
-                @Html.LabelFor(m => m.Features, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(m => m.SizeTypeID, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    @Html.TextAreaFor(m => m.Features, new { @class = "form-control", @placeholder = "e.g. features of the product" })
-                    @Html.ValidationMessageFor(m => m.Features, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.SizeTypeID, (SelectList)ViewBag.SizeTypeID, new { @class = "form-control"})
+                    
                 </div>
             </div>
             <div class="form-group">
 
-                @Html.LabelFor(m => m.Image1, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(m => m.SizeID, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    <input name="Image1" id="Image1" type="file" />
-                    @Html.ValidationMessageFor(m => m.Image1, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.SizeID, (SelectList)ViewBag.SizeID, new { @class = "form-control"})
                 </div>
             </div>
             <div class="form-group">
 
-                @Html.LabelFor(m => m.Image2, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(m => m.UnitID, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    <input name="Image2" id="Image2" type="file" />
-                    @Html.ValidationMessageFor(m => m.Image2, null, new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.UnitID, (SelectList)ViewBag.UnitID, new { @class = "form-control"})
                 </div>
             </div>
             <div class="form-group">
 
-                @Html.LabelFor(m => m.Image3, new { @class = "col-lg-3 control-label" })
+                @Html.LabelFor(m => m.Stock, new { @class = "col-lg-3 control-label" })
                 <div class="col-lg-7">
-                    <input name="Image3" id="Image3" type="file" />
-                    @Html.ValidationMessageFor(m => m.Image3, null, new { @class = "text-danger" })
+                    @Html.TextBoxFor(m=>m.Stock, new { @class = "form-control", @placeholder = "e.g. 10" })
+                    @Html.ValidationMessageFor(m => m.Stock, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.CurrencyID, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-7">
+                    @Html.DropDownListFor(m => m.CurrencyID, (SelectList)ViewBag.CurrencyID, new { @class = "form-control"})
+                    
+                </div>
+            </div>
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.Price, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-7">
+                    @Html.TextBoxFor(m=>m.Price, new { @class = "form-control", @placeholder = "e.g. 10" })
+                    @Html.ValidationMessageFor(m => m.Price, null, new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                @Html.LabelFor(m => m.ShippingCost, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-7">
+                    @Html.TextBoxFor(m=>m.ShippingCost, new { @class = "form-control", @placeholder = "e.g. 10" })
+                    @Html.ValidationMessageFor(m => m.ShippingCost, null, new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-3">
 
-                    <button type="submit" class="btn btn-success blueButton">Next <i class="fa fa-forward"></i></button>
+                    <button type="submit" class="btn btn-success blueButton">Add <i class="fa fa-plus"></i></button>
                     @*<hr />
                     <a href="@Url.Action("Index","Product")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>*@
                 </div>
@@ -83,3 +107,21 @@
         }
     </div>
 </div>
+
+
+<script type="text/javascript">
+    var url = '@Url.Action("GetSizes", "Product")'; // Don't hard code your url's!
+    var sizes = $('#SizeID'); // cache it
+    $("#SizeTypeID").change(function () {
+      //  OpenLoader();
+        var id = $(this).val(); // Use $(this) so you don't traverse the DOM again
+        $.getJSON(url, { id: id }, function (response) {
+            sizes.empty(); // remove any existing options
+            $.each(response, function (index, item) {
+           
+                sizes.append($('<option></option>').text(item.Name).val(item.SizeID));
+            });
+        //    CloseLoader();
+        });
+    });
+</script>

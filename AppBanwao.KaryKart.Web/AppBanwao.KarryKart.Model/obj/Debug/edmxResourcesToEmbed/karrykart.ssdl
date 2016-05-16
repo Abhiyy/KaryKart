@@ -1,51 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="karrykartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="karrykartModelStoreContainer">
-    <EntitySet Name="Brand" EntityType="karrykartModel.Store.Brand" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Category" EntityType="karrykartModel.Store.Category" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Country" EntityType="karrykartModel.Store.Country" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Currency" EntityType="karrykartModel.Store.Currency" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DeliverySlot" EntityType="karrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Logs" EntityType="karrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Offers" EntityType="karrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Product" EntityType="karrykartModel.Store.Product" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductFeature" EntityType="karrykartModel.Store.ProductFeature" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductImage" EntityType="karrykartModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductPrice" EntityType="karrykartModel.Store.ProductPrice" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductShipping" EntityType="karrykartModel.Store.ProductShipping" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ProductSizeMapping" EntityType="karrykartModel.Store.ProductSizeMapping" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Size" EntityType="karrykartModel.Store.Size" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="SizeType" EntityType="karrykartModel.Store.SizeType" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Slider" EntityType="karrykartModel.Store.Slider" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Subcategory" EntityType="karrykartModel.Store.Subcategory" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Unit" EntityType="karrykartModel.Store.Unit" store:Type="Tables" Schema="dbo" />
-  </EntityContainer>
+<Schema Namespace="KarrykartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Brand">
     <Key>
       <PropertyRef Name="BrandID" />
     </Key>
-    <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="CategoryID" />
     </Key>
-    <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Country">
     <Key>
       <PropertyRef Name="CountryID" />
     </Key>
-    <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryName" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Currency">
     <Key>
       <PropertyRef Name="CurrencyID" />
     </Key>
-    <Property Name="CurrencyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
     <Property Name="CountryID" Type="int" />
     <Property Name="Shortform" Type="varchar" MaxLength="10" />
@@ -54,14 +34,14 @@
     <Key>
       <PropertyRef Name="DeliverySlotID" />
     </Key>
-    <Property Name="DeliverySlotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DeliverySlotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Slot" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Logs">
     <Key>
       <PropertyRef Name="LogId" />
     </Key>
-    <Property Name="LogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MessageType" Type="varchar" MaxLength="50" />
     <Property Name="Message" Type="nvarchar(max)" />
     <Property Name="MethodName" Type="varchar" MaxLength="70" />
@@ -75,7 +55,7 @@
     <Key>
       <PropertyRef Name="OfferID" />
     </Key>
-    <Property Name="OfferID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OfferID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OfferName" Type="varchar" MaxLength="50" />
     <Property Name="ImageLink" Type="varchar" MaxLength="255" />
     <Property Name="Active" Type="bit" />
@@ -100,7 +80,7 @@
     <Key>
       <PropertyRef Name="FeatureID" />
     </Key>
-    <Property Name="FeatureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FeatureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Feature" Type="varchar" MaxLength="200" />
   </EntityType>
@@ -116,7 +96,7 @@
     <Key>
       <PropertyRef Name="PriceID" />
     </Key>
-    <Property Name="PriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SizeID" Type="int" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
@@ -126,7 +106,7 @@
     <Key>
       <PropertyRef Name="ShippingCostID" />
     </Key>
-    <Property Name="ShippingCostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShippingCostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SizeID" Type="int" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Cost" Type="decimal" Precision="7" Scale="2" />
@@ -135,16 +115,17 @@
     <Key>
       <PropertyRef Name="ProductSizeMappingID" />
     </Key>
-    <Property Name="ProductSizeMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductSizeMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="SizeID" Type="int" />
-    <Property Name="ProductID" Type="int" />
     <Property Name="UnitID" Type="int" />
+    <Property Name="Stock" Type="int" />
   </EntityType>
   <EntityType Name="Size">
     <Key>
       <PropertyRef Name="SizeID" />
     </Key>
-    <Property Name="SizeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SizeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="10" />
     <Property Name="SizeTypeID" Type="int" />
   </EntityType>
@@ -152,14 +133,14 @@
     <Key>
       <PropertyRef Name="SizeTypeID" />
     </Key>
-    <Property Name="SizeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SizeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
       <PropertyRef Name="SliderID" />
     </Key>
-    <Property Name="SliderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SliderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="30" />
     <Property Name="OfferHeading" Type="varchar" MaxLength="100" />
     <Property Name="ImageLink" Type="varchar" MaxLength="250" />
@@ -171,7 +152,7 @@
     <Key>
       <PropertyRef Name="SCategoryID" />
     </Key>
-    <Property Name="SCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
     <Property Name="CategoryID" Type="int" Nullable="false" />
   </EntityType>
@@ -179,7 +160,30 @@
     <Key>
       <PropertyRef Name="UnitID" />
     </Key>
-    <Property Name="UnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
+  <Function Name="SP_Get_Product_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <EntityContainer Name="KarrykartModelStoreContainer">
+    <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliverySlot" EntityType="Self.DeliverySlot" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductFeature" EntityType="Self.ProductFeature" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductShipping" EntityType="Self.ProductShipping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSizeMapping" EntityType="Self.ProductSizeMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SizeType" EntityType="Self.SizeType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subcategory" EntityType="Self.Subcategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
 </Schema>

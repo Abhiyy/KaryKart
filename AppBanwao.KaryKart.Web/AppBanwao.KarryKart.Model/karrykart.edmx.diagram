@@ -4,25 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b6aab456ca9e4b929590609dc57945cc" Name="Diagram1">
-        <EntityTypeShape EntityType="karrykartModel.DeliverySlot" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="karrykartModel.Log" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="karrykartModel.Slider" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="karrykartModel.Offer" Width="1.5" PointX="1.5648841176018511" PointY="26.364772630093977" />
-        <EntityTypeShape EntityType="karrykartModel.Brand" Width="1.5" PointX="9.2935169699105984" PointY="10.172176067797549" />
-        <EntityTypeShape EntityType="karrykartModel.Category" Width="1.5" PointX="6.627768094943729" PointY="9.9842159943581628" />
-        <EntityTypeShape EntityType="karrykartModel.Subcategory" Width="1.5" PointX="4.63371539704209" PointY="28.91630765652112" />
-        <EntityTypeShape EntityType="karrykartModel.ProductFeature" Width="1.5" PointX="10.344168170515527" PointY="9.47082052075808" />
-        <EntityTypeShape EntityType="karrykartModel.ProductImage" Width="1.5" PointX="9.4536339740518649" PointY="24.975517180271222" />
-        <EntityTypeShape EntityType="karrykartModel.ProductPrice" Width="1.5" PointX="7.387595144746637" PointY="15.727076850704419" />
-        <EntityTypeShape EntityType="karrykartModel.ProductShipping" Width="1.5" PointX="5.9224365418415683" PointY="3.4896222816266222" />
-        <EntityTypeShape EntityType="karrykartModel.ProductSizeMapping" Width="1.5" PointX="10.588997907279524" PointY="8.3324482330737855" />
-        <EntityTypeShape EntityType="karrykartModel.Size" Width="1.5" PointX="7.7230901120803743" PointY="23.304937239412656" />
-        <EntityTypeShape EntityType="karrykartModel.SizeType" Width="1.5" PointX="2.7966257328151842" PointY="18.019256510780778" />
-        <EntityTypeShape EntityType="karrykartModel.Unit" Width="1.5" PointX="3.407086429841391" PointY="9.6967010543200658" />
-        <EntityTypeShape EntityType="karrykartModel.Currency" Width="1.5" PointX="7.7118807638585016" PointY="31.981307893982766" />
-        <EntityTypeShape EntityType="karrykartModel.Country" Width="1.5" PointX="7.593589305688436" PointY="29.846245779584276" />
-        <EntityTypeShape EntityType="karrykartModel.Product" Width="1.5" PointX="9.9834306379703" PointY="23.3756283034457" />
+      <Diagram DiagramId="7612e3a50fbf4e71878ed9cd406a640a" Name="Diagram1">
+        <EntityTypeShape EntityType="KarrykartModel.Brand" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Category" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Country" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Currency" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.DeliverySlot" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Log" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Offer" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Product" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.ProductFeature" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.ProductImage" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.ProductPrice" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.ProductShipping" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.ProductSizeMapping" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Size" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.SizeType" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Slider" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Subcategory" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Unit" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
