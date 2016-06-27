@@ -23,6 +23,8 @@
         <EntityTypeShape EntityType="KarrykartModel.Slider" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KarrykartModel.Subcategory" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="KarrykartModel.Unit" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KarrykartModel.Role" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="KarrykartModel.User" Width="1.5" PointX="11.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

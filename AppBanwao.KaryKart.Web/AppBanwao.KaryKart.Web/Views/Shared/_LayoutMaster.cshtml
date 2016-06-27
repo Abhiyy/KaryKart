@@ -8,6 +8,8 @@
     <script src="~/Scripts/jquery-1.9.1.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/Site.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -64,6 +66,7 @@
         <div class="col-md-12">
             <div class="col-md-9">
                 @Html.Partial("_PartialMessages")
+                @Html.Partial("_PartialLogin")
         @RenderBody()
                 </div>
             <div class="col-md-3">
