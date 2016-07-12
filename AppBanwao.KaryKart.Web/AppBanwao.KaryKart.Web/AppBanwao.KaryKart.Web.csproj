@@ -147,8 +147,11 @@
     </Compile>
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\CustomHandleErrorAttribute .cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
+    <Compile Include="Helpers\SmsHelper.cs" />
+    <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="Models\OfferModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductStockPriceModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Models\SizeTypeModel.cs" />
     <Compile Include="Models\SliderModel.cs" />
@@ -611,6 +615,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -2049,6 +2054,10 @@
     <ProjectReference Include="..\AppBanwao.KarryKart.Model\AppBanwao.KarryKart.Model.csproj">
       <Project>{2732f345-029c-47c2-a909-9b73487a4104}</Project>
       <Name>AppBanwao.KarryKart.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DA.EncryptionManager\DA.EncryptionManager.csproj">
+      <Project>{71d26dfc-cd39-4be9-af3e-fc410fc790ad}</Project>
+      <Name>DA.EncryptionManager</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

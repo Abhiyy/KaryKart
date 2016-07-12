@@ -15,7 +15,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
         public bool Dismissable { get; set; }
 
     }   
-        public static class AlertStyles
+    public static class AlertStyles
         {
             public const string Success = "success";
             public const string Information = "info";
@@ -23,5 +23,12 @@ namespace AppBanwao.KaryKart.Web.Helpers
             public const string Danger = "danger";
             public const string Default = "default";
         }
+
+    public class UserRegisterationType
+    {
+        public const string MOBILE = "mobile";
+        public const string EMAIL = "email";
+    }
+
     
 }

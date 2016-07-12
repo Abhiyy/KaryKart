@@ -185,6 +185,8 @@
     <FunctionImport Name="SP_Get_Product_Details" ReturnType="Collection(KarrykartModel.SP_Get_Product_Details_Result)">
       <Parameter Name="ProductID" Mode="In" Type="Guid" />
     </FunctionImport>
+    <EntitySet Name="Roles" EntityType="KarrykartModel.Role" />
+    <EntitySet Name="Users" EntityType="KarrykartModel.User" />
   </EntityContainer>
   <ComplexType Name="SP_Get_Product_Details_Result">
     <Property Type="Guid" Name="ProductID" Nullable="false" />
@@ -217,4 +219,23 @@
     <Property Type="String" Name="SizeTypeName" Nullable="true" MaxLength="100" />
     <Property Type="Int32" Name="Stock" Nullable="true" />
   </ComplexType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
 </Schema>

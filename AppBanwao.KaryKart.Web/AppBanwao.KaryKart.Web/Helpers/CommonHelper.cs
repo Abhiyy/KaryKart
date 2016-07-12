@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.IO;
+using System.Text.RegularExpressions;
 namespace AppBanwao.KaryKart.Web.Helpers
 {
     public class CommonHelper
@@ -78,6 +79,32 @@ namespace AppBanwao.KaryKart.Web.Helpers
 
             return string.Empty;
         }
-        
+
+        public static bool IsEmail (string value)
+        {
+            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            
+            if(regex.IsMatch(value))
+                return true;
+
+            return false;
+        }
+
+        public static bool IsMobile(string value)
+        {
+         string MatchPhoneNumberPattern = @"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$";
+
+            if (Regex.IsMatch(value, MatchPhoneNumberPattern ))
+                return true;
+
+            return false;
+
+        }
+
+        public static string GenerateOTP()
+        {
+
+            return new Random().Next(0,999999).ToString();
+        }
     }
 }

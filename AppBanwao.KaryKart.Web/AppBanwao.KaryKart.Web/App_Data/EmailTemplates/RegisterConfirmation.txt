@@ -1,0 +1,32 @@
+﻿<html>
+<body style="color:grey; font-size:15px;">
+<font face="Helvetica, Arial, sans-serif">
+
+<div style="position:absolute; text-align:center;height:100px; width:600px; padding:30px;">
+<img src={7} />
+<p>Fashion-Clothes-Apparels</p>
+</div>
+
+<div style="background-color: #F5F6CE;width:600px; height:200px; padding:30px; margin-top:5px;">
+
+<p>Dear Admin,</p>
+
+<p>A customer has requested for buy/rent for the product. Please find below details of the request.</p>
+<p>
+
+
+Product ID  : {0}<br>
+Product name : {1}<br>
+Customer Name :   {2}<br>
+EmailAddress: {3}<br>
+Customer Phone: {4}<br>
+Message from Customer: {5}<br>
+Request Date: {6}<br>
+</p>
+<br/>
+<p>Please contact the customer and confirm the dates.</p>
+<p>Thank you</p>
+<p>CityTailor Team</p>
+</div>
+</body>
+</html>
