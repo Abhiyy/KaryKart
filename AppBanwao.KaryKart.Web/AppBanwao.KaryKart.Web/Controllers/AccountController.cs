@@ -37,7 +37,24 @@ namespace AppBanwao.KaryKart.Web.Controllers
                 
                 var userRegType = _userHelper.SendRegisterUserConfirmation(_userHelper.RegisterUser(model));
 
+                switch(userRegType)
+                {
+                    case ApplicationMessages.UserRegisterationType.EMAILWITHERROR:
+                    return Json(new { messagetype = ApplicationMessages.UserRegisterationType.EMAILWITHERROR, message = "Unable to deliver the email to your mailbox. Please contact administrator to know your OTP." }, JsonRequestBehavior.AllowGet); 
                 
+                    case  ApplicationMessages.UserRegisterationType.EMAIL:
+                    return Json(new { messagetype = ApplicationMessages.UserRegisterationType.EMAIL, message = "Your account has been created successfully. Please check your email for otp and use it to activate your account." }, JsonRequestBehavior.AllowGet);
+
+                    case ApplicationMessages.UserRegisterationType.MOBILE:
+                        return Json(new { messagetype = ApplicationMessages.UserRegisterationType.MOBILE, message = "success" }, JsonRequestBehavior.AllowGet);
+
+                    case ApplicationMessages.UserRegisterationType.MOBILEWITHERROR:
+                        return Json(new { messagetype = ApplicationMessages.UserRegisterationType.MOBILEWITHERROR, message = "success" }, JsonRequestBehavior.AllowGet);
+
+                    case ApplicationMessages.UserRegisterationType.USEREXIST:
+                        return Json(new { messagetype = ApplicationMessages.UserRegisterationType.USEREXIST, message = "The user already exists. Please try with different email." }, JsonRequestBehavior.AllowGet);
+                }
+             
 
             }
             catch (Exception ex)
@@ -47,6 +64,30 @@ namespace AppBanwao.KaryKart.Web.Controllers
 
             return View();
         }
+        
+        [HttpPost]
+        public ActionResult Verifyotp(OtpModel model)
+        {
+            try
+            {
+                _userHelper = new UserHelper();
+                if (_userHelper.VerifyOtp(model))
+                {
+                    return Json(new { messagetype = "success", message = "Your account is verified and active. Please login using your credentials." }, JsonRequestBehavior.AllowGet); 
+                }
+                else { 
+                
+                }
+
+
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+            return View();
+        }
+
 
        
     }

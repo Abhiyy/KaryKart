@@ -65,6 +65,14 @@
           <Property Name="ImageLink" Type="varchar" MaxLength="255" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <EntityType Name="OTPHolder">
+          <Key>
+            <PropertyRef Name="OTPID" />
+          </Key>
+          <Property Name="OTPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OTPValue" Type="varchar" MaxLength="50" />
+          <Property Name="OTPAssignedTo" Type="varchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -186,6 +194,7 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="LastUpdated" Type="datetime" />
           <Property Name="Active" Type="bit" />
+          <Property Name="RoleID" Type="int" />
         </EntityType>
         <Function Name="SP_Get_Product_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
@@ -198,6 +207,7 @@
           <EntitySet Name="DeliverySlot" EntityType="Self.DeliverySlot" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OTPHolder" EntityType="Self.OTPHolder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductFeature" EntityType="Self.ProductFeature" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
@@ -403,6 +413,7 @@
           </FunctionImport>
           <EntitySet Name="Roles" EntityType="KarrykartModel.Role" />
           <EntitySet Name="Users" EntityType="KarrykartModel.User" />
+          <EntitySet Name="OTPHolders" EntityType="KarrykartModel.OTPHolder" />
         </EntityContainer>
         <ComplexType Name="SP_Get_Product_Details_Result">
           <Property Type="Guid" Name="ProductID" Nullable="false" />
@@ -453,6 +464,15 @@
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="LastUpdated" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="RoleID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="OTPHolder">
+          <Key>
+            <PropertyRef Name="OTPID" />
+          </Key>
+          <Property Name="OTPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OTPValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OTPAssignedTo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -687,6 +707,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="KarrykartModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -694,6 +715,15 @@
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OTPHolders">
+            <EntityTypeMapping TypeName="KarrykartModel.OTPHolder">
+              <MappingFragment StoreEntitySet="OTPHolder">
+                <ScalarProperty Name="OTPAssignedTo" ColumnName="OTPAssignedTo" />
+                <ScalarProperty Name="OTPValue" ColumnName="OTPValue" />
+                <ScalarProperty Name="OTPID" ColumnName="OTPID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

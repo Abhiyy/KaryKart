@@ -52,7 +52,7 @@ namespace DA.EmailEngine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("orders@tariffbazaar.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("no-reply@karrykart.com")]
         public string EmailFromAddress {
             get {
                 return ((string)(this["EmailFromAddress"]));
@@ -61,7 +61,7 @@ namespace DA.EmailEngine {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("orders@tariffbazaar.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("no-reply@karrykart.com")]
         public string MailAuthUser {
             get {
                 return ((string)(this["MailAuthUser"]));

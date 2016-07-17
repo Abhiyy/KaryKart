@@ -3,30 +3,20 @@
 <font face="Helvetica, Arial, sans-serif">
 
 <div style="position:absolute; text-align:center;height:100px; width:600px; padding:30px;">
-<img src={7} />
-<p>Fashion-Clothes-Apparels</p>
+<img src={0} />
+<p>Food-Groceries-Cakes</p>
 </div>
 
 <div style="background-color: #F5F6CE;width:600px; height:200px; padding:30px; margin-top:5px;">
+<div style='align:center'><img src={1} alt='Welcome Image' /> </div>
+<p>Dear {2},</p>
 
-<p>Dear Admin,</p>
-
-<p>A customer has requested for buy/rent for the product. Please find below details of the request.</p>
-<p>
-
-
-Product ID  : {0}<br>
-Product name : {1}<br>
-Customer Name :   {2}<br>
-EmailAddress: {3}<br>
-Customer Phone: {4}<br>
-Message from Customer: {5}<br>
-Request Date: {6}<br>
-</p>
+<p>Thank you for registering with us, please type the following OTP in order to verify your email:</p>
+<p style='font-size:20px;color:#086A87'><span>{3}</span></p>
 <br/>
-<p>Please contact the customer and confirm the dates.</p>
+<p>Please contact us on {4}, in case of any issue.</p>
 <p>Thank you</p>
-<p>CityTailor Team</p>
+<p>KarryKart Team</p>
 </div>
 </body>
 </html>

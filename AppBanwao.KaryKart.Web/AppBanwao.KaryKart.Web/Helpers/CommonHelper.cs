@@ -18,6 +18,11 @@ namespace AppBanwao.KaryKart.Web.Helpers
             public const string Infotmation = "INFORMATION";
             public const string Exception = "EXCEPTION";
         }
+        public class CustomerType
+        {
+            public const int Administrator = 1;
+            public const int Customer = 2;
+        }
 
         public class Logger
         {
@@ -104,7 +109,30 @@ namespace AppBanwao.KaryKart.Web.Helpers
         public static string GenerateOTP()
         {
 
-            return new Random().Next(0,999999).ToString();
+            return new Random().Next(0, 999999).ToString();
+        }
+
+        public static void SaveOTP(string otp, string assignedTo)
+        { 
+          var dbContext = new karrykartEntities();
+
+          dbContext.OTPHolders.Add(new OTPHolder() { OTPValue = otp, OTPAssignedTo = assignedTo });
+          dbContext.SaveChanges();
+          dbContext = null;
+        }
+
+        public static void RemoveOTP(string assignedTo)
+        {
+            var dbContext = new karrykartEntities();
+
+            var otp = dbContext.OTPHolders.Where(x => x.OTPAssignedTo == assignedTo).FirstOrDefault();
+            if (otp != null)
+            {
+                dbContext.Entry(otp).State = EntityState.Deleted;
+                dbContext.SaveChanges();
+            }
+          
+            dbContext = null;
         }
     }
 }

@@ -23,11 +23,17 @@ namespace AppBanwao.KaryKart.Web.Helpers
             public const string Danger = "danger";
             public const string Default = "default";
         }
-
-    public class UserRegisterationType
+    public class ApplicationMessages
     {
-        public const string MOBILE = "mobile";
-        public const string EMAIL = "email";
+        public class UserRegisterationType
+        {
+            public const string MOBILE = "mobile";
+            public const string MOBILEWITHERROR = "mobilewitherror";
+            public const string EMAIL = "email";
+            public const string EMAILWITHERROR = "emailwitherror";
+            public const string USEREXIST = "userexist";
+
+        }
     }
 
     

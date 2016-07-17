@@ -107,3 +107,5 @@ D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\obj\Deb
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\obj\Debug\AppBanwao.KaryKart.Web.pdb
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\bin\DA.EncryptionManager.dll
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\bin\DA.EncryptionManager.pdb
+D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\bin\DA.EmailEngine.dll
+D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\AppBanwao.KaryKart.Web\bin\DA.EmailEngine.pdb

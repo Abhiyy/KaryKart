@@ -12,10 +12,10 @@
       <Value Profile="(Default)">false</Value>
     </Setting>
     <Setting Name="EmailFromAddress" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">orders@tariffbazaar.com</Value>
+      <Value Profile="(Default)">no-reply@karrykart.com</Value>
     </Setting>
     <Setting Name="MailAuthUser" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">orders@tariffbazaar.com</Value>
+      <Value Profile="(Default)">no-reply@karrykart.com</Value>
     </Setting>
     <Setting Name="MailAuthPass" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Karrykart1234#</Value>

@@ -21,7 +21,7 @@ namespace AppBanwao.KaryKart.Web.Controllers
         {
             using (_dbContext = new karrykartEntities())
             {
-                return View(ProductHelper.GetAllProducts(_dbContext)); 
+          //      return View(ProductHelper.GetAllProducts(_dbContext)); 
             }
             return View();
         }
@@ -30,7 +30,7 @@ namespace AppBanwao.KaryKart.Web.Controllers
         {
             using (_dbContext = new karrykartEntities())
             {
-                return View(ProductHelper.GetProduct(_dbContext, id));
+         //       return View(ProductHelper.GetProduct(_dbContext, id));
             }
             return View();
         }
@@ -132,24 +132,24 @@ namespace AppBanwao.KaryKart.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddStockPrice(ProductStockPriceModel model)
         {
-            if (ModelState.IsValid)
-            {
-                using (_dbContext = new karrykartEntities())
-                {
-                    var productSizeMapping = new ProductSizeMapping() { ProductID = model.ProductID, SizeID = model.SizeID, UnitID = model.UnitID, Stock = model.Stock };
-                    _dbContext.ProductSizeMappings.Add(productSizeMapping);
+            //if (ModelState.IsValid)
+            //{
+            //    using (_dbContext = new karrykartEntities())
+            //    {
+            //        var productSizeMapping = new ProductSizeMapping() { ProductID = model.ProductID, SizeID = model.SizeID, UnitID = model.UnitID, Stock = model.Stock };
+            //        _dbContext.ProductSizeMappings.Add(productSizeMapping);
                     
-                    var productprice = new ProductPrice() { CurrencyID = model.CurrencyID, ProductID = model.ProductID, SizeID = model.SizeID, Price = Convert.ToDecimal(model.Price) };
-                    _dbContext.ProductPrices.Add(productprice);
+            //        var productprice = new ProductPrice() { CurrencyID = model.CurrencyID, ProductID = model.ProductID, SizeID = model.SizeID, Price = Convert.ToDecimal(model.Price) };
+            //        _dbContext.ProductPrices.Add(productprice);
                     
-                    var productShipping = new ProductShipping() { ProductID = model.ProductID, SizeID = model.SizeID, Cost = Convert.ToDecimal(model.ShippingCost) };
-                    _dbContext.ProductShippings.Add(productShipping);
-                    _dbContext.SaveChanges();
-                    _logger.WriteLog(CommonHelper.MessageType.Success, "Product Stock and price added successfully with ID=" + model.Name, "AddStockPrice", "ProductController", User.Identity.Name);
-                    return RedirectToAction("Index", "Product");
-                }
-            }
-            CreateViewBagForStockPrice();
+            //        var productShipping = new ProductShipping() { ProductID = model.ProductID, SizeID = model.SizeID, Cost = Convert.ToDecimal(model.ShippingCost) };
+            //        _dbContext.ProductShippings.Add(productShipping);
+            //        _dbContext.SaveChanges();
+            //        _logger.WriteLog(CommonHelper.MessageType.Success, "Product Stock and price added successfully with ID=" + model.Name, "AddStockPrice", "ProductController", User.Identity.Name);
+            //        return RedirectToAction("Index", "Product");
+            //    }
+            //}
+            //CreateViewBagForStockPrice();
             return View();
 
         }

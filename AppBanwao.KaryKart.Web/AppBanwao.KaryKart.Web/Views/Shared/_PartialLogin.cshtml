@@ -44,18 +44,33 @@
     <label for="user.UserIdentifier">Email address</label>
     <input type="text" class="form-control" id="UserIdentifier" ng-model="user.UserIdentifier" placeholder="Email">
   </div>
-  <div class="form-group">
-    <label for="user.pwd">Password</label>
-    <input type="password" class="form-control" id="pwd" ng-model="user.pwd" placeholder="Password">
-  </div>
+            <div ng-hide="hidePwdSection">
+                <div class="form-group">
+                    <label for="user.pwd">Password</label>
+                    <input type="password" class="form-control" id="pwd" ng-model="user.pwd" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="user.pwd">Password</label>
+                    <input type="password" class="form-control" id="cnfpwd" ng-model="user.cnfpwd" placeholder="Confirm Password">
+                </div>
+            </div>
+            <div ng-show="hidePwdSection">
+                <div class="form-group">
+                    <label for="user.otp">OTP</label>
+                    <input type="password" class="form-control" id="txtOtp" ng-model="user.otp" placeholder="Please provide OTP">
+                    </div>
+                </div>
+            <div class="form-group ng-hide" ng-show="user.showmessage">
+                <label ng-model="user.errortype" class="text-{{user.errortype}}">{{user.message}}</label>
 
-   <div class="form-group">
-    <label for="user.pwd">Password</label>
-    <input type="password" class="form-control" id="cnfpwd" ng-model="user.cnfpwd" placeholder="Confirm Password">
-  </div>
+            </div>
+          
   
-  
-  <button type="button" class="btn btn-primary" ng-click="register()"><i class="fa fa-user-plus"></i> Register</button>
+  <button type="button" ng-disabled="waitactive"  class="btn btn-primary" ng-hide="hidePwdSection" ng-click="register()">
+      <span ng-if="!waitactive"><i class="fa fa-user-plus"></i> Register </span> 
+      <span ng-if="waitactive" ><i class="fa fa-spinner"></i> Please wait.. </span> 
+ </button>
+            <button type="button" class="btn btn-primary ng-hide" ng-show="hidePwdSection"  ng-click="verifyotp()"><i class="fa fa-check-circle"></i> Verify OTP</button>
            
 </form>
 

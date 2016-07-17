@@ -89,6 +89,9 @@
     <Compile Include="Offer.cs">
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>
+    <Compile Include="OTPHolder.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>

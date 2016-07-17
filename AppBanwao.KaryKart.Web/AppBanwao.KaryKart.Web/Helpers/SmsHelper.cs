@@ -12,5 +12,11 @@ namespace AppBanwao.KaryKart.Web.Helpers
 
             return false;
         }
+
+        public static bool SendVerificationMessage(string userNumber)
+        {
+
+            return false;
+        }
     }
 }

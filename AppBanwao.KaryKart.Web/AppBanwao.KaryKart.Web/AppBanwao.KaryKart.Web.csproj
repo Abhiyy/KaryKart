@@ -157,6 +157,7 @@
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\OfferModel.cs" />
+    <Compile Include="Models\OtpModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductStockPriceModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -168,6 +169,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\EmailTemplates\OtpVerificationEmail.txt" />
+    <Content Include="App_Data\EmailTemplates\RegisterConfirmation.txt" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.css" />
@@ -2043,7 +2046,6 @@
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Images\Offer\" />
     <Folder Include="Images\Product\" />
   </ItemGroup>
@@ -2054,6 +2056,10 @@
     <ProjectReference Include="..\AppBanwao.KarryKart.Model\AppBanwao.KarryKart.Model.csproj">
       <Project>{2732f345-029c-47c2-a909-9b73487a4104}</Project>
       <Name>AppBanwao.KarryKart.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DA.EmailEngine\DA.EmailEngine.csproj">
+      <Project>{7bd4819e-476d-47cc-885d-3b64cc961638}</Project>
+      <Name>DA.EmailEngine</Name>
     </ProjectReference>
     <ProjectReference Include="..\DA.EncryptionManager\DA.EncryptionManager.csproj">
       <Project>{71d26dfc-cd39-4be9-af3e-fc410fc790ad}</Project>

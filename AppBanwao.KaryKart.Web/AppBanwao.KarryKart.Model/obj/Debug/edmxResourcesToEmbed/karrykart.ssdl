@@ -60,6 +60,14 @@
     <Property Name="ImageLink" Type="varchar" MaxLength="255" />
     <Property Name="Active" Type="bit" />
   </EntityType>
+  <EntityType Name="OTPHolder">
+    <Key>
+      <PropertyRef Name="OTPID" />
+    </Key>
+    <Property Name="OTPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OTPValue" Type="varchar" MaxLength="50" />
+    <Property Name="OTPAssignedTo" Type="varchar" MaxLength="255" />
+  </EntityType>
   <EntityType Name="Product">
     <Key>
       <PropertyRef Name="ProductID" />
@@ -181,6 +189,7 @@
     <Property Name="DateCreated" Type="datetime" />
     <Property Name="LastUpdated" Type="datetime" />
     <Property Name="Active" Type="bit" />
+    <Property Name="RoleID" Type="int" />
   </EntityType>
   <Function Name="SP_Get_Product_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
@@ -193,6 +202,7 @@
     <EntitySet Name="DeliverySlot" EntityType="Self.DeliverySlot" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OTPHolder" EntityType="Self.OTPHolder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductFeature" EntityType="Self.ProductFeature" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />

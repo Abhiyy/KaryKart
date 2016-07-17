@@ -13,7 +13,7 @@
     
     <title>@ViewBag.Title</title>
 </head>
-<body ">
+<body ng-app="karrykartApp">
     <div class="container greyborder">
         <div class="row greyGradient midFont topRow">
             <div class=" col-md-12">
@@ -21,7 +21,7 @@
                     <i class="fa fa-phone"></i> +91-1234568790
                 </div>
                 <div class="col-md-4">
-                   Delivery Slots: @Html.Partial("_PartialSlotsDropDown")
+                    Delivery Slots: @Html.Partial("_PartialSlotsDropDown")
                 </div>
                 <div class="col-md-3">
                     Minimum Order: <i class="fa fa-inr"></i> 200
@@ -34,49 +34,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-3">
-                    <img src="~/Images/logo.png" class="img-responsive"/>
+                    <img src="~/Images/logo.png" class="img-responsive" />
                 </div>
                 <div class="col-md-6 SearchBoxDiv">
-                      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group ">
-          <input class="form-control roundedBorder searchBox" placeholder="Search groceries and cakes..." type="text">
-        </div>
-        <button type="submit" class="btn btn-default darkPinkButton roundedBorder"> Search <i class="fa fa-search"></i></button>
-      </form>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group ">
+                            <input class="form-control roundedBorder searchBox" placeholder="Search groceries and cakes..." type="text">
+                        </div>
+                        <button type="submit" class="btn btn-default darkPinkButton roundedBorder"> Search <i class="fa fa-search"></i></button>
+                    </form>
                 </div>
                 <div class="col-md-3 CartBoxDiv">
                     <div class="btn-group">
-  <a href="#" class="btn btn-primary roundedBorder"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">0</span></a>
-  <a aria-expanded="false" href="#" class="btn btn-primary dropdown-toggle roundedBorder" data-toggle="dropdown"><span class="caret"></span></a>
-  <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
+                        <a href="#" class="btn btn-primary roundedBorder"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">0</span></a>
+                        <a aria-expanded="false" href="#" class="btn btn-primary dropdown-toggle roundedBorder" data-toggle="dropdown"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    <div class="row">
-        @Html.Partial("_PartialMasterMenu")
-    </div>
-    <div class="container" ng-app="karrykartApp">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-9">
-                @Html.Partial("_PartialMessages")
-                @Html.Partial("_PartialLogin")
-        @RenderBody()
-                </div>
-            <div class="col-md-3">
-                @Html.Partial("_PartialVerticalAdminMenu")
-                @Html.Partial("_PartialOfferZone")
-            </div>
-            </div>
-    </div>
-          </div>
+        <div class="row">
+            @Html.Partial("_PartialMasterMenu")
         </div>
+        <div class="container" ng-app="karrykartApp">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-9">
+                        @Html.Partial("_PartialMessages")
+                        @Html.Partial("_PartialLogin")
+                        @RenderBody()
+                    </div>
+                    <div class="col-md-3">
+                        @Html.Partial("_PartialVerticalAdminMenu")
+                        @Html.Partial("_PartialOfferZone")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

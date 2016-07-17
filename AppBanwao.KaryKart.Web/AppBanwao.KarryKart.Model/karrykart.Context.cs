@@ -47,6 +47,7 @@ namespace AppBanwao.KarryKart.Model
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<OTPHolder> OTPHolders { get; set; }
     
         public virtual ObjectResult<SP_Get_Product_Details_Result> SP_Get_Product_Details(Nullable<System.Guid> productID)
         {

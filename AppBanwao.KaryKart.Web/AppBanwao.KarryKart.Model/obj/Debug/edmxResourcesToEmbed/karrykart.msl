@@ -228,6 +228,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="KarrykartModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -235,6 +236,15 @@
           <ScalarProperty Name="Mobile" ColumnName="Mobile" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTPHolders">
+      <EntityTypeMapping TypeName="KarrykartModel.OTPHolder">
+        <MappingFragment StoreEntitySet="OTPHolder">
+          <ScalarProperty Name="OTPAssignedTo" ColumnName="OTPAssignedTo" />
+          <ScalarProperty Name="OTPValue" ColumnName="OTPValue" />
+          <ScalarProperty Name="OTPID" ColumnName="OTPID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

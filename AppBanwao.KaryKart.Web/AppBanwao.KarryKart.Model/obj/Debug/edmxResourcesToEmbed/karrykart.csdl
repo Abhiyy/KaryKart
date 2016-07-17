@@ -187,6 +187,7 @@
     </FunctionImport>
     <EntitySet Name="Roles" EntityType="KarrykartModel.Role" />
     <EntitySet Name="Users" EntityType="KarrykartModel.User" />
+    <EntitySet Name="OTPHolders" EntityType="KarrykartModel.OTPHolder" />
   </EntityContainer>
   <ComplexType Name="SP_Get_Product_Details_Result">
     <Property Type="Guid" Name="ProductID" Nullable="false" />
@@ -237,5 +238,14 @@
     <Property Name="DateCreated" Type="DateTime" Precision="3" />
     <Property Name="LastUpdated" Type="DateTime" Precision="3" />
     <Property Name="Active" Type="Boolean" />
+    <Property Name="RoleID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="OTPHolder">
+    <Key>
+      <PropertyRef Name="OTPID" />
+    </Key>
+    <Property Name="OTPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OTPValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OTPAssignedTo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

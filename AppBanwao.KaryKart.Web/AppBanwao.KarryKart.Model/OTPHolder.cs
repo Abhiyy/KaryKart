@@ -12,15 +12,10 @@ namespace AppBanwao.KarryKart.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class OTPHolder
     {
-        public System.Guid UserID { get; set; }
-        public string EmailAddress { get; set; }
-        public string Mobile { get; set; }
-        public string Password { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
-        public Nullable<System.DateTime> LastUpdated { get; set; }
-        public Nullable<bool> Active { get; set; }
-        public Nullable<int> RoleID { get; set; }
+        public int OTPID { get; set; }
+        public string OTPValue { get; set; }
+        public string OTPAssignedTo { get; set; }
     }
 }
