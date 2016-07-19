@@ -75,8 +75,8 @@ namespace AppBanwao.KaryKart.Web.Controllers
                 {
                     return Json(new { messagetype = "success", message = "Your account is verified and active. Please login using your credentials." }, JsonRequestBehavior.AllowGet); 
                 }
-                else { 
-                
+                else {
+                    return Json(new { messagetype = "error", message = "Your account is active now. Unable to deliver email to your mailbox. Please contact administrator for verification purpose" }, JsonRequestBehavior.AllowGet); 
                 }
 
 

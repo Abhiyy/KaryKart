@@ -28,8 +28,8 @@ namespace AppBanwao.KaryKart.Web.Helpers
                 string otp = toEmail.Substring(0,4)+CommonHelper.GenerateOTP();
                 CommonHelper.SaveOTP(otp,toEmail);
                 string messagebody = string.Format(body, _companyLogo, "", toEmail,otp ,  _supportPhone);
-                SendEmail("Welcome to Karrykart.com", messagebody, toEmail);
-                return true;
+                return SendEmail("Welcome to Karrykart.com", messagebody, toEmail);
+                
             }
             catch (Exception ex) {
                 return false;
@@ -49,8 +49,9 @@ namespace AppBanwao.KaryKart.Web.Helpers
                 }
                
                 string messagebody = string.Format(body, _companyLogo, "", toEmail, _supportPhone);
-                SendEmail("Karrykart.com - Email Verification Complete ", messagebody, toEmail);
-                return true;
+                
+                return SendEmail("Karrykart.com - Email Verification Complete ", messagebody, toEmail);
+                
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
             return false;
         }
 
-        void SendEmail(string Subject, string Body, string EmailAddress)
+        bool SendEmail(string Subject, string Body, string EmailAddress)
         {
             //StringBuilder
             Mailer objEmail = new Mailer();
@@ -67,8 +68,8 @@ namespace AppBanwao.KaryKart.Web.Helpers
             objEmail.Body = Body;
             objEmail.Sender = _senderEmail;
             objEmail.Subject = Subject;
-            objEmail.Send();
-            objEmail = null;
+            return objEmail.Send();
+           
         }
     }
 }

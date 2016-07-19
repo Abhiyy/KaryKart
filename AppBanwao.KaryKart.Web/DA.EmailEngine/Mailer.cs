@@ -36,7 +36,7 @@ namespace DA.EmailEngine
             _ssl = Convert.ToBoolean(DA.EmailEngine.EmailSettings.Default.EnableSSL);
         }
 
-        public void Send()
+        public bool Send()
         {
             try
             {
@@ -72,11 +72,13 @@ namespace DA.EmailEngine
                     att.Dispose();
                 message.Dispose();
                 smtp.Dispose();
+
+                return true;
             }
 
             catch (Exception ex)
             {
-
+                return false;
             }
         }
     }
