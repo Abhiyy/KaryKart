@@ -5,38 +5,39 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
     $scope.errortype = 'warning';
     $scope.hidePwdSection = false;
     $scope.waitActive = false;
-   
+    $scope.emailExpression = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    $scope.pwdExpression = /^[a-zA-Z]\w{8,50}$/;
     $scope.register = function () {
-        
-        var user = {
-            UserIdentifier: $scope.user.UserIdentifier,
-            UserPwd: $scope.user.pwd
-        };
-        $scope.waitActive = true;
-        $scope.user.showmessage = true;
-        
-        $http({
-            url: 'Account/Register',
-            method: 'Post',
-            data:user
-        }).success(function (data) {
-            if (data.messagetype == 'emailwitherror' || data.messagetype == 'email')
-            {
-                $scope.errortype = data.messagetype == 'email'?'success':'info';
-                $scope.user.message = data.message;
-                $scope.hidePwdSection = true;
-            }
-            if (data.messagetype == 'userexist') {
-                $scope.errortype = 'danger';
-                $scope.user.message = data.message;
-                $scope.hidePwdSection = false;
+        if ($scope.registerForm.$valid) {
+            var user = {
+                UserIdentifier: $scope.user.UserIdentifier,
+                UserPwd: $scope.user.pwd
+            };
+            $scope.waitActive = true;
+            $scope.user.showmessage = true;
+            $scope.errortype = 'warning';
+            $scope.user.message = GetPleaseWait();
+            $http({
+                url: 'Account/Register',
+                method: 'Post',
+                data: user
+            }).success(function (data) {
+                if (data.messagetype == 'emailwitherror' || data.messagetype == 'email') {
+                    $scope.errortype = data.messagetype == 'email' ? 'success' : 'info';
+                    $scope.user.message = data.message;
+                    $scope.hidePwdSection = true;
+                }
+                if (data.messagetype == 'userexist') {
+                    $scope.errortype = 'danger';
+                    $scope.user.message = data.message;
+                    $scope.hidePwdSection = false;
 
-            }
-            
-        }).error(function(data){
-        
-        })
+                }
 
+            }).error(function (data) {
+
+            })
+        }
         $scope.waitActive = false;
     }
 
@@ -87,5 +88,10 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
         SwitchToTab('Login');
         $scope.user.message = '';
 
+    }
+
+    $scope.compare = function (cPwd)
+    {
+        $scope.isconfirm = $scope.user.pwd == cPwd ? true : false;
     }
 }])

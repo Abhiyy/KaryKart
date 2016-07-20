@@ -21,9 +21,28 @@ namespace AppBanwao.KaryKart.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult Login()
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
         {
+            try
+            {
+                _userHelper = new UserHelper();
+                var user = _userHelper.IsAuthenticatedUser(model);
+
+                if (user != null)
+                {
+                    Response.Cookies.Add(_userHelper.CreateAuthenticationTicket(user));
+                    return Json(new { messagetype = ApplicationMessages.UserLogin.VALIDUSER }, JsonRequestBehavior.AllowGet); 
+                }
+                else
+                {
+                    return Json(new { messagetype = ApplicationMessages.UserLogin.INVALIDUSER, message = "Invalid username/password. Please try again." }, JsonRequestBehavior.AllowGet); 
+                }
+            }
+            catch (Exception ex)
+            { 
+            
+            }
             return View();
         }
 
@@ -88,7 +107,13 @@ namespace AppBanwao.KaryKart.Web.Controllers
             return View();
         }
 
-
+        public ActionResult Logout()
+        {
+            _userHelper = new UserHelper();
+            _userHelper.SignoffUser();
+            _userHelper=null;
+            return RedirectToAction("Index", "Home");
+        }
        
     }
 }

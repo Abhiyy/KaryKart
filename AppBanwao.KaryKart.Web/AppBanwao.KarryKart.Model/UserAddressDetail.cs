@@ -12,18 +12,17 @@ namespace AppBanwao.KarryKart.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class UserAddressDetail
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
-        {
-            this.Users = new HashSet<User>();
-        }
+        public int AddressID { get; set; }
+        public Nullable<System.Guid> UserID { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public Nullable<int> CityID { get; set; }
+        public Nullable<int> StateID { get; set; }
+        public Nullable<int> CountryID { get; set; }
+        public string Pincode { get; set; }
     
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

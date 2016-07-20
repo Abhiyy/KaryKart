@@ -61,6 +61,18 @@
     <Compile Include="Country.cs">
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Coupon.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CouponImage.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CouponType.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CouponValue.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Currency.cs">
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>
@@ -133,6 +145,12 @@
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserAddressDetail.cs">
+      <DependentUpon>KarryKart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserDetail.cs">
       <DependentUpon>KarryKart.tt</DependentUpon>
     </Compile>
   </ItemGroup>

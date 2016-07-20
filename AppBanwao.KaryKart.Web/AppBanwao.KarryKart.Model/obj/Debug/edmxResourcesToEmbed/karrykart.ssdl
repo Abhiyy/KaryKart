@@ -21,6 +21,43 @@
     <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryName" Type="varchar" MaxLength="200" />
   </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="CouponID" />
+    </Key>
+    <Property Name="CouponID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DisplayName" Type="varchar" MaxLength="50" />
+    <Property Name="CouponTypeID" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="ExpiryDate" Type="datetime" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="datetime" />
+    <Property Name="UpdatedBy" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CouponImage">
+    <Key>
+      <PropertyRef Name="CouponImageID" />
+    </Key>
+    <Property Name="CouponImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponID" Type="uniqueidentifier" />
+    <Property Name="CouponImageurl" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="CouponType">
+    <Key>
+      <PropertyRef Name="CouponTypeID" />
+    </Key>
+    <Property Name="CouponTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="CouponValue">
+    <Key>
+      <PropertyRef Name="CouponValueID" />
+    </Key>
+    <Property Name="CouponValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponID" Type="uniqueidentifier" />
+    <Property Name="CouponValue" Type="decimal" Precision="7" Scale="2" />
+  </EntityType>
   <EntityType Name="Currency">
     <Key>
       <PropertyRef Name="CurrencyID" />
@@ -178,6 +215,29 @@
     <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="UserAddressDetail">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="uniqueidentifier" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="250" />
+    <Property Name="AddressLine2" Type="varchar" MaxLength="250" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="Pincode" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="UserDetailsID" />
+    </Key>
+    <Property Name="UserDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="uniqueidentifier" />
+    <Property Name="Salutation" Type="varchar" MaxLength="10" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="UserID" />
@@ -191,6 +251,42 @@
     <Property Name="Active" Type="bit" />
     <Property Name="RoleID" Type="int" />
   </EntityType>
+  <Association Name="FK_UserAddressDetail_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="UserAddressDetail" Type="Self.UserAddressDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserAddressDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserDetail_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Function Name="SP_Get_Product_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
   </Function>
@@ -198,6 +294,10 @@
     <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CouponImage" EntityType="Self.CouponImage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CouponType" EntityType="Self.CouponType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CouponValue" EntityType="Self.CouponValue" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DeliverySlot" EntityType="Self.DeliverySlot" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
@@ -215,6 +315,20 @@
     <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Subcategory" EntityType="Self.Subcategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAddressDetail" EntityType="Self.UserAddressDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_UserAddressDetail_Users" Association="Self.FK_UserAddressDetail_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserAddressDetail" EntitySet="UserAddressDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserDetail_Users" Association="Self.FK_UserDetail_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserDetail" EntitySet="UserDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

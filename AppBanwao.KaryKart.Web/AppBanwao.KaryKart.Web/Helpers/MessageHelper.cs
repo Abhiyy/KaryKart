@@ -34,6 +34,12 @@ namespace AppBanwao.KaryKart.Web.Helpers
             public const string USEREXIST = "userexist";
 
         }
+        public class UserLogin
+        {
+            public const string VALIDUSER = "validuser";
+            public const string INVALIDUSER = "invaliduser";
+        }
+
     }
 
     

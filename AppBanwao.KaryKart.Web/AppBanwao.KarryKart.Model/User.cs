@@ -14,6 +14,13 @@ namespace AppBanwao.KarryKart.Model
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.UserAddressDetails = new HashSet<UserAddressDetail>();
+            this.UserDetails = new HashSet<UserDetail>();
+        }
+    
         public System.Guid UserID { get; set; }
         public string EmailAddress { get; set; }
         public string Mobile { get; set; }
@@ -22,5 +29,11 @@ namespace AppBanwao.KarryKart.Model
         public Nullable<System.DateTime> LastUpdated { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> RoleID { get; set; }
+    
+        public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserAddressDetail> UserAddressDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserDetail> UserDetails { get; set; }
     }
 }

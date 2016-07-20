@@ -48,7 +48,7 @@
                 <div class="col-md-3 CartBoxDiv">
                     <div class="btn-group">
                         <a href="#" class="btn btn-primary roundedBorder"><i class="fa fa-shopping-cart"></i> Cart <span class="badge">0</span></a>
-                        <a aria-expanded="false" href="#" class="btn btn-primary dropdown-toggle roundedBorder" data-toggle="dropdown"><span class="caret"></span></a>
+                        <a aria-expanded="false" href="#" class="btn btn-primary dropdown-toggle roundedBorder carretButtonPadding" data-toggle="dropdown"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
@@ -72,8 +72,11 @@
                         @RenderBody()
                     </div>
                     <div class="col-md-3">
+                        @if (User.IsInRole("Administrator"))
+                        { 
                         @Html.Partial("_PartialVerticalAdminMenu")
-                        @Html.Partial("_PartialOfferZone")
+                        }
+                            @Html.Partial("_PartialOfferZone")
                     </div>
                 </div>
             </div>

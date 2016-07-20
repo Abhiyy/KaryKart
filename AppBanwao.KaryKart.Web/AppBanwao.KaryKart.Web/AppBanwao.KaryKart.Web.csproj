@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\CustomHandleErrorAttribute .cs" />
+    <Compile Include="Helpers\CustomPrincipal.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OfferModel.cs" />
     <Compile Include="Models\OtpModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
@@ -618,6 +620,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\LoginCtrl.js" />
     <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />

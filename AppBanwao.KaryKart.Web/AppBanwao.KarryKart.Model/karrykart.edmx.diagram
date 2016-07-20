@@ -26,6 +26,15 @@
         <EntityTypeShape EntityType="KarrykartModel.Role" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="KarrykartModel.User" Width="1.5" PointX="11.75" PointY="3.75" />
         <EntityTypeShape EntityType="KarrykartModel.OTPHolder" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="KarrykartModel.Coupon" Width="1.5" PointX="11.75" PointY="10.75" />
+        <EntityTypeShape EntityType="KarrykartModel.CouponImage" Width="1.5" PointX="3.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KarrykartModel.CouponType" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KarrykartModel.CouponValue" Width="1.5" PointX="5.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KarrykartModel.UserAddressDetail" Width="1.5" PointX="14.375" PointY="2.5" />
+        <EntityTypeShape EntityType="KarrykartModel.UserDetail" Width="1.5" PointX="14.375" PointY="6" />
+        <AssociationConnector Association="KarrykartModel.FK_Users_Roles" />
+        <AssociationConnector Association="KarrykartModel.FK_UserAddressDetail_Users" />
+        <AssociationConnector Association="KarrykartModel.FK_UserDetail_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

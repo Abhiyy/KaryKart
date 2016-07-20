@@ -48,6 +48,12 @@ namespace AppBanwao.KarryKart.Model
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<OTPHolder> OTPHolders { get; set; }
+        public virtual DbSet<Coupon> Coupons { get; set; }
+        public virtual DbSet<CouponImage> CouponImages { get; set; }
+        public virtual DbSet<CouponType> CouponTypes { get; set; }
+        public virtual DbSet<CouponValue> CouponValues { get; set; }
+        public virtual DbSet<UserAddressDetail> UserAddressDetails { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     
         public virtual ObjectResult<SP_Get_Product_Details_Result> SP_Get_Product_Details(Nullable<System.Guid> productID)
         {
