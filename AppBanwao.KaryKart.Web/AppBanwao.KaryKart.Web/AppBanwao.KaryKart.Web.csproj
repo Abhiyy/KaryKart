@@ -2047,6 +2047,7 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Offer\" />

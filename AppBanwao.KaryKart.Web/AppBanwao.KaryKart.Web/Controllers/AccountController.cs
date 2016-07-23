@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace AppBanwao.KaryKart.Web.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //
         // GET: /Account/
@@ -114,6 +114,10 @@ namespace AppBanwao.KaryKart.Web.Controllers
             _userHelper=null;
             return RedirectToAction("Index", "Home");
         }
-       
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
     }
 }
