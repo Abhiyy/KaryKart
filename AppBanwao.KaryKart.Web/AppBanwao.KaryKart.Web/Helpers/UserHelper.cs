@@ -40,14 +40,14 @@ namespace AppBanwao.KaryKart.Web.Helpers
                     UserID = user.UserID
                 };
 
-                
+
                 _context.Users.Add(user);
                 _context.UserDetails.Add(userDet);
                 _context.UserAddressDetails.Add(userAddress);
                 _context.SaveChanges();
                 return user;
             }
-           
+
             _context = null;
 
             return null;
@@ -100,7 +100,23 @@ namespace AppBanwao.KaryKart.Web.Helpers
             }
 
             return false;
-       
+
+        }
+
+        public bool VerifyOtp(OtpModel model,bool isOtp)
+        {
+            _context = new karrykartEntities();
+
+            var otp = _context.OTPHolders.Where(x => x.OTPAssignedTo == model.UserIdentifier && x.OTPValue == model.Userotp).FirstOrDefault();
+
+            if (otp != null)
+            {
+                CommonHelper.RemoveOTP(model.UserIdentifier);
+                return true;
+            }
+
+            return false;
+
         }
 
         bool SendOtpVerificationToUser(User user)
@@ -124,62 +140,144 @@ namespace AppBanwao.KaryKart.Web.Helpers
                     _emailHelper = null;
                     return false;
                 }
-               
+
             }
             return false;
         }
 
-       public  User IsAuthenticatedUser(LoginModel model)
+        public User IsAuthenticatedUser(LoginModel model)
         {
             _context = new karrykartEntities();
-             model.UserPwd = EncryptionManager.ConvertToUnSecureString(EncryptionManager.EncryptData(model.UserPwd));
+            model.UserPwd = EncryptionManager.ConvertToUnSecureString(EncryptionManager.EncryptData(model.UserPwd));
             var user = _context.Users.Where(x => x.EmailAddress == model.UserID || x.Mobile == model.UserID).FirstOrDefault();
             _context = null;
-            return (user.Active.Value && user.Password==model.UserPwd)?user:null;
+            return (user.Active.Value && user.Password == model.UserPwd) ? user : null;
         }
 
-       public HttpCookie CreateAuthenticationTicket(User authUser)
-       {
-           _context = new karrykartEntities();
-           CustomPrincipalSerialize serializeModel = new CustomPrincipalSerialize();
+        public HttpCookie CreateAuthenticationTicket(User authUser)
+        {
+            _context = new karrykartEntities();
+            CustomPrincipalSerialize serializeModel = new CustomPrincipalSerialize();
 
-           serializeModel.UserName = string.IsNullOrEmpty(authUser.EmailAddress) ? authUser.Mobile : authUser.EmailAddress;
-           serializeModel.FirstName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().FirstName)) ? authUser.UserDetails.FirstOrDefault().FirstName : serializeModel.UserName;
-           serializeModel.LastName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().LastName))?authUser.UserDetails.FirstOrDefault().LastName:string.Empty;
-           
-           
-           //List<ICollection<aspnet_Roles>> userRoles = null;
-           //List<string> roles = null;
-           //if (!IsDefaultUser)
-           //{
-           //    userRoles = _dbContext.aspnet_Users.Where(x => x.UserName == authUser.EmailAddress).Select(x => x.aspnet_Roles).ToList();
-           //    roles = new List<string>();
-           //    foreach (var userRole in userRoles)
-           //    {
-           //        roles.Add(userRole.FirstOrDefault().RoleName);
-           //    }
-           //}
-           //else
-           //{
-           //    roles = new List<string>();
-           //    roles.Add("DefaultUser");
-           //    serializeModel.IsDefaultUser = true;
-           //}
-           //var permissions = _dbContext.RolePermissions.Where(x => roles.Contains(x.RoleName)).Select(x => x.PermissionId).ToList();
+            serializeModel.UserName = string.IsNullOrEmpty(authUser.EmailAddress) ? authUser.Mobile : authUser.EmailAddress;
+            serializeModel.FirstName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().FirstName)) ? authUser.UserDetails.FirstOrDefault().FirstName : serializeModel.UserName;
+            serializeModel.LastName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().LastName)) ? authUser.UserDetails.FirstOrDefault().LastName : string.Empty;
 
-           JavaScriptSerializer serializer = new JavaScriptSerializer();
-           string userData = serializer.Serialize(serializeModel);
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string userData = serializer.Serialize(serializeModel);
 
-           FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, authUser.EmailAddress, DateTime.Now, DateTime.Now.AddHours(8), false, userData);
-           string encTicket = FormsAuthentication.Encrypt(authTicket);
-           HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+            FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(1, authUser.EmailAddress, DateTime.Now, DateTime.Now.AddHours(8), false, userData);
+            string encTicket = FormsAuthentication.Encrypt(authTicket);
+            HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
 
-           return faCookie;
-       }
+            return faCookie;
+        }
 
         public void SignoffUser()
         {
             FormsAuthentication.SignOut();
         }
+
+        public bool UserExists(string userID)
+        {
+
+            _context = new karrykartEntities();
+
+            if (_context.Users.Where(x => x.EmailAddress == userID || x.Mobile == userID).Count() > 0)
+                return true;
+
+            _context = null;
+
+            return false;
+
+        }
+
+        public bool SendPasswordResetOtp(string userID)
+        {
+            if (!(string.IsNullOrEmpty(userID)))
+            {
+                if (CommonHelper.IsMobile(userID))
+                {
+                    string otp = userID.Substring(0, 2) + CommonHelper.GenerateOTP();
+                    CommonHelper.SaveOTP(otp, userID);
+                    SmsHelper.SendOtpMessage(userID,otp);
+                    return true;
+                }
+                else
+                {
+                    _emailHelper = new EmailHelper();
+
+                    string otp = userID.Substring(0, 2) + CommonHelper.GenerateOTP();
+                    CommonHelper.SaveOTP(otp, userID);
+                    if (_emailHelper.SendOtpEmail(userID,otp))
+                    {
+                        _emailHelper = null;
+                        return true;
+                    }
+                    else
+                    {
+                        _emailHelper = null;
+                        return false;
+                    }
+
+                }
+                
+            }
+            return false;
+        }
+
+        public bool SetPassword(LoginModel model)
+        { 
+        _context = new karrykartEntities();
+
+        var user = _context.Users.Where(x => x.EmailAddress == model.UserID).FirstOrDefault();
+
+        if (user != null)
+        {
+            user.Password = EncryptionManager.ConvertToUnSecureString(EncryptionManager.EncryptData(model.UserPwd));
+            _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            _context.SaveChanges();
+        }
+        _context = null;
+        _emailHelper = new EmailHelper();
+        
+            var IsMessageSent = SendChangePasswordMessage(model.UserID);
+            _emailHelper = null;
+            return IsMessageSent;
+
+        
+        }
+
+        bool SendChangePasswordMessage(string userID)
+        {
+            if (!(string.IsNullOrEmpty(userID)))
+            {
+                if (CommonHelper.IsMobile(userID))
+                {
+                    SmsHelper.SendChangePasswordMessage(userID);
+                    return true;
+                }
+                else
+                {
+                    _emailHelper = new EmailHelper();
+                    
+                    if (_emailHelper.SendPasswordChangeEmail(userID))
+                    {
+                        CommonHelper.RemoveOTP(userID);
+                        _emailHelper = null;
+                        return true;
+                    }
+                    else
+                    {
+                        _emailHelper = null;
+                        return false;
+                    }
+
+                }
+
+            }
+            return false;
+        }
+
     }
 }

@@ -18,5 +18,15 @@ namespace AppBanwao.KaryKart.Web.Helpers
 
             return false;
         }
+
+        public static bool SendOtpMessage(string userNumber,string otp)
+        {
+            return false;
+        }
+
+        public static bool SendChangePasswordMessage(string userNumber)
+        {
+            return false;
+        }
     }
 }

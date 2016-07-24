@@ -39,6 +39,13 @@ namespace AppBanwao.KaryKart.Web.Helpers
             public const string VALIDUSER = "validuser";
             public const string INVALIDUSER = "invaliduser";
         }
+        public class ForgotPassword
+        {
+            public const string SUCCESS = "success";
+            public const string VALIDUSEREMAILNOTSEND = "validuseremailnotsend";
+            public const string ERROR = "error";
+            public const string USERNOTEXISTS = "usernotexists";
+        }
 
     }
 

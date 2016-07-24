@@ -119,5 +119,77 @@ namespace AppBanwao.KaryKart.Web.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ForgotPassword(LoginModel model)
+        {
+            try
+            {
+                _userHelper = new UserHelper();
+                if (_userHelper.UserExists(model.UserID))
+                {
+                    if (_userHelper.SendPasswordResetOtp(model.UserID))
+                    {
+                        return Json(new { messagetype = ApplicationMessages.ForgotPassword.SUCCESS, message = "We have sent an otp to your registered user ID. Please enter the otp above and reset your password." }, JsonRequestBehavior.AllowGet);
+                    }
+                    else {
+                        return Json(new { messagetype = ApplicationMessages.ForgotPassword.VALIDUSEREMAILNOTSEND, message = "Unable to deliver OTP. Please contact administrator to know your OTP and use it to reset the password." }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else {
+                    return Json(new { messagetype = ApplicationMessages.ForgotPassword.USERNOTEXISTS, message = "User does not exists." }, JsonRequestBehavior.AllowGet);
+                }
+                _userHelper = null;
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult VerifyUser(OtpModel model)
+        {
+            try
+            {
+                _userHelper = new UserHelper();
+                if (_userHelper.VerifyOtp(model,true))
+                {
+                    _userHelper = null;
+                    return Json(new { messagetype = ApplicationMessages.ForgotPassword.SUCCESS, message = "Please type your new password." }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    _userHelper = null;
+                    return Json(new { messagetype = ApplicationMessages.ForgotPassword.ERROR, message = "The otp does not matches. Please contact administrator." }, JsonRequestBehavior.AllowGet);
+                }
+
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SetPassword(LoginModel model)
+        {
+            try
+            {
+                _userHelper = new UserHelper();
+                if (_userHelper.SetPassword(model))
+                {
+                    return Json(new { messagetype = ApplicationMessages.ForgotPassword.SUCCESS, message = "The password has been changed successfully. Please login using the new password." }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            { 
+            
+            }
+            return View();
+        }
     }
 }

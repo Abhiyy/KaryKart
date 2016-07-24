@@ -171,6 +171,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\EmailTemplates\ChangePasswordEmail.txt" />
+    <Content Include="App_Data\EmailTemplates\OtpEmail.txt" />
     <Content Include="App_Data\EmailTemplates\OtpVerificationEmail.txt" />
     <Content Include="App_Data\EmailTemplates\RegisterConfirmation.txt" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
@@ -593,6 +595,8 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Grid.mvc.readme" />
+    <Content Include="Images\Offer\product3.jpg" />
+    <Content Include="Images\Offer\product6.jpg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -620,6 +624,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\ForgotPwdCtrl.js" />
     <Content Include="Scripts\App\LoginCtrl.js" />
     <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\errors.json" />
@@ -635,6 +640,7 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\kkpub.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Slider\girl1.jpg" />
@@ -2050,7 +2056,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\Offer\" />
     <Folder Include="Images\Product\" />
   </ItemGroup>
   <ItemGroup>

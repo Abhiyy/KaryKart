@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KarrykartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Brand">
+    <Key>
+      <PropertyRef Name="BrandID" />
+    </Key>
+    <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Currency">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="Shortform" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="DeliverySlot">
+    <Key>
+      <PropertyRef Name="DeliverySlotID" />
+    </Key>
+    <Property Name="DeliverySlotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Slot" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MessageType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MethodName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="EventTimeStamp" Type="DateTime" Precision="3" />
+    <Property Name="IpAddress" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Browser" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Offer">
+    <Key>
+      <PropertyRef Name="OfferID" />
+    </Key>
+    <Property Name="OfferID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OfferName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ImageLink" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CategoryID" Type="Int32" />
+    <Property Name="BrandID" Type="Int32" />
+    <Property Name="SubCategoryID" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="UpdatedBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="ProductFeature">
+    <Key>
+      <PropertyRef Name="FeatureID" />
+    </Key>
+    <Property Name="FeatureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Guid" />
+    <Property Name="Feature" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ProductImage">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Guid" Nullable="false" />
+    <Property Name="ProductID" Type="Guid" />
+    <Property Name="ImageLink" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ProductPrice">
+    <Key>
+      <PropertyRef Name="PriceID" />
+    </Key>
+    <Property Name="PriceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SizeID" Type="Int32" />
+    <Property Name="ProductID" Type="Guid" />
+    <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+    <Property Name="CurrencyID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ProductShipping">
+    <Key>
+      <PropertyRef Name="ShippingCostID" />
+    </Key>
+    <Property Name="ShippingCostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SizeID" Type="Int32" />
+    <Property Name="ProductID" Type="Guid" />
+    <Property Name="Cost" Type="Decimal" Precision="7" Scale="2" />
+  </EntityType>
+  <EntityType Name="ProductSizeMapping">
+    <Key>
+      <PropertyRef Name="ProductSizeMappingID" />
+    </Key>
+    <Property Name="ProductSizeMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Guid" />
+    <Property Name="SizeID" Type="Int32" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="Stock" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Size">
+    <Key>
+      <PropertyRef Name="SizeID" />
+    </Key>
+    <Property Name="SizeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SizeTypeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="SizeType">
+    <Key>
+      <PropertyRef Name="SizeTypeID" />
+    </Key>
+    <Property Name="SizeTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Slider">
+    <Key>
+      <PropertyRef Name="SliderID" />
+    </Key>
+    <Property Name="SliderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="OfferHeading" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ImageLink" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Offer" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="SlideOrder" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Subcategory">
+    <Key>
+      <PropertyRef Name="SCategoryID" />
+    </Key>
+    <Property Name="SCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Unit">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="karrykartEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Brands" EntityType="Self.Brand" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Currencies" EntityType="Self.Currency" />
+    <EntitySet Name="DeliverySlots" EntityType="Self.DeliverySlot" />
+    <EntitySet Name="Logs" EntityType="Self.Log" />
+    <EntitySet Name="Offers" EntityType="Self.Offer" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="ProductFeatures" EntityType="Self.ProductFeature" />
+    <EntitySet Name="ProductImages" EntityType="Self.ProductImage" />
+    <EntitySet Name="ProductPrices" EntityType="Self.ProductPrice" />
+    <EntitySet Name="ProductShippings" EntityType="Self.ProductShipping" />
+    <EntitySet Name="ProductSizeMappings" EntityType="Self.ProductSizeMapping" />
+    <EntitySet Name="Sizes" EntityType="Self.Size" />
+    <EntitySet Name="SizeTypes" EntityType="Self.SizeType" />
+    <EntitySet Name="Sliders" EntityType="Self.Slider" />
+    <EntitySet Name="Subcategories" EntityType="Self.Subcategory" />
+    <EntitySet Name="Units" EntityType="Self.Unit" />
+    <FunctionImport Name="SP_Get_Product_Details" ReturnType="Collection(KarrykartModel.SP_Get_Product_Details_Result)">
+      <Parameter Name="ProductID" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <EntitySet Name="Roles" EntityType="KarrykartModel.Role" />
+    <EntitySet Name="Users" EntityType="KarrykartModel.User" />
+    <EntitySet Name="OTPHolders" EntityType="KarrykartModel.OTPHolder" />
+    <EntitySet Name="Coupons" EntityType="KarrykartModel.Coupon" />
+    <EntitySet Name="CouponImages" EntityType="KarrykartModel.CouponImage" />
+    <EntitySet Name="CouponTypes" EntityType="KarrykartModel.CouponType" />
+    <EntitySet Name="CouponValues" EntityType="KarrykartModel.CouponValue" />
+    <EntitySet Name="UserAddressDetails" EntityType="KarrykartModel.UserAddressDetail" />
+    <EntitySet Name="UserDetails" EntityType="KarrykartModel.UserDetail" />
+    <AssociationSet Name="FK_Users_Roles" Association="KarrykartModel.FK_Users_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAddressDetail_Users" Association="KarrykartModel.FK_UserAddressDetail_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserAddressDetail" EntitySet="UserAddressDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserDetail_Users" Association="KarrykartModel.FK_UserDetail_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="SP_Get_Product_Details_Result">
+    <Property Type="Guid" Name="ProductID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="Int32" Name="CategoryID" Nullable="true" />
+    <Property Type="Int32" Name="BrandID" Nullable="true" />
+    <Property Type="Int32" Name="SubCategoryID" Nullable="true" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="UpdatedOn" Nullable="true" Precision="23" />
+    <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="UpdatedBy" Nullable="true" MaxLength="255" />
+    <Property Type="Boolean" Name="Active" Nullable="true" />
+    <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SCategoryName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="BrandName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="FeatureID" Nullable="true" />
+    <Property Type="String" Name="Feature" Nullable="true" />
+    <Property Type="String" Name="ImageID" Nullable="true" />
+    <Property Type="String" Name="ImageLink" Nullable="true" />
+    <Property Type="Int32" Name="PriceID" Nullable="false" />
+    <Property Type="Decimal" Name="Price" Nullable="true" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="ShippingCostID" Nullable="false" />
+    <Property Type="Decimal" Name="ShippingCost" Nullable="true" Precision="7" Scale="2" />
+    <Property Type="Int32" Name="SizeID" Nullable="false" />
+    <Property Type="String" Name="SizeName" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="UnitID" Nullable="false" />
+    <Property Type="String" Name="UnitName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="SizeTypeID" Nullable="false" />
+    <Property Type="String" Name="SizeTypeName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="Stock" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="KarrykartModel.FK_Users_Roles" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Guid" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateCreated" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="RoleID" Type="Int32" />
+    <NavigationProperty Name="Role" Relationship="KarrykartModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="UserAddressDetails" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="User" ToRole="UserAddressDetail" />
+    <NavigationProperty Name="UserDetails" Relationship="KarrykartModel.FK_UserDetail_Users" FromRole="User" ToRole="UserDetail" />
+  </EntityType>
+  <EntityType Name="OTPHolder">
+    <Key>
+      <PropertyRef Name="OTPID" />
+    </Key>
+    <Property Name="OTPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OTPValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OTPAssignedTo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="CouponID" />
+    </Key>
+    <Property Name="CouponID" Type="Guid" Nullable="false" />
+    <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CouponTypeID" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedBy" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CouponImage">
+    <Key>
+      <PropertyRef Name="CouponImageID" />
+    </Key>
+    <Property Name="CouponImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CouponID" Type="Guid" />
+    <Property Name="CouponImageurl" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CouponType">
+    <Key>
+      <PropertyRef Name="CouponTypeID" />
+    </Key>
+    <Property Name="CouponTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CouponValue">
+    <Key>
+      <PropertyRef Name="CouponValueID" />
+    </Key>
+    <Property Name="CouponValueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CouponID" Type="Guid" />
+    <Property Name="CouponValue1" Type="Decimal" Precision="7" Scale="2" />
+  </EntityType>
+  <EntityType Name="UserAddressDetail">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="AddressLine1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="UserAddressDetail" ToRole="User" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="UserDetailsID" />
+    </Key>
+    <Property Name="UserDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Guid" />
+    <Property Name="Salutation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="User" Relationship="KarrykartModel.FK_UserDetail_Users" FromRole="UserDetail" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Users_Roles">
+    <End Type="KarrykartModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="KarrykartModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAddressDetail_Users">
+    <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="KarrykartModel.UserAddressDetail" Role="UserAddressDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserAddressDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserDetail_Users">
+    <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="KarrykartModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

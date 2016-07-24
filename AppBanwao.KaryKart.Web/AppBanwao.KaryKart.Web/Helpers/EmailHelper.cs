@@ -60,6 +60,54 @@ namespace AppBanwao.KaryKart.Web.Helpers
             return false;
         }
 
+        public bool SendOtpEmail(string toEmail,string otp)
+        {
+
+            string body;
+            //Read template file from the App_Data folder
+            try
+            {
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"\\App_Data\\EmailTemplates\OtpEmail.txt")))
+                {
+                    body = sr.ReadToEnd();
+                }
+
+                string messagebody = string.Format(body, _companyLogo,  toEmail,otp, _supportPhone);
+
+                return SendEmail("Karrykart.com - OTP", messagebody, toEmail);
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        public bool SendPasswordChangeEmail(string toEmail)
+        {
+
+            string body;
+            //Read template file from the App_Data folder
+            try
+            {
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"\\App_Data\\EmailTemplates\ChangePasswordEmail.txt")))
+                {
+                    body = sr.ReadToEnd();
+                }
+
+                string messagebody = string.Format(body, _companyLogo, toEmail, _supportPhone);
+
+                return SendEmail("Karrykart.com - Password changed successfully", messagebody, toEmail);
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
         bool SendEmail(string Subject, string Body, string EmailAddress)
         {
             //StringBuilder
