@@ -1,6 +1,6 @@
 ﻿
 
-app.controller("LoginController", ['$scope', '$http','$window', function ($scope, $http,$window) {
+app.controller("LoginController", ['$scope', '$http','$window','$location', function ($scope, $http,$window,$location) {
     $scope.emailExpression = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     $scope.errortype = 'warning';
     
@@ -13,9 +13,10 @@ app.controller("LoginController", ['$scope', '$http','$window', function ($scope
             $scope.user.showmessage = true;
             $scope.errortype = 'warning';
             $scope.user.message = GetPleaseWait();
-
+            var Url = window.location.href;
+            Url = (Url.indexOf('Account') > -1) ? 'Login' : 'Account/Login';
             $http({
-                url: 'Account/Login',
+                url: Url,
                 method: 'Post',
                 data: user
             }).success(function (data) {
