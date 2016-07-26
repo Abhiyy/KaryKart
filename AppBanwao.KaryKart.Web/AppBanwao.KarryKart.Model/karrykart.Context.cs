@@ -54,6 +54,9 @@ namespace AppBanwao.KarryKart.Model
         public virtual DbSet<CouponValue> CouponValues { get; set; }
         public virtual DbSet<UserAddressDetail> UserAddressDetails { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<refCity> refCities { get; set; }
+        public virtual DbSet<refSaluation> refSaluations { get; set; }
+        public virtual DbSet<refState> refStates { get; set; }
     
         public virtual ObjectResult<SP_Get_Product_Details_Result> SP_Get_Product_Details(Nullable<System.Guid> productID)
         {

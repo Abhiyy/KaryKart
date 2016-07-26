@@ -168,6 +168,7 @@
     <Compile Include="Models\SliderModel.cs" />
     <Compile Include="Models\SubcategoryModel.cs" />
     <Compile Include="Models\UnitModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -626,6 +627,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\ForgotPwdCtrl.js" />
     <Content Include="Scripts\App\LoginCtrl.js" />
+    <Content Include="Scripts\App\MyAccountCtrl.js" />
     <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -2056,6 +2058,7 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Shared\_PartialLogin.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\MyAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Product\" />

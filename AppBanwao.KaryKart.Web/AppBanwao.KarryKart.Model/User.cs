@@ -29,6 +29,7 @@ namespace AppBanwao.KarryKart.Model
         public Nullable<System.DateTime> LastUpdated { get; set; }
         public Nullable<bool> Active { get; set; }
         public Nullable<int> RoleID { get; set; }
+        public Nullable<bool> ProfileComplete { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

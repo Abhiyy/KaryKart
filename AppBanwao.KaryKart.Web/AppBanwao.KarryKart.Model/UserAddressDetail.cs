@@ -22,6 +22,7 @@ namespace AppBanwao.KarryKart.Model
         public Nullable<int> StateID { get; set; }
         public Nullable<int> CountryID { get; set; }
         public string Pincode { get; set; }
+        public string Landmark { get; set; }
     
         public virtual User User { get; set; }
     }

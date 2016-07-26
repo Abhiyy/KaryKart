@@ -7,6 +7,7 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
     $scope.waitActive = false;
     $scope.emailExpression = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     $scope.pwdExpression = /^[a-zA-Z]\w{8,50}$/;
+    $scope.isconfirm=false;
     $scope.register = function () {
         if ($scope.registerForm.$valid) {
             var user = {

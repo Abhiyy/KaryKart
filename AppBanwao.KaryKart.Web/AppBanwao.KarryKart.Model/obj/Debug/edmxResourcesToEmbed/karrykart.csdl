@@ -206,6 +206,9 @@
       <End Role="User" EntitySet="Users" />
       <End Role="UserDetail" EntitySet="UserDetails" />
     </AssociationSet>
+    <EntitySet Name="refCities" EntityType="KarrykartModel.refCity" />
+    <EntitySet Name="refSaluations" EntityType="KarrykartModel.refSaluation" />
+    <EntitySet Name="refStates" EntityType="KarrykartModel.refState" />
   </EntityContainer>
   <ComplexType Name="SP_Get_Product_Details_Result">
     <Property Type="Guid" Name="ProductID" Nullable="false" />
@@ -261,6 +264,7 @@
     <NavigationProperty Name="Role" Relationship="KarrykartModel.FK_Users_Roles" FromRole="User" ToRole="Role" />
     <NavigationProperty Name="UserAddressDetails" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="User" ToRole="UserAddressDetail" />
     <NavigationProperty Name="UserDetails" Relationship="KarrykartModel.FK_UserDetail_Users" FromRole="User" ToRole="UserDetail" />
+    <Property Name="ProfileComplete" Type="Boolean" />
   </EntityType>
   <EntityType Name="OTPHolder">
     <Key>
@@ -320,6 +324,7 @@
     <Property Name="CountryID" Type="Int32" />
     <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="User" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="UserAddressDetail" ToRole="User" />
+    <Property Name="Landmark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="UserDetail">
     <Key>
@@ -368,4 +373,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="refCity">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="refSaluation">
+    <Key>
+      <PropertyRef Name="SID" />
+    </Key>
+    <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Salutation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="refState">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>
