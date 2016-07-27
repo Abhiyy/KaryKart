@@ -76,8 +76,8 @@
             </div>
 
             <div class="form-group">
-                <label for="CityID">City</label>
-                <select class="form-control" id="select" ng-model="CityID" ng-options="ct.CityID as ct.Name for ct in cities" ng-init="CityID=1"></select>
+                <label for="ctyID">City</label>
+                <select class="form-control" id="select" ng-model="ctyID" ng-options="ct.CityID as ct.Name for ct in cities" ng-init="ctyID=1"></select>
             </div>
 
             <div class="form-group">
@@ -103,7 +103,7 @@
                 <label ng-model="errortype" class="text-{{errortype}}"> <span ng-bind-html="message"></span> </label>
             </div>
 
-            <button type="submit" class="btn btn-primary" ng-click="updateuser()"><i class="fa fa-edit"></i> Update Details</button>
+            <button type="submit" class="btn btn-primary" ng-click="updateuserdata()"><i class="fa fa-edit"></i> Update Details</button>
 
         </form>
 

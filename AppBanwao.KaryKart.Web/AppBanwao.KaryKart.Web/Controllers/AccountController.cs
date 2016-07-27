@@ -215,5 +215,27 @@ namespace AppBanwao.KaryKart.Web.Controllers
 
             return View();
         }
+       
+        [Authorize(Roles = "Customer,Administrator")]
+        [HttpPost]
+        public ActionResult UpdateUser(UserModel model)
+        {
+            try
+            {
+                _userHelper = new UserHelper();
+
+                var detailSaved = _userHelper.UpdateUser(model);
+                if (detailSaved)
+                    return Json(new { messagetype = "success", message = "The account details has been updated successfully." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return View();
+        }
+
+
     }
 }

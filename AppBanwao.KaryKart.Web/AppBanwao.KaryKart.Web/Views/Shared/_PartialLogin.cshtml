@@ -23,8 +23,8 @@
       <div role="tabpanel" class="tab-pane active" id="Login" ng-controller="LoginController">
           <form name="loginForm" novalidate>
               <div class="form-group">
-                  <label for="user.UserID">UserID</label>
-                  <input type="email" class="form-control" ng-model="user.UserID" name="loginUserID" ng-pattern="emailExpression" placeholder="Enter User ID">
+                  <label for="user.UserID">Email Address</label>
+                  <input type="email" class="form-control" ng-model="user.UserID" name="loginUserID" ng-pattern="emailExpression" placeholder="Your email">
                   <p class="help-block errorMessage" ng-show="loginForm.loginUserID.$error.pattern">
                       Please provide valid User ID.
                   </p>

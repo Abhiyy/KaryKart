@@ -45,6 +45,7 @@ namespace AppBanwao.KaryKart.Web
                     newUser.FirstName = serializeModel.FirstName;
                     newUser.LastName = serializeModel.LastName;
                     newUser.EmailAddress = serializeModel.UserName;
+                    newUser.ProfileComplete = serializeModel.ProfileComplete;
                     HttpContext.Current.User = newUser;
                 }
                 catch (Exception)

@@ -152,7 +152,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
             model.UserPwd = EncryptionManager.ConvertToUnSecureString(EncryptionManager.EncryptData(model.UserPwd));
             var user = _context.Users.Where(x => x.EmailAddress == model.UserID || x.Mobile == model.UserID).FirstOrDefault();
             _context = null;
-            return (user.Active.Value && user.Password == model.UserPwd) ? user : null;
+            return (user != null) ? (user.Active.Value && user.Password == model.UserPwd) ? user : null : null;
         }
 
         public HttpCookie CreateAuthenticationTicket(User authUser)
@@ -291,6 +291,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
                 Active = userdetail.Active.Value,
                 AddressID = userdetail.UserAddressDetails.FirstOrDefault().AddressID,
                 AddressLine1 = userdetail.UserAddressDetails.FirstOrDefault().AddressLine1,
+                AddressLine2 = userdetail.UserAddressDetails.FirstOrDefault().AddressLine2,
                 CityID = userdetail.UserAddressDetails.FirstOrDefault().CityID,
                 CountryID = userdetail.UserAddressDetails.FirstOrDefault().CountryID,
                 Datecreated = userdetail.DateCreated.Value,
@@ -316,10 +317,55 @@ namespace AppBanwao.KaryKart.Web.Helpers
                 user.countries = _context.Countries.ToList();
                 user.salutations = _context.refSaluations.ToList();
             }
+            _context = null;
 
             return user;
             
         }
 
+        public bool UpdateUser(UserModel model)
+        {
+            if (model != null) {
+                _context = new karrykartEntities();
+                
+                var userAddr = _context.UserAddressDetails.Where(s => s.UserID == model.UserID).FirstOrDefault();
+                if (userAddr != null)
+                {
+                    userAddr.AddressLine1 = model.AddressLine1;
+                    userAddr.AddressLine2 = model.AddressLine2;
+                    userAddr.CityID = model.CityID;
+                    userAddr.StateID = model.StateID;
+                    userAddr.CountryID = model.CountryID;
+                    userAddr.Landmark = model.Landmark;
+                    userAddr.Pincode = model.Pincode;
+                }
+
+                var userDetails = _context.UserDetails.Where(x => x.UserID == model.UserID).FirstOrDefault();
+
+                if (userDetails != null)
+                {
+                    userDetails.FirstName = model.FirstName;
+                    userDetails.LastName = model.LastName;
+                    userDetails.Salutation = model.Salutation;
+                }
+                
+                var user = _context.Users.Find(model.UserID);
+                
+                if (user != null)
+                {
+                    user.Mobile = model.Mobile;
+                    user.ProfileComplete =true;
+                    user.LastUpdated = DateTime.Now;
+                }
+
+                _context.Entry(userDetails).State=System.Data.Entity.EntityState.Modified;
+                _context.Entry(userAddr).State = System.Data.Entity.EntityState.Modified;
+                _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }
