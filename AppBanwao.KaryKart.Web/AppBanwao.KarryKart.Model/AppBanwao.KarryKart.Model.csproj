@@ -53,136 +53,133 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Brand.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Country.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Coupon.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="CouponImage.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="CouponType.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="CouponValue.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Currency.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="DeliverySlot.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
-    <Compile Include="KarryKart.Context.cs">
+    <Compile Include="karrykart.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KarryKart.Context.tt</DependentUpon>
+      <DependentUpon>karrykart.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="KarryKart.cs">
+    <Compile Include="karrykart.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
-    <Compile Include="KarryKart.Designer.cs">
+    <Compile Include="karrykart.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KarryKart.edmx</DependentUpon>
+      <DependentUpon>karrykart.edmx</DependentUpon>
     </Compile>
     <Compile Include="Log.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelHelper.cs" />
     <Compile Include="Offer.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="OTPHolder.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductFeature.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductImage.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductPrice.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductShipping.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductSizeMapping.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="refCity.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="refSaluation.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="refState.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Size.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="SizeType.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Slider.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SP_Get_Product_Details_Result.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Subcategory.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Unit.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="UserAddressDetail.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="UserDetail.cs">
-      <DependentUpon>KarryKart.tt</DependentUpon>
+      <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="KarryKart.edmx">
+    <EntityDeploy Include="karrykart.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KarryKart.Designer.cs</LastGenOutput>
+      <LastGenOutput>karrykart.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="KarryKart.Context.tt">
+    <None Include="karrykart.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KarryKart.edmx</DependentUpon>
-      <LastGenOutput>KarryKart.Context.cs</LastGenOutput>
+      <DependentUpon>karrykart.edmx</DependentUpon>
+      <LastGenOutput>karrykart.Context.cs</LastGenOutput>
     </None>
-    <None Include="KarryKart.edmx.diagram">
-      <DependentUpon>KarryKart.edmx</DependentUpon>
+    <None Include="karrykart.edmx.diagram">
+      <DependentUpon>karrykart.edmx</DependentUpon>
     </None>
-    <None Include="KarryKart.tt">
+    <None Include="karrykart.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KarryKart.edmx</DependentUpon>
-      <LastGenOutput>KarryKart.cs</LastGenOutput>
+      <DependentUpon>karrykart.edmx</DependentUpon>
+      <LastGenOutput>karrykart.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

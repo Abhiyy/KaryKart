@@ -166,6 +166,27 @@
     <Property Name="UnitID" Type="int" />
     <Property Name="Stock" Type="int" />
   </EntityType>
+  <EntityType Name="refCity">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="refSaluation">
+    <Key>
+      <PropertyRef Name="SID" />
+    </Key>
+    <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Salutation" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="refState">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+  </EntityType>
   <EntityType Name="Roles">
     <Key>
       <PropertyRef Name="RoleID" />
@@ -227,6 +248,7 @@
     <Property Name="StateID" Type="int" />
     <Property Name="CountryID" Type="int" />
     <Property Name="Pincode" Type="varchar" MaxLength="10" />
+    <Property Name="Landmark" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="UserDetail">
     <Key>
@@ -250,6 +272,7 @@
     <Property Name="LastUpdated" Type="datetime" />
     <Property Name="Active" Type="bit" />
     <Property Name="RoleID" Type="int" />
+    <Property Name="ProfileComplete" Type="bit" />
   </EntityType>
   <Association Name="FK_UserAddressDetail_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
@@ -309,6 +332,9 @@
     <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductShipping" EntityType="Self.ProductShipping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductSizeMapping" EntityType="Self.ProductSizeMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="refCity" EntityType="Self.refCity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="refSaluation" EntityType="Self.refSaluation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="refState" EntityType="Self.refState" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SizeType" EntityType="Self.SizeType" Schema="dbo" store:Type="Tables" />

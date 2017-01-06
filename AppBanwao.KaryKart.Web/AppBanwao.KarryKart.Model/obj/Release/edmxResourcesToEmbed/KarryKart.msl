@@ -228,6 +228,7 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="KarrykartModel.User">
         <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="ProfileComplete" ColumnName="ProfileComplete" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
@@ -292,6 +293,7 @@
     <EntitySetMapping Name="UserAddressDetails">
       <EntityTypeMapping TypeName="KarrykartModel.UserAddressDetail">
         <MappingFragment StoreEntitySet="UserAddressDetail">
+          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
           <ScalarProperty Name="Pincode" ColumnName="Pincode" />
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
           <ScalarProperty Name="StateID" ColumnName="StateID" />
@@ -311,6 +313,30 @@
           <ScalarProperty Name="Salutation" ColumnName="Salutation" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="UserDetailsID" ColumnName="UserDetailsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="refCities">
+      <EntityTypeMapping TypeName="KarrykartModel.refCity">
+        <MappingFragment StoreEntitySet="refCity">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="refSaluations">
+      <EntityTypeMapping TypeName="KarrykartModel.refSaluation">
+        <MappingFragment StoreEntitySet="refSaluation">
+          <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+          <ScalarProperty Name="SID" ColumnName="SID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="refStates">
+      <EntityTypeMapping TypeName="KarrykartModel.refState">
+        <MappingFragment StoreEntitySet="refState">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

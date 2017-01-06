@@ -39,7 +39,6 @@
               <div class="form-group" ng-show="user.showmessage">
                   <label ng-model="errortype" class="text-{{errortype}}"> <span ng-bind-html="user.message"></span> </label>
               </div>
-
               <button type="submit" class="btn btn-primary" ng-click="login()"><i class="fa fa-user"></i> Login</button>
               <a href="@Url.Action("ForgotPassword","Account")" class="btn btn-default"><i class="fa fa-key"></i> Forgot Password</a>
           </form>
@@ -66,9 +65,9 @@
                 <div class="form-group">
                     <label for="user.pwd">Confirm Password</label>
                     <input type="password" class="form-control" ng-keyup="compare(user.cnfpwd)" name="cnfpwd" ng-pattern="pwdExpression" ng-model="user.cnfpwd" placeholder="Confirm Password">
-                    <p ng-class="{true:'text-success',false:'text-danger'}[isconfirm]" ng-show="isconfirm || registerForm.cnfpwd.$pristine ">
+                    <label ng-class="{true:'successMessage',false:'errorMessage'}[isconfirm]" ng-show="isconfirm || registerForm.cnfpwd.$dirty ">
                         Password {{isconfirm==true?'':'not'}} match
-                    </p>
+                    </label>
                 </div>
             </div>
             <div ng-show="hidePwdSection">

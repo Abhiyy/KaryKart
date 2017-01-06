@@ -25,6 +25,47 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Coupons">
+      <EntityTypeMapping TypeName="KarrykartModel.Coupon">
+        <MappingFragment StoreEntitySet="Coupon">
+          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="CouponTypeID" ColumnName="CouponTypeID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CouponImages">
+      <EntityTypeMapping TypeName="KarrykartModel.CouponImage">
+        <MappingFragment StoreEntitySet="CouponImage">
+          <ScalarProperty Name="CouponImageID" ColumnName="CouponImageID" />
+          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
+          <ScalarProperty Name="CouponImageurl" ColumnName="CouponImageurl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CouponTypes">
+      <EntityTypeMapping TypeName="KarrykartModel.CouponType">
+        <MappingFragment StoreEntitySet="CouponType">
+          <ScalarProperty Name="CouponTypeID" ColumnName="CouponTypeID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CouponValues">
+      <EntityTypeMapping TypeName="KarrykartModel.CouponValue">
+        <MappingFragment StoreEntitySet="CouponValue">
+          <ScalarProperty Name="CouponValueID" ColumnName="CouponValueID" />
+          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
+          <ScalarProperty Name="CouponValue1" ColumnName="CouponValue1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Currencies">
       <EntityTypeMapping TypeName="KarrykartModel.Currency">
         <MappingFragment StoreEntitySet="Currency">
@@ -65,6 +106,15 @@
           <ScalarProperty Name="OfferName" ColumnName="OfferName" />
           <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
           <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OTPHolders">
+      <EntityTypeMapping TypeName="KarrykartModel.OTPHolder">
+        <MappingFragment StoreEntitySet="OTPHolder">
+          <ScalarProperty Name="OTPID" ColumnName="OTPID" />
+          <ScalarProperty Name="OTPValue" ColumnName="OTPValue" />
+          <ScalarProperty Name="OTPAssignedTo" ColumnName="OTPAssignedTo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -135,6 +185,38 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="refCities">
+      <EntityTypeMapping TypeName="KarrykartModel.refCity">
+        <MappingFragment StoreEntitySet="refCity">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="refSaluations">
+      <EntityTypeMapping TypeName="KarrykartModel.refSaluation">
+        <MappingFragment StoreEntitySet="refSaluation">
+          <ScalarProperty Name="SID" ColumnName="SID" />
+          <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="refStates">
+      <EntityTypeMapping TypeName="KarrykartModel.refState">
+        <MappingFragment StoreEntitySet="refState">
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="KarrykartModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Sizes">
       <EntityTypeMapping TypeName="KarrykartModel.Size">
         <MappingFragment StoreEntitySet="Size">
@@ -182,161 +264,44 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="SP_Get_Product_Details" FunctionName="KarrykartModel.Store.SP_Get_Product_Details">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="KarrykartModel.SP_Get_Product_Details_Result">
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-          <ScalarProperty Name="BrandID" ColumnName="BrandID" />
-          <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-          <ScalarProperty Name="SCategoryName" ColumnName="SCategoryName" />
-          <ScalarProperty Name="BrandName" ColumnName="BrandName" />
-          <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
-          <ScalarProperty Name="Feature" ColumnName="Feature" />
-          <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-          <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
-          <ScalarProperty Name="PriceID" ColumnName="PriceID" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="ShippingCostID" ColumnName="ShippingCostID" />
-          <ScalarProperty Name="ShippingCost" ColumnName="ShippingCost" />
-          <ScalarProperty Name="SizeID" ColumnName="SizeID" />
-          <ScalarProperty Name="SizeName" ColumnName="SizeName" />
-          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
-          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
-          <ScalarProperty Name="SizeTypeID" ColumnName="SizeTypeID" />
-          <ScalarProperty Name="SizeTypeName" ColumnName="SizeTypeName" />
-          <ScalarProperty Name="Stock" ColumnName="Stock" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="KarrykartModel.Role">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="KarrykartModel.User">
-        <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="ProfileComplete" ColumnName="ProfileComplete" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
-          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="OTPHolders">
-      <EntityTypeMapping TypeName="KarrykartModel.OTPHolder">
-        <MappingFragment StoreEntitySet="OTPHolder">
-          <ScalarProperty Name="OTPAssignedTo" ColumnName="OTPAssignedTo" />
-          <ScalarProperty Name="OTPValue" ColumnName="OTPValue" />
-          <ScalarProperty Name="OTPID" ColumnName="OTPID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Coupons">
-      <EntityTypeMapping TypeName="KarrykartModel.Coupon">
-        <MappingFragment StoreEntitySet="Coupon">
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-          <ScalarProperty Name="Active" ColumnName="Active" />
-          <ScalarProperty Name="CouponTypeID" ColumnName="CouponTypeID" />
-          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CouponImages">
-      <EntityTypeMapping TypeName="KarrykartModel.CouponImage">
-        <MappingFragment StoreEntitySet="CouponImage">
-          <ScalarProperty Name="CouponImageurl" ColumnName="CouponImageurl" />
-          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
-          <ScalarProperty Name="CouponImageID" ColumnName="CouponImageID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CouponTypes">
-      <EntityTypeMapping TypeName="KarrykartModel.CouponType">
-        <MappingFragment StoreEntitySet="CouponType">
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="CouponTypeID" ColumnName="CouponTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CouponValues">
-      <EntityTypeMapping TypeName="KarrykartModel.CouponValue">
-        <MappingFragment StoreEntitySet="CouponValue">
-          <ScalarProperty Name="CouponValue1" ColumnName="CouponValue" />
-          <ScalarProperty Name="CouponID" ColumnName="CouponID" />
-          <ScalarProperty Name="CouponValueID" ColumnName="CouponValueID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UserAddressDetails">
       <EntityTypeMapping TypeName="KarrykartModel.UserAddressDetail">
         <MappingFragment StoreEntitySet="UserAddressDetail">
-          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-          <ScalarProperty Name="StateID" ColumnName="StateID" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
-          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="Landmark" ColumnName="Landmark" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserDetails">
       <EntityTypeMapping TypeName="KarrykartModel.UserDetail">
         <MappingFragment StoreEntitySet="UserDetail">
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="Salutation" ColumnName="Salutation" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="UserDetailsID" ColumnName="UserDetailsID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="refCities">
-      <EntityTypeMapping TypeName="KarrykartModel.refCity">
-        <MappingFragment StoreEntitySet="refCity">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="refSaluations">
-      <EntityTypeMapping TypeName="KarrykartModel.refSaluation">
-        <MappingFragment StoreEntitySet="refSaluation">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Salutation" ColumnName="Salutation" />
-          <ScalarProperty Name="SID" ColumnName="SID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="refStates">
-      <EntityTypeMapping TypeName="KarrykartModel.refState">
-        <MappingFragment StoreEntitySet="refState">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="StateID" ColumnName="StateID" />
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="KarrykartModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ProfileComplete" ColumnName="ProfileComplete" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

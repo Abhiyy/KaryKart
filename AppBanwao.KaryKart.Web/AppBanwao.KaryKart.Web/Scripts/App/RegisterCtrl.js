@@ -9,37 +9,44 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
     $scope.pwdExpression = /^[a-zA-Z]\w{8,50}$/;
     $scope.isconfirm=false;
     $scope.register = function () {
+        $scope.user.showmessage = false;
         if ($scope.registerForm.$valid) {
-            var user = {
-                UserIdentifier: $scope.user.UserIdentifier,
-                UserPwd: $scope.user.pwd
-            };
-            $scope.waitActive = true;
-            $scope.user.showmessage = true;
-            $scope.errortype = 'warning';
-            $scope.user.message = GetPleaseWait();
-            $http({
-                url: 'Account/Register',
-                method: 'Post',
-                data: user
-            }).success(function (data) {
-                if (data.messagetype == 'emailwitherror' || data.messagetype == 'email') {
-                    $scope.errortype = data.messagetype == 'email' ? 'success' : 'info';
-                    $scope.user.message = data.message;
-                    $scope.hidePwdSection = true;
-                }
-                if (data.messagetype == 'userexist') {
-                    $scope.errortype = 'danger';
-                    $scope.user.message = data.message;
-                    $scope.hidePwdSection = false;
+            if ($scope.user.UserIdentifier.length() > 0 && $scope.user.pwd.length() > 0 && $scope.user.cnfpwd.length() > 0) {
+                var user = {
+                    UserIdentifier: $scope.user.UserIdentifier,
+                    UserPwd: $scope.user.pwd
+                };
+                $scope.waitActive = true;
+                $scope.user.showmessage = true;
+                $scope.errortype = 'warning';
+                $scope.user.message = GetPleaseWait();
+                $http({
+                    url: 'Account/Register',
+                    method: 'Post',
+                    data: user
+                }).success(function (data) {
+                    if (data.messagetype == 'emailwitherror' || data.messagetype == 'email') {
+                        $scope.errortype = data.messagetype == 'email' ? 'success' : 'info';
+                        $scope.user.message = data.message;
+                        $scope.hidePwdSection = true;
+                    }
+                    if (data.messagetype == 'userexist') {
+                        $scope.errortype = 'danger';
+                        $scope.user.message = data.message;
+                        $scope.hidePwdSection = false;
 
-                }
+                    }
 
-            }).error(function (data) {
+                }).error(function (data) {
 
-            })
+                })
+            } else {
+                $scope.user.showmessage = true;
+                $scope.errortype = 'danger';
+                $scope.user.message = 'Please provide necessary details above.';
+            }
+            $scope.waitActive = false;
         }
-        $scope.waitActive = false;
     }
 
     $scope.verifyotp = function () {
@@ -93,6 +100,9 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
 
     $scope.compare = function (cPwd)
     {
+       
         $scope.isconfirm = $scope.user.pwd == cPwd ? true : false;
+        
+       
     }
 }])

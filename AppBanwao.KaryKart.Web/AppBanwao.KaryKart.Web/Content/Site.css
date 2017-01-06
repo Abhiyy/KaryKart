@@ -120,7 +120,12 @@ height:30px
 .errorMessage {
 color:#f00 !important;
 }
-
+.successMessage {
+color:#13762d !important;
+}
 .carretButtonPadding {
 /*padding-bottom:9px !important;*/
+}
+.tabActive {
+    background-color: #008cba;
 }

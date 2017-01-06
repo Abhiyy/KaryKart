@@ -1,6 +1,7 @@
 ﻿    @using AppBanwao.KaryKart.Web.Helpers
 @{
     string fullname = (User as CustomPrincipal) != null?(User as CustomPrincipal).FullName:string.Empty;
+    bool profileComplete = (User as CustomPrincipal) != null ? (User as CustomPrincipal).ProfileComplete : false;
 }  
 
   
@@ -39,7 +40,7 @@
         @if (!(User.Identity.IsAuthenticated))
         {
             <li>
-                <a href="#" onclick="OpenModal('loginModal')"><i class="fa fa-sign-in"></i> Login</a>
+                <a href="#" onclick="OpenModal('loginModal')"><i class="fa fa-sign-in"></i> Login/Register</a>
             </li>
         }
         else
@@ -47,7 +48,13 @@
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i> @fullname <span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#">My Account</a></li>
+
+        <li><a href="@Url.Action("MyAccount","Account")">My Account 
+                                       @if (!profileComplete)
+                                       {
+                                           <span class="badge">Incomplete</span>
+                                       }
+                                   </a></li>
         <li><a href="#">My Orders</a></li>
         <li class="divider"></li>
         <li><a href="@Url.Action("Logout","Account")"><i class="fa fa-sign-out"></i> Logout</a></li>

@@ -1,24 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="KarrykartModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="KarrykartModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="KarrykartModelStoreContainer">
+    <EntitySet Name="Brand" EntityType="KarrykartModel.Store.Brand" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="KarrykartModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Country" EntityType="KarrykartModel.Store.Country" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Coupon" EntityType="KarrykartModel.Store.Coupon" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CouponImage" EntityType="KarrykartModel.Store.CouponImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CouponType" EntityType="KarrykartModel.Store.CouponType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CouponValue" EntityType="KarrykartModel.Store.CouponValue" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Currency" EntityType="KarrykartModel.Store.Currency" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DeliverySlot" EntityType="KarrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Logs" EntityType="KarrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Offers" EntityType="KarrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OTPHolder" EntityType="KarrykartModel.Store.OTPHolder" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Product" EntityType="KarrykartModel.Store.Product" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductFeature" EntityType="KarrykartModel.Store.ProductFeature" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductImage" EntityType="KarrykartModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductPrice" EntityType="KarrykartModel.Store.ProductPrice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductShipping" EntityType="KarrykartModel.Store.ProductShipping" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductSizeMapping" EntityType="KarrykartModel.Store.ProductSizeMapping" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="refCity" EntityType="KarrykartModel.Store.refCity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="refSaluation" EntityType="KarrykartModel.Store.refSaluation" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="refState" EntityType="KarrykartModel.Store.refState" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="KarrykartModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Size" EntityType="KarrykartModel.Store.Size" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SizeType" EntityType="KarrykartModel.Store.SizeType" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Slider" EntityType="KarrykartModel.Store.Slider" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Subcategory" EntityType="KarrykartModel.Store.Subcategory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Unit" EntityType="KarrykartModel.Store.Unit" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserAddressDetail" EntityType="KarrykartModel.Store.UserAddressDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserDetail" EntityType="KarrykartModel.Store.UserDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="KarrykartModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_UserAddressDetail_Users" Association="KarrykartModel.Store.FK_UserAddressDetail_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserAddressDetail" EntitySet="UserAddressDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserDetail_Users" Association="KarrykartModel.Store.FK_UserDetail_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserDetail" EntitySet="UserDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="KarrykartModel.Store.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Brand">
     <Key>
       <PropertyRef Name="BrandID" />
     </Key>
-    <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
       <PropertyRef Name="CategoryID" />
     </Key>
-    <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Country">
     <Key>
       <PropertyRef Name="CountryID" />
     </Key>
-    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CountryName" Type="varchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Coupon">
@@ -39,7 +83,7 @@
     <Key>
       <PropertyRef Name="CouponImageID" />
     </Key>
-    <Property Name="CouponImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CouponID" Type="uniqueidentifier" />
     <Property Name="CouponImageurl" Type="varchar" MaxLength="500" />
   </EntityType>
@@ -47,22 +91,22 @@
     <Key>
       <PropertyRef Name="CouponTypeID" />
     </Key>
-    <Property Name="CouponTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Type" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="CouponValue">
     <Key>
       <PropertyRef Name="CouponValueID" />
     </Key>
-    <Property Name="CouponValueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CouponValueID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="CouponID" Type="uniqueidentifier" />
-    <Property Name="CouponValue" Type="decimal" Precision="7" Scale="2" />
+    <Property Name="CouponValue1" Type="decimal" Precision="7" Scale="2" />
   </EntityType>
   <EntityType Name="Currency">
     <Key>
       <PropertyRef Name="CurrencyID" />
     </Key>
-    <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CurrencyID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
     <Property Name="CountryID" Type="int" />
     <Property Name="Shortform" Type="varchar" MaxLength="10" />
@@ -71,14 +115,14 @@
     <Key>
       <PropertyRef Name="DeliverySlotID" />
     </Key>
-    <Property Name="DeliverySlotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DeliverySlotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Slot" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Logs">
     <Key>
       <PropertyRef Name="LogId" />
     </Key>
-    <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="MessageType" Type="varchar" MaxLength="50" />
     <Property Name="Message" Type="nvarchar(max)" />
     <Property Name="MethodName" Type="varchar" MaxLength="70" />
@@ -92,7 +136,7 @@
     <Key>
       <PropertyRef Name="OfferID" />
     </Key>
-    <Property Name="OfferID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OfferID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OfferName" Type="varchar" MaxLength="50" />
     <Property Name="ImageLink" Type="varchar" MaxLength="255" />
     <Property Name="Active" Type="bit" />
@@ -101,7 +145,7 @@
     <Key>
       <PropertyRef Name="OTPID" />
     </Key>
-    <Property Name="OTPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OTPID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="OTPValue" Type="varchar" MaxLength="50" />
     <Property Name="OTPAssignedTo" Type="varchar" MaxLength="255" />
   </EntityType>
@@ -125,7 +169,7 @@
     <Key>
       <PropertyRef Name="FeatureID" />
     </Key>
-    <Property Name="FeatureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FeatureID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Feature" Type="varchar" MaxLength="200" />
   </EntityType>
@@ -141,7 +185,7 @@
     <Key>
       <PropertyRef Name="PriceID" />
     </Key>
-    <Property Name="PriceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="SizeID" Type="int" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
@@ -151,7 +195,7 @@
     <Key>
       <PropertyRef Name="ShippingCostID" />
     </Key>
-    <Property Name="ShippingCostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShippingCostID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="SizeID" Type="int" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="Cost" Type="decimal" Precision="7" Scale="2" />
@@ -160,7 +204,7 @@
     <Key>
       <PropertyRef Name="ProductSizeMappingID" />
     </Key>
-    <Property Name="ProductSizeMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductSizeMappingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="ProductID" Type="uniqueidentifier" />
     <Property Name="SizeID" Type="int" />
     <Property Name="UnitID" Type="int" />
@@ -170,35 +214,35 @@
     <Key>
       <PropertyRef Name="CityID" />
     </Key>
-    <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="refSaluation">
     <Key>
       <PropertyRef Name="SID" />
     </Key>
-    <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Salutation" Type="varchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="refState">
     <Key>
       <PropertyRef Name="StateID" />
     </Key>
-    <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
       <PropertyRef Name="RoleID" />
     </Key>
-    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="RoleName" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Size">
     <Key>
       <PropertyRef Name="SizeID" />
     </Key>
-    <Property Name="SizeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SizeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="10" />
     <Property Name="SizeTypeID" Type="int" />
   </EntityType>
@@ -206,14 +250,14 @@
     <Key>
       <PropertyRef Name="SizeTypeID" />
     </Key>
-    <Property Name="SizeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SizeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Slider">
     <Key>
       <PropertyRef Name="SliderID" />
     </Key>
-    <Property Name="SliderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SliderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="30" />
     <Property Name="OfferHeading" Type="varchar" MaxLength="100" />
     <Property Name="ImageLink" Type="varchar" MaxLength="250" />
@@ -225,7 +269,7 @@
     <Key>
       <PropertyRef Name="SCategoryID" />
     </Key>
-    <Property Name="SCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SCategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="100" />
     <Property Name="CategoryID" Type="int" Nullable="false" />
   </EntityType>
@@ -233,14 +277,14 @@
     <Key>
       <PropertyRef Name="UnitID" />
     </Key>
-    <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="UserAddressDetail">
     <Key>
       <PropertyRef Name="AddressID" />
     </Key>
-    <Property Name="AddressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AddressID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="uniqueidentifier" />
     <Property Name="AddressLine1" Type="varchar" MaxLength="250" />
     <Property Name="AddressLine2" Type="varchar" MaxLength="250" />
@@ -254,7 +298,7 @@
     <Key>
       <PropertyRef Name="UserDetailsID" />
     </Key>
-    <Property Name="UserDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserDetailsID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="uniqueidentifier" />
     <Property Name="Salutation" Type="varchar" MaxLength="10" />
     <Property Name="FirstName" Type="varchar" MaxLength="50" />
@@ -275,8 +319,8 @@
     <Property Name="ProfileComplete" Type="bit" />
   </EntityType>
   <Association Name="FK_UserAddressDetail_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="UserAddressDetail" Type="Self.UserAddressDetail" Multiplicity="*" />
+    <End Role="Users" Type="KarrykartModel.Store.Users" Multiplicity="0..1" />
+    <End Role="UserAddressDetail" Type="KarrykartModel.Store.UserAddressDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="UserID" />
@@ -287,8 +331,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserDetail_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="*" />
+    <End Role="Users" Type="KarrykartModel.Store.Users" Multiplicity="0..1" />
+    <End Role="UserDetail" Type="KarrykartModel.Store.UserDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
         <PropertyRef Name="UserID" />
@@ -299,8 +343,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Users_Roles">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <End Role="Roles" Type="KarrykartModel.Store.Roles" Multiplicity="0..1" />
+    <End Role="Users" Type="KarrykartModel.Store.Users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Roles">
         <PropertyRef Name="RoleID" />
@@ -310,51 +354,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="SP_Get_Product_Details" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="ProductID" Type="uniqueidentifier" Mode="In" />
-  </Function>
-  <EntityContainer Name="KarrykartModelStoreContainer">
-    <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CouponImage" EntityType="Self.CouponImage" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CouponType" EntityType="Self.CouponType" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CouponValue" EntityType="Self.CouponValue" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Currency" EntityType="Self.Currency" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="DeliverySlot" EntityType="Self.DeliverySlot" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Offers" EntityType="Self.Offers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="OTPHolder" EntityType="Self.OTPHolder" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductFeature" EntityType="Self.ProductFeature" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductShipping" EntityType="Self.ProductShipping" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="ProductSizeMapping" EntityType="Self.ProductSizeMapping" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="refCity" EntityType="Self.refCity" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="refSaluation" EntityType="Self.refSaluation" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="refState" EntityType="Self.refState" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SizeType" EntityType="Self.SizeType" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Subcategory" EntityType="Self.Subcategory" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserAddressDetail" EntityType="Self.UserAddressDetail" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_UserAddressDetail_Users" Association="Self.FK_UserAddressDetail_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UserAddressDetail" EntitySet="UserAddressDetail" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserDetail_Users" Association="Self.FK_UserDetail_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UserDetail" EntitySet="UserDetail" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>
