@@ -11,7 +11,7 @@ app.controller("RegisterController", ['$scope', '$http', function ($scope, $http
     $scope.register = function () {
         $scope.user.showmessage = false;
         if ($scope.registerForm.$valid) {
-            if ($scope.user.UserIdentifier.length() > 0 && $scope.user.pwd.length() > 0 && $scope.user.cnfpwd.length() > 0) {
+            if ($scope.user.UserIdentifier.length > 0 && $scope.user.pwd.length > 0 && $scope.user.cnfpwd.length > 0) {
                 var user = {
                     UserIdentifier: $scope.user.UserIdentifier,
                     UserPwd: $scope.user.pwd
