@@ -241,7 +241,115 @@ public class ProductModel
     }
 
 
+12/01/2017
+----------------
+APIHelper.cs
 
+string _apiUrl = ConfigurationManager.AppSettings["APIMainURL"].ToString();
+        HttpClient _client = null;
+
+        public ApiHelper() {
+
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(_apiUrl);
+        }
+
+        public void SendRequest(string apiname)
+        {
+            try
+            {
+                var response = _client.GetAsync(apiname).Result.Content.ReadAsAsync<List<ProductModel>>();
+               // return response;
+            }
+            catch (Exception ex) {
+               // return null;    
+            }
+        }
+
+Web.config changes
+------------------
+
+<add key="APIMainURL" value="http://localhost:53445/api/"/>
+
+ProductController.cs - Web
+-------------------------
+
+ProductHelper _productHelper = null;
+
+        public ActionResult Index()
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                _productHelper = new ProductHelper();
+                
+               return View(_productHelper.GetAllProducts(_dbContext)); 
+            }
+            return View();
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                _productHelper = new ProductHelper();
+               // return View(_productHelper.GetProduct(_dbContext, id));
+            }
+            return View();
+        }
+        
+        ProductController.cs - WebAPI
+        -----------------------------------------
+        
+         public string Get(bool ActiveOnly=true)
+        {
+
+            try
+            {
+                _productHelper = new ProductHelper();
+                return JsonConvert.SerializeObject(_productHelper.GetAllProducts(ActiveOnly), new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally {
+                _productHelper = null;
+            }
+            return null;
+        }
+        
+        ProductHelper.cs - in Web
+----------------------------------------        
+         public  ApiHelper _apiHelper = null;
+
+        public ProductHelper()
+        {
+        _apiHelper = new ApiHelper();
+        }
+
+        public List<Product> GetAllProducts(karrykartEntities context)
+        {
+           // var response = _apiHelper.SendRequest("Product");
+            _apiHelper.SendRequest("Product");
+            //response.EnsureSuccessStatusCode();
+            //var respString = response.Content.ReadAsStringAsync().Result;
+            //var productList = JsonConvert.DeserializeObject<List<ProductModel>>(respString);//<IEnumerable<ProductModel>>().Result;
+
+            //var productList = context.Products.ToList();
+
+            List<Product> lstProduct = new List<Product>();
+            //foreach (var product in productList)
+            //{
+            //   // lstProduct.Add(GetProduct(context, product.ProductID));
+            //}
+
+            return lstProduct;
+        }
+
+        //public Product GetProduct(ProductModel product)
+        //{
+        //    return context.Products.Where(x=>x.ProductID ==productID).FirstOrDefault();
+        //}
 
 
 
