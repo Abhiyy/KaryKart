@@ -351,5 +351,200 @@ ProductHelper _productHelper = null;
         //    return context.Products.Where(x=>x.ProductID ==productID).FirstOrDefault();
         //}
 
+ProductHelper.cs - API
+-----------------------
 
+ karrykartEntities _context = null;
+
+        public ProductModel GetProductDetail(Guid Id)
+        {
+            ProductModel objProduct = null;
+            _context = new karrykartEntities();
+            var product = _context.Products.Find(Id);
+            if ( product!= null)
+            {
+                objProduct = new ProductModel()
+                {
+                    Active = product.Active.Value,
+                    BrandID = product.BrandID.Value,
+                    BrandName = product.Brand.Name,
+                    CategoryID = product.CategoryID.Value,
+                    CategoryName = product.Category.Name,
+                    CreatedBy = product.CreatedBy,
+                    CreatedOn = product.CreatedOn.Value,
+                    Description = product.Description,
+                    Features = GetProductFeatures(product),
+                    Images = product.ProductImages.ToList(),
+                    Name = product.Name,
+                    Prices = product.ProductPrices.ToList(),
+                    ProductID = product.ProductID,
+                    ProductSizeMappings = GetProductSizeMapping(_context, product),
+                    ShippingDetails = product.ProductShippings.ToList(),
+                    SubCategoryID = product.SubCategoryID.Value,
+                    SubCategoryName = product.Subcategory.Name,
+                    UpdatedBy = product.UpdatedBy,
+                    UpdatedOn = product.UpdatedOn.Value
+                };
+            }
+            _context = null;
+            return objProduct;
+        }
+
+
+        public List<ProductModel> GetAllProducts(bool ActiveOnly = true)
+        {
+            _context = new karrykartEntities();
+            List<Guid> productIDs = null;
+            List<ProductModel> lstProducts = null;
+            if(ActiveOnly)
+             productIDs = _context.Products.Where(x => x.Active == ActiveOnly).Select(x => x.ProductID).ToList();
+            else
+             productIDs = _context.Products.Select(x => x.ProductID).ToList();
+
+            if(productIDs.Count>0)
+            {
+                lstProducts = new List<ProductModel>();
+                foreach (var id in productIDs)
+                {
+                    lstProducts.Add(GetProductDetail(id));
+                }
+            }
+            productIDs = null;
+
+            return lstProducts;
+        }
+
+        private List<ProductSize> GetProductSizeMapping(karrykartEntities context, Product product)
+        {
+            List<ProductSize> lstProductSizeMapping = new List<ProductSize>(); ProductSize objSizeMapping = null;
+            foreach (var productSize in product.ProductSizeMappings)
+            {
+                objSizeMapping = new ProductSize()
+                {
+                    SizeID = productSize.SizeID.Value,
+                    ProductSizeMappingID = productSize.ProductSizeMappingID,
+                    Stock = productSize.Stock.Value,
+                    UnitID = productSize.UnitID.Value
+                };
+
+                objSizeMapping.SizeName = context.Sizes.Where(x => x.SizeID == productSize.SizeID).FirstOrDefault().Name;
+                objSizeMapping.SizeTypeID = context.Sizes.Where(x => x.SizeID == productSize.SizeID).FirstOrDefault().SizeTypeID.Value;
+                objSizeMapping.SizeTypeName = context.SizeTypes.Where(x => x.SizeTypeID == objSizeMapping.SizeTypeID).FirstOrDefault().Name;
+                lstProductSizeMapping.Add(objSizeMapping);
+                objSizeMapping = null;
+            }
+            return lstProductSizeMapping;
+        }
+
+        private List<ProductFeatures> GetProductFeatures(Product product)
+        {
+            List<ProductFeatures> lstFeatures = new List<ProductFeatures>();
+            ProductFeatures objFeature = null;
+            foreach (var feature in product.ProductFeatures)
+            {
+                objFeature = new ProductFeatures() { FeatureID = feature.FeatureID, Feature = feature.Feature };
+                lstFeatures.Add(objFeature);
+                objFeature = null;
+            }
+            return lstFeatures;
+        }
+        
+        ProductModel.cs
+        ----------------------------
+        
+        public class ProductModel
+    {
+
+        public Guid ProductID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public string CategoryName { get; set; }
+
+        public int BrandID { get; set; }
+
+        public string BrandName { get; set; }
+
+        public int SubCategoryID { get; set; }
+
+        public string SubCategoryName { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime UpdatedOn { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public bool Active { get; set; }
+
+        public List<ProductFeatures> Features { get; set; }
+
+        public List<ProductImages> Images { get; set; }
+
+        public List<ProductPrice> Prices { get; set; }
+
+        public List<ProductShippingDetail> ShippingDetails { get; set; }
+
+        public List<ProductSize> ProductSizeMappings { get; set; }
+
+
+
+    }
+
+    public class ProductFeatures
+    {
+        public int FeatureID { get; set; }
+
+        public string Feature { get; set; }
+
+    }
+
+    public class ProductImages
+    {
+        public Guid ImageID { get; set; }
+
+        public string ImageLink { get; set; }
+    }
+
+    public class ProductPrices
+    {
+        public int PriceID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int CurrencyID { get; set; }
+    }
+
+    public class ProductShippingDetail
+    {
+        public int ShippingCostID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public decimal Cost { get; set; }
+    }
+
+    public class ProductSize 
+    {
+        public int ProductSizeMappingID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public int UnitID { get; set; }
+
+        public int Stock { get; set; }
+        public string SizeName { get; set; }
+        public string SizeTypeName { get; set; }
+        public int SizeTypeID { get; set; }
+    }
+
+        
 
