@@ -680,4 +680,502 @@ ProductHelper.cs - API
         
 
     }
+    PART II- 13/01/2017
+    -------------------------------------------
+    
+    ProductModel.cs
+    --------------------
+       public class ProductModel
+    {
+
+        public Guid ProductID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public string CategoryName { get; set; }
+
+        public int BrandID { get; set; }
+
+        public string BrandName { get; set; }
+
+        public int SubCategoryID { get; set; }
+
+        public string SubCategoryName { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime UpdatedOn { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public bool Active { get; set; }
+
+        public List<ProductFeatures> Features { get; set; }
+
+        public List<ProductImages> Images { get; set; }
+
+        public List<ProductPrices> Prices { get; set; }
+
+        public List<ProductShippingDetail> ShippingDetails { get; set; }
+
+        public List<ProductSize> ProductSizeMappings { get; set; }
+
+
+
+    }
+    
+    -----------------------------------
+    ProductHelper.cs
+    
+            private List<ProductPrices> GetProductPrices(Product product)
+        {
+            List<ProductPrices> lstProductPrices = new List<ProductPrices>();
+
+            ProductPrices objProductPrice = null;
+
+            foreach (var price in product.ProductPrices)
+            {
+                objProductPrice = new ProductPrices() { CurrencyID = price.CurrencyID.Value, Price = price.Price.Value, PriceID = price.PriceID, SizeID = price.SizeID.Value };
+
+                lstProductPrices.Add(objProductPrice);
+
+                objProductPrice = null;
+            }
+
+            return lstProductPrices;
+        }
+        
+        ProductController.cs
+        ------------------------------
+        
+         public List<ProductModel> Get(bool ActiveOnly=true)
+        {
+
+            try
+            {
+                _productHelper = new ProductHelper();
+                return _productHelper.GetAllProducts(ActiveOnly);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally {
+                _productHelper = null;
+            }
+            return null;
+        }
+    
+    ProductDetailsModel.cs
+    ------------------------
+    public class ProductDetailsModel
+    {
+         public Guid ProductID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public string CategoryName { get; set; }
+
+        public int BrandID { get; set; }
+
+        public string BrandName { get; set; }
+
+        public int SubCategoryID { get; set; }
+
+        public string SubCategoryName { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime UpdatedOn { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public bool Active { get; set; }
+
+        public List<ProductFeatures> Features { get; set; }
+
+        public List<ProductImages> Images { get; set; }
+
+        public List<ProductPrices> Prices { get; set; }
+
+        public List<ProductShippingDetail> ShippingDetails { get; set; }
+
+        public List<ProductSize> ProductSizeMappings { get; set; }
+
+
+
+    }
+
+    public class ProductFeatures
+    {
+        public int FeatureID { get; set; }
+
+        public string Feature { get; set; }
+
+    }
+
+    public class ProductImages
+    {
+        public Guid ImageID { get; set; }
+
+        public string ImageLink { get; set; }
+    }
+
+    public class ProductPrices
+    {
+        public int PriceID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int CurrencyID { get; set; }
+    }
+
+    public class ProductShippingDetail
+    {
+        public int ShippingCostID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public decimal Cost { get; set; }
+    }
+
+    public class ProductSize 
+    {
+        public int ProductSizeMappingID { get; set; }
+
+        public int SizeID { get; set; }
+
+        public int UnitID { get; set; }
+
+        public int Stock { get; set; }
+        public string SizeName { get; set; }
+        public string SizeTypeName { get; set; }
+        public int SizeTypeID { get; set; }
+    }
+    
+    ApiHelper.cs
+    ----------------------
+    
+      public class ApiHelper
+    {
+        string _apiUrl = ConfigurationManager.AppSettings["APIMainURL"].ToString();
+        HttpClient _client = null;
+
+        public static List<string> InvalidJsonElements;
+
+        public  IList<T> DeserializeToList<T>(string jsonString)
+        {
+            InvalidJsonElements = null;
+            var array = JArray.Parse(jsonString);
+            IList<T> objectsList = new List<T>();
+
+            foreach (var item in array)
+            {
+                try
+                {
+                    // CorrectElements
+                    objectsList.Add(item.ToObject<T>());
+                }
+                catch (Exception ex)
+                {
+                    InvalidJsonElements = InvalidJsonElements ?? new List<string>();
+                    InvalidJsonElements.Add(item.ToString());
+                }
+            }
+
+            return objectsList;
+        }
+
+
+
+        public ApiHelper() {
+
+            _client = new HttpClient();
+            _client.BaseAddress = new Uri(_apiUrl);
+        }
+
+        public string SendRequest(string apiname)
+        {
+            try
+            {
+                return  _client.GetAsync(apiname).Result.Content.ReadAsStringAsync().Result;
+                 //JsonConvert.DeserializeObject < List < API.Models.ProductModel >>(_client.GetAsync(apiname).Result.Content.ReadAsStringAsync().ToString());
+            }
+            catch (Exception ex) {
+                return null;    
+            }
+        }
+
+    }
+    
+    ProductController.cs
+    -----------------------------
+    
+    public ActionResult Index()
+        {
+            try
+            {
+                _productHelper = new ProductHelper();
+
+                return View(_productHelper.GetAllProducts(_dbContext));
+            }
+            catch (Exception ex) {
+                return View();
+            }
+            
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                _productHelper = new ProductHelper();
+               // return View(_productHelper.GetProduct(_dbContext, id));
+            }
+            return View();
+        }
+        
+        Product - Index
+        -----------------
+        @model IList<AppBanwao.KaryKart.Web.Models.ProductDetailsModel>
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
+    <script src="~/Scripts/gridmvc.min.js"></script>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                <li class="active">Products</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Product list</h3>
+            <hr />
+            @Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(data => data.ProductID).Titled("ProductID");
+    columns.Add(data => data.Name).Titled("Name");
+    columns.Add(data => data.CategoryName).Titled("Category");
+    columns.Add(data => data.SubCategoryName).Titled("SubCategory");
+
+    columns.Add()
+        .Titled("Actions")
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => @<a href="@Url.Action("Details", "Product", new { id = o.ProductID })" class="btn btn-info">Details <i class="fa fa-search"></i></a>);
+
+}).WithPaging(20)
+            <hr />
+            <a href="@Url.Action("Create","Product")" class="btn btn-default">Create <i class="fa fa-plus"></i></a>
+            <hr />
+            <a href="@Url.Action("Index","Home")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>
+        </div>
+    </div>
+
+Product -Details
+---------------------
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+@model AppBanwao.KarryKart.Models.ProductDetailsModel
+<div class="row">
+
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li><a href="@Url.Action("Index","Product")">Product</a></li>
+            <li class="active">Details</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-md-10">
+
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal"}))
+        {
+            <hr />
+            <h3>Product Details</h3>
+    <hr />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m=>m.ProductID)
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Name</label>
+                <div class="col-lg-7">
+                    @Html.DisplayFor(m=>m.Name)
+                    
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Description</label>
+                <div class="col-lg-7">
+                    @Html.DisplayFor(m=>m.Description)
+                    
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Category</label>
+                <div class="col-lg-7">
+                    @Html.DisplayFor(m=>m.CategoryName)
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Sub Category</label>
+                <div class="col-lg-7">
+                    @Html.DisplayFor(m=>m.SubCategoryName)
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Brand</label>
+                <div class="col-lg-7">
+                    @Html.DisplayFor(m=>m.BrandName)
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Active</label>
+                <div class="col-lg-7">
+                    @if (Model.Active.Value)
+                    { 
+                    <span >Yes</span>
+                    }else{
+                    { 
+                    <span >No</span>
+                    }
+                    }
+                    
+                </div>
+            </div>
+            
+            <hr />
+            
+            <h3>Product Features & Image Details</h3>
+    <hr />
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Features</label>
+                <div class="col-lg-7">
+            
+            @foreach (var feature in Model.ProductFeatures.Split(','))
+            { 
+            <i class ="fa fa-check"></i> <span>@feature.Feature</span><br />
+            }
+
+
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                
+                <div class="col-lg-10">
+            <label >Images</label><br />
+            @foreach (var imgLink in Model.ProductImages.Split(','))
+            { 
+            <img src="@Url.Content(imgLink.ImageLink)" class="img img-responsive" />
+            }
+
+
+                </div>
+            </div>
+            
+               <hr />
+            
+            <h3>Product Stock & Price Details</h3>
+    <hr />
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Size</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.SizeName)*@
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Unit</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.UnitName)*@
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Size Type</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.SizeTypeName)*@
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Price</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.Price)*@
+                    
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Stock</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.Stock)*@
+                </div>
+            </div>
+            
+            <div class="form-group">
+
+                <label class = "col-lg-3 control-label">Shipping Cost (per unit)</label>
+                <div class="col-lg-7">
+                    @*@Html.DisplayFor(m=>m.ShippingCost)*@
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-3">
+
+                    <button type="submit" class="btn btn-success blueButton">Edit <i class="fa fa-edit"></i></button>
+                    <hr />
+                    <a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+
 
