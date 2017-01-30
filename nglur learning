@@ -1,721 +1,311 @@
-24/01/2017
-==========================
-API- Web.config
-------------------
-<system.webServer>
-    <validation validateIntegratedModeConfiguration="false" />
-    <handlers>
-      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
-      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" />
-      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
-      <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0" />
-      <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
-      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
-    </handlers>
-    <httpProtocol>
-      <customHeaders>
-        <add name="Access-Control-Allow-Origin" value="*" />
-        <add name="Access-Control-Allow-Headers" value="Content-Type" />
-        <add name="Access-Control-Allow-Methods" value="GET,POST,PUT,DELETE,OPTIONS" />
-        <add name="Access-Control-Allow-Credentials" value="true" />
-      </customHeaders>
-    </httpProtocol>
-  </system.webServer>
-  
-  API - ProductModel.cs
-  ----------------------------
-  using AppBanwao.KarryKart.Model;
+ProductController.cs
+----------------------
+
+using AppBanwao.KarryKart.Model;
+using AppBanwao.KaryKart.Web.Helpers;
+using AppBanwao.KaryKart.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace API.Models
+namespace AppBanwao.KaryKart.Web.Controllers
 {
-    public class ProductModel
+    public class ProductController : BaseController
     {
-
-        public Guid ProductID { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public int CategoryID { get; set; }
-
-        public string CategoryName { get; set; }
-
-        public int BrandID { get; set; }
-
-        public string BrandName { get; set; }
-
-        public int SubCategoryID { get; set; }
-
-        public string SubCategoryName { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime UpdatedOn { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public string UpdatedBy { get; set; }
-
-        public bool Active { get; set; }
-
-        public List<ProductFeatures> Features { get; set; }
-
-        public List<ProductImages> Images { get; set; }
-
-        public List<ProductPrices> Prices { get; set; }
-
-        public List<ProductShippingDetail> ShippingDetails { get; set; }
-
-        public List<ProductSize> ProductSizeMappings { get; set; }
+        //
+        // GET: /Product/
+        string _productImages = ConfigurationManager.AppSettings["ProductDirectory"].ToString();
 
 
+        ProductHelper _productHelper = null;
 
-    }
-
-    public class ProductFeatures
-    {
-        public int FeatureID { get; set; }
-
-        public string Feature { get; set; }
-
-    }
-
-    public class ProductImages
-    {
-        public Guid ImageID { get; set; }
-
-        public string ImageLink { get; set; }
-    }
-
-    public class ProductPrices
-    {
-        public int PriceID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int CurrencyID { get; set; }
-    }
-
-    public class ProductShippingDetail
-    {
-        public int ShippingCostID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public decimal Cost { get; set; }
-    }
-
-    public class ProductSize 
-    {
-        public int ProductSizeMappingID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public int UnitID { get; set; }
-        public string UnitName { get; set; }
-        public int Stock { get; set; }
-        public string SizeName { get; set; }
-        public string SizeTypeName { get; set; }
-        public int SizeTypeID { get; set; }
-    }
-
-}
-
-API - ProductHelper.cs
---------------------------------------
-
- private List<ProductSize> GetProductSizeMapping(karrykartEntities context, Product product)
+        public ActionResult Index()
         {
-            List<ProductSize> lstProductSizeMapping = new List<ProductSize>(); ProductSize objSizeMapping = null;
-            foreach (var productSize in product.ProductSizeMappings)
+            try
             {
-                objSizeMapping = new ProductSize()
-                {
-                    SizeID = productSize.SizeID.Value,
-                    ProductSizeMappingID = productSize.ProductSizeMappingID,
-                    Stock = productSize.Stock.Value,
-                    UnitID = productSize.UnitID.Value,
-                    
-                };
-                objSizeMapping.UnitName = context.Units.Where(x => x.UnitID == productSize.UnitID).FirstOrDefault().Name;
-                objSizeMapping.SizeName = context.Sizes.Where(x => x.SizeID == productSize.SizeID).FirstOrDefault().Name;
-                objSizeMapping.SizeTypeID = context.Sizes.Where(x => x.SizeID == productSize.SizeID).FirstOrDefault().SizeTypeID.Value;
-                objSizeMapping.SizeTypeName = context.SizeTypes.Where(x => x.SizeTypeID == objSizeMapping.SizeTypeID).FirstOrDefault().Name;
-                lstProductSizeMapping.Add(objSizeMapping);
-                objSizeMapping = null;
+                _productHelper = new ProductHelper();
+
+                return View(_productHelper.GetAllProducts());
             }
-            return lstProductSizeMapping;
+            catch (Exception ex)
+            {
+                return View();
+            }
+
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                _productHelper = new ProductHelper();
+                return View(_productHelper.GetProduct(id));
+            }
+            return View();
+        }
+
+        public ActionResult Create() {
+            CreateViewBagForProduct();
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ProductModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (_dbContext = new karrykartEntities())
+                {
+                    var product = new Product()
+                    {
+                        Active = model.Active,
+                        CategoryID = model.CategoryID,
+                        CreatedBy = User.Identity.Name,
+                        UpdatedBy = User.Identity.Name,
+                        Description = model.Description,
+                        Name = model.Name,
+                        ProductID = Guid.NewGuid(),
+                        SubCategoryID = model.SubCategoryID,
+                        BrandID = model.BrandID,
+                        CreatedOn = DateTime.Now,
+                        UpdatedOn = DateTime.Now
+
+                    };
+                    _dbContext.Products.Add(product);
+                    _dbContext.SaveChanges();
+                    _logger.WriteLog(CommonHelper.MessageType.Success, "Product created successfully with name=" + product.ProductID, "Create", "ProductController", User.Identity.Name);
+                    return RedirectToAction("AddImageFeatureDetails", "Product", new { id = product.ProductID });
+                }
+            
+            }
+            CreateViewBagForProduct();
+            return View();
+        }
+
+        public ActionResult AddImageFeatureDetails(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                var product = _dbContext.Products.Find(id);
+                return View(new ProductModel() { ProductID = product.ProductID, Name = product.Name });
+            
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddImageFeatureDetails(ProductModel model)
+        {
+            
+            using (_dbContext = new karrykartEntities())
+            {
+                    if (!(String.IsNullOrEmpty(model.Features)))
+                    {
+                        foreach (var featureText in model.Features.Split(';'))
+                        {
+                            _dbContext.ProductFeatures.Add(new ProductFeature() { Feature = featureText, ProductID = model.ProductID });
+                        }
+                    }
+
+                    var lstImages = UploadImage(model);
+
+                    foreach (var image in lstImages)
+                    {
+                        if (!String.IsNullOrEmpty(image))
+                        {
+                            _dbContext.ProductImages.Add(new ProductImage() {ImageID=Guid.NewGuid(), ImageLink = image, ProductID = model.ProductID });
+                            _dbContext.SaveChanges();
+                        }
+                    }
+                    _logger.WriteLog(CommonHelper.MessageType.Success, "Product imgaes and features added successfully with name=" + model.ProductID, "Create", "ProductController", User.Identity.Name);
+                    return RedirectToAction("AddStockPrice", "Product", new { id = model.ProductID });
+            }
+
+            return View(model);
         }
         
-Web - ProductDetailsModel.cs
-------------------------------------
+        public ActionResult AddStockPrice(Guid id)
+        {
+            using (_dbContext = new karrykartEntities())
+            {
+                var product = _dbContext.Products.Find(id);
+                CreateViewBagForStockPrice();
+                return View(new ProductStockPriceModel() { ProductID = product.ProductID, Name = product.Name });
+            }
+            return View();
+        }
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddStockPrice(ProductStockPriceModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (_dbContext = new karrykartEntities())
+                {
+                    var productSizeMapping = new ProductSizeMapping() { ProductID = model.ProductID, SizeID = model.SizeID, UnitID = model.UnitID, Stock = model.Stock };
+                    _dbContext.ProductSizeMappings.Add(productSizeMapping);
 
-namespace AppBanwao.KaryKart.Web.Models
-{
-    public class ProductDetailsModel
-    {
-         public Guid ProductID { get; set; }
+                    var productprice = new ProductPrice() { CurrencyID = model.CurrencyID, ProductID = model.ProductID, SizeID = model.SizeID, Price = Convert.ToDecimal(model.Price) };
+                    _dbContext.ProductPrices.Add(productprice);
 
-        public string Name { get; set; }
+                    var productShipping = new ProductShipping() { ProductID = model.ProductID, SizeID = model.SizeID, Cost = Convert.ToDecimal(model.ShippingCost) };
+                    _dbContext.ProductShippings.Add(productShipping);
+                    _dbContext.SaveChanges();
+                    _logger.WriteLog(CommonHelper.MessageType.Success, "Product Stock and price added successfully with ID=" + model.Name, "AddStockPrice", "ProductController", User.Identity.Name);
+                    return RedirectToAction("Index", "Product");
+                }
+            }
+            CreateViewBagForStockPrice();
+            return View();
 
-        public string Description { get; set; }
+        }
 
-        public int CategoryID { get; set; }
+        [HttpGet]
+        public JsonResult GetCategories()
+        {
+            _dbContext = new karrykartEntities();
+            var categories = _dbContext.Categories.Select(x => new { x.CategoryID, x.Name }).ToList();
+            _dbContext = null;
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
 
-        public string CategoryName { get; set; }
+        [HttpGet]
+        public JsonResult GetBrands()
+        {
+            _dbContext = new karrykartEntities();
+            var brands = _dbContext.Brands.Select(x => new { x.BrandID, x.Name }).ToList();
+            _dbContext = null;
+            return Json(brands, JsonRequestBehavior.AllowGet);
+        }
 
-        public int BrandID { get; set; }
+        [HttpGet]
+        public JsonResult GetSubCategories(int id = -1) // its a GET, not a POST
+        {
+            _dbContext = new karrykartEntities();
+            if (id != -1)
+            {
+                var subcategories = _dbContext.Subcategories.Where(x => x.CategoryID == id).Select(x => new { x.SCategoryID, x.Name }).ToList();
+                _dbContext = null;
+                return Json(subcategories, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var subcategories = _dbContext.Subcategories.Select(x => new { x.SCategoryID, x.Name }).ToList();
+                _dbContext = null;
+                return Json(subcategories, JsonRequestBehavior.AllowGet);
+            }
+        }
 
-        public string BrandName { get; set; }
-
-        public int SubCategoryID { get; set; }
-
-        public string SubCategoryName { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime UpdatedOn { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public string UpdatedBy { get; set; }
-
-        public bool Active { get; set; }
-
-        public List<ProductFeatures> Features { get; set; }
-
-        public List<ProductImages> Images { get; set; }
-
-        public List<ProductPrices> Prices { get; set; }
-
-        public List<ProductShippingDetail> ShippingDetails { get; set; }
-
-        public List<ProductSize> ProductSizeMappings { get; set; }
-
-
-
-    }
-
-    public class ProductFeatures
-    {
-        public int FeatureID { get; set; }
-
-        public string Feature { get; set; }
-
-    }
-
-    public class ProductImages
-    {
-        public Guid ImageID { get; set; }
-
-        public string ImageLink { get; set; }
-    }
-
-    public class ProductPrices
-    {
-        public int PriceID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int CurrencyID { get; set; }
-    }
-
-    public class ProductShippingDetail
-    {
-        public int ShippingCostID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public decimal Cost { get; set; }
-    }
-
-    public class ProductSize 
-    {
-        public int ProductSizeMappingID { get; set; }
-
-        public int SizeID { get; set; }
-
-        public int UnitID { get; set; }
-        public string UnitName { get; set; }
-        public int Stock { get; set; }
-        public string SizeName { get; set; }
-        public string SizeTypeName { get; set; }
-        public int SizeTypeID { get; set; }
-    }
-    }
-
-Web- ProductCtrl.js
--------------------------------
-
-
-app.controller("ProductController", ['$scope', '$http', '$window', '$location','ProductService', function ($scope, $http, $window, $location, ProductService) {
-    var apiURL = 'http://localhost:53445/api/';
-
-    //var id = ;
-    $scope.basicDetailsEditing = false;
-    var product = ProductService.getProduct($location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1)));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1))); //ProductService.GetProduct(id);
-
-
-    $scope.editBasicDetails = function () {
-
-    }
-
-}]);
-
-app.service('ProductService', ['$http', function ($http) {
-    var apiURL = 'http://localhost:53445/api/';
-
-    var product;
-    this.getProduct = function (id) {
-        product = $http.get(apiURL + "product?id=" + id).then(function (response) {
-            product = (response.data);
-        });
-
-        return product;
-    };
-
-}]);
-
-Web- ProductController.cs
-----------------------------------
-
-public ActionResult Edit(Guid id)
+        [HttpGet]
+        public JsonResult GetSizes(int id) // its a GET, not a POST
+        {
+            _dbContext = new karrykartEntities();
+            var sizes = _dbContext.Sizes.Where(x => x.SizeTypeID == id).Select(x => new { x.SizeID, x.Name }).ToList();
+            _dbContext = null;
+            return Json(sizes, JsonRequestBehavior.AllowGet);
+        }
+        
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
 
-Web - Product/Edit.cshtml
--------------------------------------
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
-}
-<script src="~/Scripts/App/ProductCtrl.js"></script>
-<script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
-<div class="row">
+        [HttpPost]
+        public ActionResult EditBasicProductDetails(ProductDetailsModel model)
+        {
+            if (model.ProductID != Guid.Empty)
+            { 
+                _dbContext = new karrykartEntities();
+                var product = _dbContext.Products.Find(model.ProductID);
+                if (product != null)
+                {
+                    product.Active = model.Active;
+                    product.BrandID = model.BrandID;
+                    product.CategoryID = model.CategoryID;
+                    product.SubCategoryID = model.SubCategoryID;
+                    product.Description = model.Description;
+                    product.Name = model.Name;
+                    product.UpdatedBy = User.Identity.Name;
+                    product.UpdatedOn = DateTime.Now;
+                    _dbContext.Entry(product).State = EntityState.Modified;
+                    _dbContext.SaveChanges();
+                    _logger.WriteLog(CommonHelper.MessageType.Success, "Basic product details updated successfully with Name=" + model.Name, "EditBasicProductDetails", "ProductController", User.Identity.Name);
 
-    <div class="col-md-12">
-        <ul class="breadcrumb">
-            <li><a href="@Url.Action("Index","Home")">Home</a></li>
-            <li><a href="@Url.Action("Index","Product")">Product</a></li>
-            <li class="active">Edit</li>
-        </ul>
-    </div>
-</div>
+                    return Json(new { messagetype = ApplicationMessages.Product.SUCCESS, message = "Basic product details updated successfully." });
+                }
+            }
+            return View();
+        }
 
-<div class="row">
-    <div class="col-md-10" ng-controller="ProductController">
-        <h3>Product Details</h3>
-        <hr />
-
-        <form name="formBasicdetails" class="form-horizontal">
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Name">Name</label>
-                <div class="col-lg-7">
-                    <input type="text" ng-disabled="basicDetailsEditing" ng-model="product.Name" placeholder="e.g Arhar dal, chocolate etc." name="productName" class="form-control" />
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Description">Description</label>
-                <div class="col-lg-7">
-                    <textarea ng-disabled="basicDetailsEditing" ng-model="product.Description" placeholder="e.g Enter product details." name="productDescription" id="productDescription" class="form-control" />
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.CategoryID">Category</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="basicDetailsEditing" ng-model="product.CategoryID" class="form-control" name="productCategory" id="productCategory"></select>
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.SubCategoryID">Sub-Category</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="basicDetailsEditing" ng-model="product.SubCategoryID" class="form-control" name="productSubCategory" id="productSubCategory"></select>
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.BrandID">Brand</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="basicDetailsEditing" ng-model="product.BrandID" class="form-control" name="productBrand" id="productBrand"></select>
-
-                </div>
-            </div>
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Active">Active</label>
-                <div class="col-lg-7">
-                    <input type="checkbox" ng-disabled="basicDetailsEditing" ng-model="product.Active" class="form-control" name="productActive" id="productActive" />
-
-                </div>
-            </div>
-
-        </form>
-    </div>
-</div>
-
-Web - Product/Details.cshtml
----------------------------------
-
-@{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
-}
-@model AppBanwao.KaryKart.Web.Models.ProductDetailsModel
-<div class="row">
-
-    <div class="col-md-12">
-        <ul class="breadcrumb">
-            <li><a href="@Url.Action("Index","Home")">Home</a></li>
-            <li><a href="@Url.Action("Index","Product")">Product</a></li>
-            <li class="active">Details</li>
-        </ul>
-    </div>
-</div>
-<div class="row">
-
-    <div class="col-md-10">
-
-        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal" }))
+        [HttpPost]
+        public ActionResult RemoveProductFeature(Guid ProductID, int FeatureID)
         {
 
-            <h3>Product Details</h3>
-            <hr />
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.ProductID)
-            <div class="form-group">
+            _dbContext = new karrykartEntities();
 
-                <label class="col-lg-3 control-label">Name</label>
-                <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.Name)
+            var feature = _dbContext.ProductFeatures.Where(x => x.FeatureID == FeatureID && x.ProductID == ProductID).FirstOrDefault();
 
-                </div>
-            </div>
-            <div class="form-group">
+            if (feature != null)
+            {
+                _dbContext.Entry(feature).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                _logger.WriteLog(CommonHelper.MessageType.Success, "Product feature deleted successfully with id=" + FeatureID, "RemoveProductFeature", "ProductController", User.Identity.Name);
 
-                <label class="col-lg-3 control-label">Description</label>
-                <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.Description)
+                return Json(new { messagetype = ApplicationMessages.Product.SUCCESS, message = "Product feature removed successfully." });
+            }
 
-                </div>
-            </div>
-            <div class="form-group">
+            return View();
+        }
+        void CreateViewBagForProduct()
+        {
+            _dbContext = new karrykartEntities();
+            ViewBag.CategoryID = new SelectList(_dbContext.Categories.ToList(), "CategoryID", "Name");
+            ViewBag.SubcategoryID = new SelectList(_dbContext.Subcategories.ToList(), "SCategoryID", "Name");
+            ViewBag.BrandID = new SelectList(_dbContext.Brands.ToList(), "BrandID", "Name");
 
-                <label class="col-lg-3 control-label">Category</label>
-                <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.CategoryName)
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label">Sub Category</label>
-                <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.SubCategoryName)
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label">Brand</label>
-                <div class="col-lg-7">
-                    @Html.DisplayFor(m => m.BrandName)
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label">Active</label>
-                <div class="col-lg-7">
-                    @if (Model.Active)
-                    {
-                        <span>Yes</span>
-                    }
-                    else
-                    {
-                        {
-                            <span>No</span>
-                        }
-                    }
-
-                </div>
-            </div>
-
-
-
-            <h3>Product Features & Image Details</h3>
-            <hr />
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label">Features</label>
-                <div class="col-lg-7">
-
-                    @foreach (var feature in Model.Features)
-                    {
-                        <i class="fa fa-check"></i> <span>@feature.Feature</span><br />
-                    }
-
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-
-
-                <label class="col-lg-3 control-label">Images</label><br />
-                <div class="col-lg-7">
-                    @foreach (var imgLink in Model.Images)
-                    {
-                        <img src="@Url.Content(imgLink.ImageLink)" class="img img-responsive" style="width:20%" />
-                    }
-                </div>
-
-            </div>
-
-
-
-            <h3>Product Stock & Price Details</h3>
-            <hr />
-
-            <div class="form-group">
-
-
-                <div class="col-lg-10">
-                    <table class="table table-striped table-hover ">
-                        <thead>
-                            <tr>
-
-                                <th>Size Name</th>
-                                <th>Unit Name</th>
-                                <th>Size Type</th>
-                                <th>Price (per unit)</th>
-                                <th>Shipping Cost (per unit)</th>
-                                <th>Stock</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var row in Model.ProductSizeMappings)
-                            {
-                                <tr>
-                                    <td>@row.SizeName </td>
-                                    <td>@row.UnitName</td>
-                                    <td>@row.SizeTypeName</td>
-                                    <td>@Model.Prices.Where(x => x.SizeID == row.SizeID).FirstOrDefault().Price</td>
-                                    <td>@Model.ShippingDetails.Where(x => x.SizeID == row.SizeID).FirstOrDefault().Cost</td>
-                                    <td>@row.Stock</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                   
-
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-lg-10">
-                    <a href="@Url.Action("Edit", "Product", new { id = Model.ProductID })" class="btn btn-success bluebutton">Edit Product Details <i class="fa fa-edit"></i></a>
-                    
-                    <hr />
-                    <a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>
-                </div>
-            </div>
+            _dbContext = null;
 
         }
-    </div>
-</div>
 
-25/01/2017
-----------------------------------------------
-ProductCtrl.js
------------------
+        void CreateViewBagForStockPrice()
+        {
+            _dbContext = new karrykartEntities();
+            ViewBag.UnitID = new SelectList(_dbContext.Units.ToList(), "UnitID", "Name");
+            ViewBag.SizeTypeID = new SelectList(_dbContext.SizeTypes.ToList(), "SizeTypeID", "Name");
+            ViewBag.CurrencyID = new SelectList(_dbContext.Currencies.ToList(), "CurrencyID", "Shortform");
+            ViewBag.SizeID = new SelectList(_dbContext.Sizes.ToList(), "SizeID", "Name");
+            _dbContext = null;
 
-app.controller("ProductController", ['$scope', '$http', '$window', '$location','ProductService', function ($scope, $http, $window, $location, ProductService) {
-    var apiURL = 'http://localhost:53445/api/';
+        }
 
-    
-    $scope.basicDetailsEditing = false;
-   // var product = ProductService.getProduct($location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1)));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1))); //ProductService.GetProduct(id);
-    // console.log(product["ProductID"]);
-    apiURL += "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
-    $scope.product = {};
-    return $http({
-        method: "GET",
-        url: apiURL,
-        headers: { 'Content-Type': 'application/json' }
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-        $scope.product= response.data;
-        // return product;
-        //  console.log(product);
-    }, function errorCallback(response) {
-        //console.log(response);
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-    });
+        List<string> UploadImage(ProductModel model)
+        {
+            List<string> lstImageLink = new List<string>();
+            if (model.Image1 != null)
+                lstImageLink.Add( CommonHelper.UploadFile(model.Image1, _productImages));
 
-    console.log($scope.product);
+            if (model.Image2 != null)
+                lstImageLink.Add(CommonHelper.UploadFile(model.Image2, _productImages));
 
-    $scope.editBasicDetails = function () {
-        $scope.basicDetailsEditing = true;
-    }
-    $scope.cancelBasicDetails = function () {
-        $scope.basicDetailsEditing = false;
+            if (model.Image3 != null)
+                lstImageLink.Add(CommonHelper.UploadFile(model.Image3, _productImages));
+            
+            return lstImageLink;
+        }
     }
 
-}]);
-
-app.service('ProductService', ['$http', function ($http,$scope) {
-    var apiURL = 'http://localhost:53445/api/';
-
-    var product = {};
-   
-    this.getProduct = function (id,$scope) {
-        apiURL += "product?id=" + id;
-        return $http({
-            method: "GET",
-            url: apiURL,
-            headers: { 'Content-Type': 'application/json' }
-        }).then(function successCallback(response) {
-            // this callback will be called asynchronously
-            // when the response is available
-            return response.data;
-           // return product;
-          //  console.log(product);
-        }, function errorCallback(response) {
-            //console.log(response);
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-        });
-      //  console.log(product);
-        
-    };
-}]);
-
-Edit.cshtml
------------------------
-
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
-<script src="~/Scripts/App/ProductCtrl.js"></script>
-<script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
-<div class="row">
-
-    <div class="col-md-12">
-        <ul class="breadcrumb">
-            <li><a href="@Url.Action("Index","Home")">Home</a></li>
-            <li><a href="@Url.Action("Index","Product")">Product</a></li>
-            <li class="active">Edit</li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-10" ng-controller="ProductController">
-        <h3>Product Details</h3>
-        <hr />
-
-        <form name="formBasicdetails" class="form-horizontal">
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Name">Name</label>
-                <div class="col-lg-7">
-                    <input type="text" ng-disabled="!basicDetailsEditing" ng-model="product.Name" placeholder="e.g Arhar dal, chocolate etc." name="productName" class="form-control" />
-
-                </div>
-            </div>
-            
-            
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Description">Description</label>
-                <div class="col-lg-7">
-                    <textarea ng-disabled="!basicDetailsEditing" ng-model="product.Description" placeholder="e.g Enter product details." name="productDescription" id="productDescription" class="form-control" ></textarea>
-
-                </div>
-            </div>
-            
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.CategoryID">Category</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-model="product.CategoryID" class="form-control" name="productCategory" id="productCategory"></select>
-
-                </div>
-            </div>
-            
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.SubCategoryID">Sub-Category</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-model="product.SubCategoryID" class="form-control" name="productSubCategory" id="productSubCategory"></select>
-
-                </div>
-            </div>
-            
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.BrandID">Brand</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-model="product.BrandID" class="form-control" name="productBrand" id="productBrand"></select>
-
-                </div>
-            </div>
-            
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Active">Active</label>
-                <div class="col-lg-7">
-                    <input type="checkbox" ng-disabled="!basicDetailsEditing" ng-model="product.Active" name="productActive" id="productActive" />
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-7 col-lg-offset-3">
-                    <button ng-click="editBasicDetails()" ng-hide="basicDetailsEditing" class="btn btn-info">Edit Basic Details <i class="fa fa-edit"></i></button>
-                    <button ng-click="updateBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-success">Update <i class="fa fa-check-circle"></i></button>
-                    <button ng-click="cancelBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-danger">Cancel <i class="fa fa-close"></i></button>
-                    <hr />
-                    @*<a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>*@
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 ProductCtrl.js
------------------------
+-----------------------------
+
 app.controller("ProductController", ['$scope', '$http', '$window', '$location', function ($scope, $http, $window, $location) {
     var apiURL = 'http://localhost:53445/api/';
 
@@ -730,21 +320,25 @@ app.controller("ProductController", ['$scope', '$http', '$window', '$location', 
     }).success(function (data, status, header, config) {
         $scope.product = data;
     });
-
+    
     $scope.categories;
+    $scope.subcategories;
+    $scope.brands;
+
     $http.get("/Product/GetCategories").success(function (data) {
         $scope.categories = data;
     }).error(function (status) {
-      //  alert(status);
+        //  alert(status);
     });
 
-    $http.get("/Product/SubCategories/"+).success(function (data) {
+    $http.get("/Product/GetBrands").success(function (data) {
+        $scope.brands = data;
+    }).error(function (status) {
+        //  alert(status);
+    });
 
-        $.map(data, function (item) {
-            categories.push(item.Name);
-        });
-
-        $scope.categories = categories;
+    $http.get("/Product/GetSubCategories").success(function (data) {
+        $scope.subcategories = data;
     }).error(function (status) {
         //  alert(status);
     });
@@ -754,6 +348,9 @@ app.controller("ProductController", ['$scope', '$http', '$window', '$location', 
         url: apiURL
     }).success(function (data, status, header, config) {
         $scope.product = data;
+        angular.forEach($scope.product.Features, function (obj) {
+            obj["showEdit"] = true;
+        })
     });
 
       
@@ -763,6 +360,46 @@ app.controller("ProductController", ['$scope', '$http', '$window', '$location', 
     $scope.cancelBasicDetails = function () {
         $scope.basicDetailsEditing = false;
     }
+    $scope.updateBasicDetails = function () {
+        var basicproductDetails = {
+            "ProductID": $scope.product.ProductID,
+            "Name": $scope.product.Name,
+            "Description": $scope.product.Description,
+            "CategoryID": $scope.product.CategoryID,
+            "SubCategoryID": $scope.product.SubCategoryID,
+            "BrandID": $scope.product.BrandID,
+            "Active": $scope.product.Active
+        };
+
+        $http.post("/Product/EditBasicProductDetails", { model: basicproductDetails }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                $scope.basicDetailsEditing = false;
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    };
+
+
+    $scope.deleteProductFeature = function (id) {
+        $http.post("/Product/RemoveProductFeature", { ProductID: $scope.product.ProductID, FeatureID: id }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    };
+
+    $scope.toggleEdit = function (feature) {
+        feature.showEdit = feature.showEdit ? false : true;
+    };
+
 
 }]);
 
@@ -793,15 +430,76 @@ app.controller("ProductController", ['$scope', '$http', '$window', '$location', 
 //    };
 //}]);
 
+
+ProductHelper.cs
+--------------------------
+using AppBanwao.KarryKart.Model;
+using AppBanwao.KaryKart.Web.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Linq;
+using System.Web;
+
+namespace AppBanwao.KaryKart.Web.Helpers
+{
+
+    public class ProductHelper
+    {
+
+        public ApiHelper _apiHelper = null;
+
+        public ProductHelper()
+        {
+            _apiHelper = new ApiHelper();
+        }
+
+        public IList<ProductDetailsModel> GetAllProducts()
+        {
+            var productList = _apiHelper.DeserializeToList<ProductDetailsModel>(_apiHelper.SendRequest("Product"));
+
+            if(productList==null)
+                productList = new List<ProductDetailsModel>();
+
+            return productList;
+        }
+
+        public ProductDetailsModel GetProduct(Guid id)
+        {
+
+            var product = JsonConvert.DeserializeObject<ProductDetailsModel>(_apiHelper.SendRequest("Product?id=" + id));
+
+            return product;
+        }
+
+    }
+}
+
 Edit.cshtml
------------------------
+----------------------
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
-<script src="~/Scripts/App/ProductCtrl.js"></script>
+<link href="~/Content/kendo/2017.1.118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2017.1.118/kendo.default.min.css" rel="stylesheet" />
 <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
+<script type="text/javascript">
+
+    //$(document).ready(function () {
+    //    // create Editor from textarea HTML element with default set of tools
+    //    $("#productDescription").kendoEditor({
+    //        resizable: {
+    //            content: true,
+    //            toolbar: true
+    //        }
+    //    });
+    //});
+</script>
+<script src="~/Scripts/App/ProductCtrl.js"></script>
+
 <div class="row">
 
     <div class="col-md-12">
@@ -842,15 +540,7 @@ Edit.cshtml
 
                 <label class="col-lg-3 control-label" for="product.CategoryID">Category</label>
                 <div class="col-lg-7">
-                    @*@Html.DropDownList("productCategory", (SelectList)ViewBag.Category, new { @class = "form-control", @ng_disabled = "!basicDetailsEditing", @ng_model = "product.CategoryID", @id = "productCategory" })*@
-                    @*<select ng-model="selected" ng-options="b for b in list">
-                        <option value="">-- Select a Book --</option>
-                    </select>*@
-                   
-                     <select ng-disabled="!basicDetailsEditing" ng-options="c for c in categories" ng-model="product.CategoryID" class="form-control" name="productCategory" id="productCategory">
-                         <option value="-1">-- Select a category --</option>
-                     </select>
-
+                 <select ng-disabled="!basicDetailsEditing" ng-options="c.CategoryID as c.Name for c in categories" ng-init="product.CategoryID" ng-model="product.CategoryID" class="form-control" name="productCategory" id="productCategory"></select>
                 </div>
             </div>
             
@@ -859,7 +549,7 @@ Edit.cshtml
                 <label class="col-lg-3 control-label" for="product.SubCategoryID">Sub-Category</label>
                 <div class="col-lg-7">
                     
-                    <select ng-disabled="!basicDetailsEditing" ng-model="product.SubCategoryID" class="form-control" name="productSubCategory" id="productSubCategory"></select>
+                    <select ng-disabled="!basicDetailsEditing" ng-options="sc.SCategoryID as sc.Name for sc in subcategories" ng-model="product.SubCategoryID" class="form-control" name="productSubCategory" id="productSubCategory"></select>
 
                 </div>
             </div>
@@ -868,7 +558,7 @@ Edit.cshtml
 
                 <label class="col-lg-3 control-label" for="product.BrandID">Brand</label>
                 <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-model="product.BrandID" class="form-control" name="productBrand" id="productBrand"></select>
+                    <select ng-disabled="!basicDetailsEditing" ng-options="b.BrandID as b.Name for b in brands" ng-model="product.BrandID" class="form-control" name="productBrand" id="productBrand"></select>
 
                 </div>
             </div>
@@ -887,13 +577,54 @@ Edit.cshtml
                     <button ng-click="editBasicDetails()" ng-hide="basicDetailsEditing" class="btn btn-info">Edit Basic Details <i class="fa fa-edit"></i></button>
                     <button ng-click="updateBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-success">Update <i class="fa fa-check-circle"></i></button>
                     <button ng-click="cancelBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-danger">Cancel <i class="fa fa-close"></i></button>
-                    <hr />
+                   
+                    @*<a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>*@
+                </div>
+            </div>
+        </form>
+
+       <hr/>
+        <h3>Product Features and Images</h3>
+         <hr />
+        
+        <form name="formproductFeatureImages" class="form-horizontal">
+            <div class="form-group">
+
+                <label class="col-lg-3 control-label" for="product.Features">Features</label>
+                <div class="col-lg-7">
+                     
+                    <table class="table table-striped table-hover">
+                        <tr><th>#</th> <th>Feature Description</th><td>Actions</td></tr>
+                        <tr ng-repeat="x in product.Features">
+                            <td>{{ x.FeatureID }}</td>
+                            <td>
+                                <span ng-show="emp.showEdit">
+                                    {{ x.Feature }}
+                                </span>
+                                <input type="text" ng-model="product.EditFeatureText" ng-show="!emp.showEdit" class="form-control">
+                           </td>
+                            <td>
+                            <button class="btn btn-info btn-xs" id="btnEditFeature" title="Edit Feature" ng-click="editProductFeature('{{ x.FeatureID }}')"> <i class="fa fa-pencil"></i> </button> <button class="btn btn-danger btn-xs" title="Remove Feature" id="btnDelete" ng-click="deleteProductFeature( x.FeatureID )"> <i class="fa fa-remove"></i> </button></td>
+                        </tr>
+                    </table>
+                    @*<input type="text" ng-disabled="!basicDetailsEditing" ng-model="product.Name" placeholder="e.g Arhar dal, chocolate etc." name="productName" class="form-control" />*@
+
+                </div>
+            </div>
+            
+            
+            
+
+            <div class="form-group">
+                <div class="col-lg-7 col-lg-offset-3">
+                    <button ng-click="editBasicDetails()" ng-hide="basicDetailsEditing" class="btn btn-info">Edit Basic Details <i class="fa fa-edit"></i></button>
+                    <button ng-click="updateBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-success">Update <i class="fa fa-check-circle"></i></button>
+                    <button ng-click="cancelBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-danger">Cancel <i class="fa fa-close"></i></button>
+                   
                     @*<a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>*@
                 </div>
             </div>
         </form>
     </div>
 </div>
-<script>
 
-</script>
