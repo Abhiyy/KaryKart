@@ -1,380 +1,24 @@
-ProductController.cs
-------------------------------
-
-
-         [HttpPost]
-        public ActionResult AddNewProductImage(Guid ProductID, HttpPostedFileBase file)
+ProductHelper.cs - API
+--------------------------------
+  private List<ProductImages> GetProductImages(Product product)
         {
+            List<ProductImages> lstImages = new List<ProductImages>();
+            ProductImages objImage = null;
 
-                var req = Request.Files;
-            return View();
+            foreach (var img in product.ProductImages)
+            {
+                objImage = new ProductImages() { ImageID = img.ImageID,ImageLink=img.ImageLink.Replace("~","../..")};
+                lstImages.Add(objImage);
+                objImage = null;
+            }
+
+            return lstImages;
         }
-        
-  ProductCtrl.js
-  -------------------------
-  
-     var product;
-    $scope.basicDetailsEditing = false;
-    // var product = ProductService.getProduct($location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1)));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1))); //ProductService.GetProduct(id);
-    // console.log(product["ProductID"]);
-    apiURL += "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
-    $http({
-        method: "GET",
-        url: apiURL
-    }).success(function (data, status, header, config) {
-        $scope.product = data;
-    });
-
-    $scope.selected = {};
-    $scope.categories;
-    $scope.subcategories;
-    $scope.brands;
-    $scope.isAddFeature = false;
-
-    $http.get("/Product/GetCategories").success(function (data) {
-        $scope.categories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetBrands").success(function (data) {
-        $scope.brands = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSubCategories").success(function (data) {
-        $scope.subcategories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http({
-        method: "GET",
-        url: apiURL
-    }).success(function (data, status, header, config) {
-        $scope.product = data;
-
-    });
-
-
-    $scope.editBasicDetails = function () {
-        $scope.basicDetailsEditing = true;
-    }
-    $scope.cancelBasicDetails = function () {
-        $scope.basicDetailsEditing = false;
-    }
-    $scope.updateBasicDetails = function () {
-        var basicproductDetails = {
-            "ProductID": $scope.product.ProductID,
-            "Name": $scope.product.Name,
-            "Description": $scope.product.Description,
-            "CategoryID": $scope.product.CategoryID,
-            "SubCategoryID": $scope.product.SubCategoryID,
-            "BrandID": $scope.product.BrandID,
-            "Active": $scope.product.Active
-        };
-
-        $http.post("/Product/EditBasicProductDetails", { model: basicproductDetails }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.basicDetailsEditing = false;
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-
-    $scope.deleteProductFeature = function (id) {
-        $http.post("/Product/RemoveProductFeature", { ProductID: $scope.product.ProductID, FeatureID: id }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-            
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-    $scope.getTemplate = function (feature) {
-        if (feature.FeatureID === $scope.selected.FeatureID) return 'edit';
-        else if (feature.FeatureID == '-1') return 'add';
-        else return 'display';
-    };
-
-    
-    $scope.editFeature = function (feature) {
-        $scope.selected = angular.copy(feature);
-    };
-
-    $scope.addFeature = function ()
-    {
-        $scope.product.Features.push({
-            "FeatureID": "-1",
-            "Feature": ""
-        });
-
-        $scope.isAddFeature = true;
-    }
-
-    $scope.reset = function () {
-        $scope.selected = {};
-    };
-
-    $scope.saveEditedFeature = function (model) {
-        $http.post("/Product/EditProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.reset();
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-
-    };
-
-    $scope.saveAddedFeature = function (model)
-    {
-        $http.post("/Product/AddProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.product.Features.splice(($scope.product.Features.length-1), 1, { "FeatureID": responseData.id, "Feature": model.Feature });
-                $scope.isAddFeature = false;
-                
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    }
-}]);
-
-//app.service('ProductService', ['$http', function ($http, $scope) {
-var product;
-    $scope.basicDetailsEditing = false;
-    // var product = ProductService.getProduct($location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1)));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1))); //ProductService.GetProduct(id);
-    // console.log(product["ProductID"]);
-    apiURL += "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
-    $http({
-        method: "GET",
-        url: apiURL
-    }).success(function (data, status, header, config) {
-        $scope.product = data;
-    });
-
-    $scope.selected = {};
-    $scope.categories;
-    $scope.subcategories;
-    $scope.brands;
-    $scope.isAddFeature = false;
-    $scope.isAddImage = false;
-    $http.get("/Product/GetCategories").success(function (data) {
-        $scope.categories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetBrands").success(function (data) {
-        $scope.brands = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSubCategories").success(function (data) {
-        $scope.subcategories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http({
-        method: "GET",
-        url: apiURL
-    }).success(function (data, status, header, config) {
-        $scope.product = data;
-
-    });
-
-
-    $scope.editBasicDetails = function () {
-        $scope.basicDetailsEditing = true;
-    }
-    $scope.cancelBasicDetails = function () {
-        $scope.basicDetailsEditing = false;
-    }
-    $scope.updateBasicDetails = function () {
-        var basicproductDetails = {
-            "ProductID": $scope.product.ProductID,
-            "Name": $scope.product.Name,
-            "Description": $scope.product.Description,
-            "CategoryID": $scope.product.CategoryID,
-            "SubCategoryID": $scope.product.SubCategoryID,
-            "BrandID": $scope.product.BrandID,
-            "Active": $scope.product.Active
-        };
-
-        $http.post("/Product/EditBasicProductDetails", { model: basicproductDetails }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.basicDetailsEditing = false;
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-
-    $scope.deleteProductFeature = function (id) {
-        $http.post("/Product/RemoveProductFeature", { ProductID: $scope.product.ProductID, FeatureID: id }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-            
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-    $scope.getTemplate = function (feature) {
-        if (feature.FeatureID === $scope.selected.FeatureID) return 'edit';
-        else if (feature.FeatureID == '-1') return 'add';
-        else return 'display';
-    };
-
-    $scope.getTemplateImages = function (image) {
-        if (image.ImageID == '-1') return 'addPicture';
-        else return 'displayPicture';
-    };
-
-    
-    $scope.editFeature = function (feature) {
-        $scope.selected = angular.copy(feature);
-    };
-
-    $scope.addFeature = function ()
-    {
-        $scope.product.Features.push({
-            "FeatureID": "-1",
-            "Feature": ""
-        });
-
-        $scope.isAddFeature = true;
-    }
-
-    $scope.addImage = function () {
-        $scope.product.Images.push({
-            "ImageID": "-1",
-            "ImageLink": ""
-        });
-
-        $scope.isAddImage = true;
-    }
-
-    $scope.reset = function () {
-        $scope.selected = {};
-    };
-
-    $scope.saveEditedFeature = function (model) {
-        $http.post("/Product/EditProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.reset();
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-
-    };
-
-    $scope.saveNewImage = function (model) {
-           
-        //var formData = new FormData();
-        //formData.append("file", $scope.files);
-        //formData.append("ProductID", $scope.product.ProductID);
-
-        $http.post("/Product/AddNewProductImage", {ProductID:$scope.product.ProductID,file:$scope.files}).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                // $scope.product.Features.splice(($scope.product.Features.length - 1), 1, { "FeatureID": responseData.id, "Feature": model.Feature });
-                // $scope.isAddFeature = false;
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        })
-    };
-
-    $scope.uploadedFile = function (element) {
-        $scope.$apply(function ($scope) {
-            $scope.files = element.files;
-        });
-    };
-
-    $scope.saveAddedFeature = function (model) {
-        $http.post("/Product/AddProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.product.Features.splice(($scope.product.Features.length - 1), 1, { "FeatureID": responseData.id, "Feature": model.Feature });
-                $scope.isAddFeature = false;
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-}]);
-
-//app.service('ProductService', ['$http', function ($http, $scope) {
-//    var apiURL = 'http://localhost:13518/api';
-
-//    var product = {};
-
-//    this.getProduct = function (id, $scope) {
-//        apiURL += "product?id=" + id;
-//        return $http({
-//            method: "GET",
-//            url: apiURL,
-//            headers: { 'Content-Type': 'application/json' }
-//        }).then(function successCallback(response) {
-//            // this callback will be called asynchronously
-//            // when the response is available
-//            return response.data;
-//            // return product;
-//            //  console.log(product);
-//        }, function errorCallback(response) {
-//            //console.log(response);
-//            // called asynchronously if an error occurs
-//            // or server returns response with an error status.
-//        });
-//        //  console.log(product);
-
-//    };
-//}]);
-
-
-Edit.cshtml
------------------------
-
-@{
+ 
+ Edit.cshtml
+ -------------------------------------
+ 
+ @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
@@ -473,106 +117,7 @@ Edit.cshtml
                     <button ng-click="updateBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-success">Update <i class="fa fa-check-circle"></i></button>
                     <button ng-click="cancelBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-danger">Cancel <i class="fa fa-close"></i></button>
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
-}
-<link href="~/Content/kendo/2017.1.118/kendo.common.min.css" rel="stylesheet" />
-<link href="~/Content/kendo/2017.1.118/kendo.default.min.css" rel="stylesheet" />
-<script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
-<script type="text/javascript">
-
-    //$(document).ready(function () {
-    //    // create Editor from textarea HTML element with default set of tools
-    //    $("#productDescription").kendoEditor({
-    //        resizable: {
-    //            content: true,
-    //            toolbar: true
-    //        }
-    //    });
-    //});
-</script>
-<script src="~/Scripts/App/ProductCtrl.js"></script>
-
-<div class="row">
-
-    <div class="col-md-12">
-        <ul class="breadcrumb">
-            <li><a href="@Url.Action("Index","Home")">Home</a></li>
-            <li><a href="@Url.Action("Index","Product")">Product</a></li>
-            <li class="active">Edit</li>
-        </ul>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-10" ng-controller="ProductController">
-        <h3>Product Details</h3>
-        <hr />
-
-        <form name="formBasicdetails" class="form-horizontal">
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Name">Name</label>
-                <div class="col-lg-7">
-                    <input type="text" ng-disabled="!basicDetailsEditing" ng-model="product.Name" placeholder="e.g Arhar dal, chocolate etc." name="productName" class="form-control" />
-
-                </div>
-            </div>
-
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Description">Description</label>
-                <div class="col-lg-7">
-                    <textarea ng-disabled="!basicDetailsEditing" ng-model="product.Description" placeholder="e.g Enter product details." name="productDescription" id="productDescription" class="form-control"></textarea>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.CategoryID">Category</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-options="c.CategoryID as c.Name for c in categories" ng-init="product.CategoryID" ng-model="product.CategoryID" class="form-control" name="productCategory" id="productCategory"></select>
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.SubCategoryID">Sub-Category</label>
-                <div class="col-lg-7">
-
-                    <select ng-disabled="!basicDetailsEditing" ng-options="sc.SCategoryID as sc.Name for sc in subcategories" ng-model="product.SubCategoryID" class="form-control" name="productSubCategory" id="productSubCategory"></select>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.BrandID">Brand</label>
-                <div class="col-lg-7">
-                    <select ng-disabled="!basicDetailsEditing" ng-options="b.BrandID as b.Name for b in brands" ng-model="product.BrandID" class="form-control" name="productBrand" id="productBrand"></select>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-
-                <label class="col-lg-3 control-label" for="product.Active">Active</label>
-                <div class="col-lg-7">
-                    <input type="checkbox" ng-disabled="!basicDetailsEditing" ng-model="product.Active" name="productActive" id="productActive" />
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-7 col-lg-offset-3">
-                    <button ng-click="editBasicDetails()" ng-hide="basicDetailsEditing" class="btn btn-info">Edit Basic Details <i class="fa fa-edit"></i></button>
-                    <button ng-click="updateBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-success">Update <i class="fa fa-check-circle"></i></button>
-                    <button ng-click="cancelBasicDetails()" ng-show="basicDetailsEditing" class="btn btn-danger">Cancel <i class="fa fa-close"></i></button>
-
-                    @*<a href="@Url.Action("Index","Category")" class="btn btn-danger">Back <i class="fa fa-backward"></i> </a>*@
+                   
                 </div>
             </div>
         </form>
@@ -613,7 +158,7 @@ Edit.cshtml
                         <td><input type="text" ng-model="x.Feature" /></td>
                         <td>
                             <button class="btn btn-success btn-xs" ng-click="saveAddedFeature(x )">Save</button>
-                            <button class="btn btn-danger btn-xs" ng-click="reset()">Cancel</button>
+                            <button class="btn btn-danger btn-xs" ng-click="removeNewFeature()">Cancel</button>
                         </td>
                         </script>
                     <button class="btn btn-info" ng-disabled="isAddFeature" ng-click="addFeature()">Add new feature <i class="fa fa-plus"></i> </button>
@@ -634,10 +179,10 @@ Edit.cshtml
                     <script type="text/ng-template" id="displayPicture">
                         <td>{{ i.ImageID }}</td>
                         <td>
-                          <img src="{{i.ImageLink}}")" />
+                          <img src="{{i.ImageLink}}")" style="width:100px" />
                         </td>
                         <td>
-                           <button class="btn btn-danger btn-xs" title="Remove Feature" id="btnDelete" ng-click="deleteProductFeature( i.ImageID )"> <i class="fa fa-remove"></i> </button>
+                           <button class="btn btn-danger btn-xs" title="Remove Image" id="btnImageDelete" ng-click="deleteImage( i.ImageID )"> <i class="fa fa-remove"></i> </button>
                         </td>
                     </script>
                    
@@ -646,7 +191,7 @@ Edit.cshtml
                         <td><input type="file" onchange="angular.element(this).scope().uploadedFile(this)" /> <span>{{i.ImageLink}}</span></td>
                         <td>
                             <button class="btn btn-success btn-xs" ng-click="saveNewImage(i)">Save</button>
-                            <button class="btn btn-danger btn-xs" ng-click="reset()">Cancel</button>
+                            <button class="btn btn-danger btn-xs" ng-click="removeImage()">Cancel</button>
                         </td>
                     </script>
                     <button class="btn btn-info" ng-disabled="isAddImage" ng-click="addImage()">Add new Image <i class="fa fa-plus"></i> </button>
@@ -660,3 +205,255 @@ Edit.cshtml
         </form>
     </div>
 </div>
+
+ProductCtrl.js
+--------------------------------
+
+ var product;
+    $scope.basicDetailsEditing = false;
+
+    apiURL += "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
+   
+    $scope.selected = {};
+    $scope.categories;
+    $scope.subcategories;
+    $scope.brands;
+    $scope.isAddFeature = false;
+    $scope.isAddImage = false;
+    $http.get("/Product/GetCategories").success(function (data) {
+        $scope.categories = data;
+    }).error(function (status) {
+        //  alert(status);
+    });
+
+    $http.get("/Product/GetBrands").success(function (data) {
+        $scope.brands = data;
+    }).error(function (status) {
+        //  alert(status);
+    });
+
+    $http.get("/Product/GetSubCategories").success(function (data) {
+        $scope.subcategories = data;
+    }).error(function (status) {
+        //  alert(status);
+    });
+     
+    LoadProduct();
+
+    function LoadProduct() {
+        $http({
+            method: "GET",
+            url: apiURL
+        }).success(function (data, status, header, config) {
+            $scope.product = data;
+
+        });
+
+    }
+    $scope.editBasicDetails = function () {
+        $scope.basicDetailsEditing = true;
+    }
+    $scope.cancelBasicDetails = function () {
+        $scope.basicDetailsEditing = false;
+    }
+    $scope.updateBasicDetails = function () {
+        var basicproductDetails = {
+            "ProductID": $scope.product.ProductID,
+            "Name": $scope.product.Name,
+            "Description": $scope.product.Description,
+            "CategoryID": $scope.product.CategoryID,
+            "SubCategoryID": $scope.product.SubCategoryID,
+            "BrandID": $scope.product.BrandID,
+            "Active": $scope.product.Active
+        };
+
+        $http.post("/Product/EditBasicProductDetails", { model: basicproductDetails }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                $scope.basicDetailsEditing = false;
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    };
+
+
+    $scope.deleteProductFeature = function (id) {
+        $http.post("/Product/RemoveProductFeature", { ProductID: $scope.product.ProductID, FeatureID: id }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                LoadProduct();
+
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    };
+
+    $scope.getTemplate = function (feature) {
+        if (feature.FeatureID === $scope.selected.FeatureID) return 'edit';
+        else if (feature.FeatureID == '-1') return 'add';
+        else return 'display';
+    };
+
+    $scope.getTemplateImages = function (image) {
+        if (image.ImageID == '-1') return 'addPicture';
+        else return 'displayPicture';
+    };
+
+
+    $scope.editFeature = function (feature) {
+        $scope.selected = angular.copy(feature);
+    };
+
+    $scope.addFeature = function () {
+        $scope.product.Features.push({
+            "FeatureID": "-1",
+            "Feature": ""
+        });
+
+        $scope.isAddFeature = true;
+    }
+
+    $scope.addImage = function () {
+        $scope.product.Images.push({
+            "ImageID": "-1",
+            "ImageLink": ""
+        });
+
+        $scope.isAddImage = true;
+    }
+
+    $scope.reset = function () {
+        $scope.selected = {};
+    };
+
+    $scope.saveEditedFeature = function (model) {
+        $http.post("/Product/EditProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                $scope.reset();
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+
+    };
+
+    $scope.saveNewImage = function (model) {
+
+        var formData = new FormData();
+        formData.append("file", $scope.files[0]);
+        formData.append("ProductID", $scope.product.ProductID);
+
+        //var httpRequest = new XMLHttpRequest();
+
+        //httpRequest.open("POST", "/Product/AddNewProductImage");
+        //httpRequest.send(formData);
+
+        $http.post("/Product/AddNewProductImage",formData, {
+            transformRequest: angular.identity,
+            headers: { 'Content-Type': undefined }
+        }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                LoadProduct();//  $scope.product.Images.splice(($scope.product.Images.length - 1), 1, { "ImageID": responseData.id, "ImageLink": responseData.ImageLink });
+                $scope.isAddFeature = false;
+
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        })
+    };
+    $scope.removeImage = function () {
+        $scope.product.Images.splice(($scope.product.Images.length - 1), 1);
+        $scope.isAddImage = false;
+    };
+    $scope.uploadedFile = function (element) {
+        $scope.$apply(function ($scope) {
+            $scope.files = element.files;
+        });
+    };
+
+    $scope.removeNewFeature = function () {
+        $scope.product.Features.splice(($scope.product.Features.length - 1), 1);
+        $scope.isAddFeature = false;
+    }
+
+    $scope.deleteImage = function (id)
+    {
+        $http.post("/Product/RemoveProductImage", { ProductID: $scope.product.ProductID, ImageID: id }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                LoadProduct();
+
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    }
+
+    $scope.saveAddedFeature = function (model) {
+        $http.post("/Product/AddProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
+            if (responseData.messagetype = "success") {
+                alert(responseData.message);
+                LoadProduct(); // $scope.product.Features.splice(($scope.product.Features.length - 1), 1, { "FeatureID": responseData.id, "Feature": model.Feature });
+                $scope.isAddFeature = false;
+
+            } else {
+                alert(responseData.message);
+            }
+        }).error(function (responseData) {
+            console.log("Error !" + responseData);
+        });
+    };
+}]);
+
+
+ProductController.cs - WEB
+-----------------------------------------
+
+ [HttpPost]
+        public ActionResult AddNewProductImage(Guid ProductID, HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                _dbContext = new karrykartEntities();
+                var productImage = new ProductImage() {ImageID=Guid.NewGuid(), ImageLink = CommonHelper.UploadFile(file, _productImages), ProductID = ProductID };
+                _dbContext.ProductImages.Add(productImage);
+                _dbContext.SaveChanges();
+                _logger.WriteLog(CommonHelper.MessageType.Success, "Product image added successfully for product ID=" + ProductID +", ImageID="+productImage.ImageID, "AddNewProductImage", "ProductController", User.Identity.Name);
+                return Json(new { messagetype = ApplicationMessages.Product.SUCCESS, message = "New product image details added successfully.", id = productImage.ImageID, ImageLink = productImage.ImageLink });
+            }
+          
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RemoveProductImage(Guid ProductID, Guid ImageID)
+        {
+            if (ProductID != null)
+            {
+                _dbContext = new karrykartEntities();
+                var productImage = _dbContext.ProductImages.Where(x => x.ProductID == ProductID && x.ImageID == ImageID).FirstOrDefault();
+                _dbContext.Entry(productImage).State = EntityState.Deleted;
+                _dbContext.SaveChanges();
+                _dbContext = null;
+                _logger.WriteLog(CommonHelper.MessageType.Success, "Product image deleted successfully.", "RemoveProductImage", "ProductController", User.Identity.Name);
+
+                return Json(new { messagetype = ApplicationMessages.Product.SUCCESS, message = "New product feature details added successfully." });
+            
+            }
+
+            return View();
+        }
