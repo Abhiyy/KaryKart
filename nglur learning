@@ -1,35 +1,7 @@
-Results.cshtml
------------------
-
-@{
-    ViewBag.Title = "Results";
-    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
-}
-<script src="~/Scripts/App/SearchResultsCtrl.js"></script>
-<h2>Results</h2>
-
-
-SearchController.cs
----------------------
-
-public class SearchController : BaseController
-    {
-        //
-        // GET: /Search/
-
-        public ActionResult Results()
-        {
-            return View();
-        }
-
-        
-    }
-
 HomeCtrl.js
-----------------------
+-------------------
 
-
-app.controller("ProductSearchController", ['$scope', '$http', '$window', 'GlobalService', function ($scope, $http, $window, GlobalService) {
+app.controller("ProductSearchController", ['$scope', '$location','$http', '$window', 'GlobalService', function ($scope, $location, $http, $window, GlobalService) {
 
     $scope.AvailableProducts = [];
     $scope.selectedProduct = undefined;
@@ -52,386 +24,92 @@ app.controller("ProductSearchController", ['$scope', '$http', '$window', 'Global
    
     $scope.searchProduct = function () {
    
-        $window.location.href = GlobalService.websiteURL + 'Search/Results?search=' + $scope.selectedProduct;
+        $window.location.href = GlobalService.websiteURL + 'Search/Results#?search='+ $scope.selectedProduct;// + $location.search('search',);
     };
 }
 ]);
 
-_LayoutMaster.cshtml
-----------------------------
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/bootstrap.yeti.min.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.9.1.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <script src="~/Scripts/Site.js"></script>
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/Scripts/angular-sanitize.min.js"></script>
-    <script src="~/Scripts/App/GlobalService.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
-    <script src="~/Scripts/App/HomeCtrl.js"></script>
-    <title>@ViewBag.Title</title>
-</head>
-<body ng-app="karrykartApp">
-    <div class="container greyborder">
-        <div class="row greyGradient midFont topRow">
-            <div class=" col-md-12">
-                <div class="col-md-2">
-                    <i class="fa fa-phone"></i> +91-1234568790
-                </div>
-                <div class="col-md-4">
-                    Delivery Slots: @Html.Partial("_PartialSlotsDropDown")
-                </div>
-                <div class="col-md-3">
-                    Minimum Order: <i class="fa fa-inr"></i> 200
-                </div>
-                <div class="col-md-3">
-                    Support Email: <i class="fa fa-inbox"></i> <a href="mailto:care@karrycart.com">care@karrycart.com</a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-3">
-                    <img src="~/Images/logo.png" class="img-responsive" />
-                </div>
-                <div class="col-md-6 SearchBoxDiv" ng-controller="ProductSearchController">
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="form-group ">
-                            <input class="form-control roundedBorder searchBox" ng-model="selectedProduct" typeahead="item for item in AvailableProducts | filter:$viewValue | limitTo:8" placeholder="Search groceries and cakes...">
-                        </div>
 
-                        <button ng-click="searchProduct()" class="btn btn-default darkPinkButton roundedBorder"> Search <i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-
-GlobalService.js
+Results.cshtml
 -------------------
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<script src="~/Scripts/App/SearchResultsCtrl.js"></script>
+<div class="row" ng-controller="SearchResultsController">
+    <h2>Results</h2>
+</div>
 
-var app = angular.module("karrykartApp", ['ngSanitize', 'ui.bootstrap']);
+ProductController.cs - API
+-----------------------------
 
-app.service('GlobalService', ['$http',function ($http) {
-    this.apiURL = 'http://localhost:53445/api/';
-    this.websiteURL = 'http://localhost:15557/';
+ public List<ProductModel> Search(string ProductName)
+        {
+            try
+            {
+                _productHelper = new ProductHelper();
+
+                return _productHelper.GetSearchedProduct(ProductName);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            { 
+            
+            }
+
+            return null;
+        }
+        
+ SearchResultsCtrl.js
+ ----------------------------
+ 
+ app.controller("SearchResultsController", ['$scope','$http','$location', '$window', 'GlobalService', function ($scope,$http,$location,$window,GlobalService) {
+
+    $scope.searchedProductList;
     
-}]);
+    GetSearchedProduct();
 
-
-ProductCtrl.js
------------------------
-
-app.controller("ProductController", ['$scope', '$http', '$window', '$location', 'GlobalService', function ($scope, $http, $window, $location, GlobalService) {
-    
-    
-    $scope.basicDetailsEditing = false;
-
-   var apiURL = GlobalService.apiURL+ "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
-
-    $scope.selected = {};
-    $scope.isAddPSS = false;
-    $scope.categories;
-    $scope.subcategories;
-    $scope.brands;
-    $scope.isAddFeature = false;
-    $scope.isAddImage = false;
-    $scope.sizetypes;
-    $scope.units;
-    $scope.sizes;
-
-    $http.get("/Product/GetCategories").success(function (data) {
-        $scope.categories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetBrands").success(function (data) {
-        $scope.brands = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSubCategories").success(function (data) {
-        $scope.subcategories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSizeTypes").success(function (data) {
-        $scope.sizetypes = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetUnits").success(function (data) {
-        $scope.units = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-
-    $http.get("/Product/GetSizes").success(function (data) {
-        $scope.sizes = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    LoadProduct();
-
-    function LoadProduct() {
+    function GetSearchedProduct()
+    {
+     
         $http({
-            method: "GET",
-            url: apiURL
+            method: 'GET',
+            url: GlobalService.apiURL + "Product/Search",
+            data: { ProductName: $location.search()['search'] }
         }).success(function (data, status, header, config) {
-            $scope.product = data;
-            $scope.productPriceStockMappings = [];
-            // var json = JSON.parse(JSON.stringify(data));
-            for (var i = 0; i < data.ProductSizeMappings.length; i++) {
-                $scope.productPriceStockMappings.push({
-                    "ProductSizeMappingID": $scope.product.ProductSizeMappings[i].ProductSizeMappingID,
-                    "SizeID": $scope.product.ProductSizeMappings[i].SizeID,
-                    "SizeName": $scope.product.ProductSizeMappings[i].SizeName,
-                    "UnitID": $scope.product.ProductSizeMappings[i].UnitID,
-                    "UnitName": $scope.product.ProductSizeMappings[i].UnitName,
-                    "SizeTypeID": $scope.product.ProductSizeMappings[i].SizeTypeID,
-                    "SizeTypeName": $scope.product.ProductSizeMappings[i].SizeTypeName,
-                    "Stock": $scope.product.ProductSizeMappings[i].Stock,
-                    "ShippingCostID": $scope.product.ShippingDetails[i].ShippingCostID,
-                    "Cost": $scope.product.ShippingDetails[i].Cost,
-                    "PriceID": $scope.product.Prices[i].PriceID,
-                    "Price": $scope.product.Prices[i].Price,
-                    "CurrencyID": $scope.product.Prices[i].CurrencyID,
-                });
-            }
+            $scope.searchedProductList = data;
         });
 
-
+        console.log($scope.searchedProductList);
     }
+    //console.log(searchTerm);
+}
+]);
 
-    $scope.editBasicDetails = function () {
-        $scope.basicDetailsEditing = true;
-    };
+ProductHelper.cs
+-----------------------------
+  public List<ProductModel> GetSearchedProduct(string searchText)
+        {
+            _context = new karrykartEntities();
+            List<ProductModel> lstProducts = null;
 
-    $scope.cancelBasicDetails = function () {
-        $scope.basicDetailsEditing = false;
-    };
+           var productIDs = _context.Products.Where(x => x.Name.Contains(searchText)).Select(x => x.ProductID).ToList();
+           if (productIDs.Count > 0)
+           {
+               lstProducts = new List<ProductModel>();
+               foreach (var id in productIDs)
+               {
+                   lstProducts.Add(GetProductDetail(id));
+               }
+           }
+           productIDs = null;
 
-    $scope.updateBasicDetails = function () {
-        var basicproductDetails = {
-            "ProductID": $scope.product.ProductID,
-            "Name": $scope.product.Name,
-            "Description": $scope.product.Description,
-            "CategoryID": $scope.product.CategoryID,
-            "SubCategoryID": $scope.product.SubCategoryID,
-            "BrandID": $scope.product.BrandID,
-            "Active": $scope.product.Active
-        };
+           _context = null;
+           return lstProducts;
 
-        $http.post("/Product/EditBasicProductDetails", { model: basicproductDetails }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.basicDetailsEditing = false;
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-
-    $scope.deleteProductFeature = function (id) {
-        $http.post("/Product/RemoveProductFeature", { ProductID: $scope.product.ProductID, FeatureID: id }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-    $scope.getTemplate = function (feature) {
-        if (feature.FeatureID === $scope.selected.FeatureID) return 'edit';
-        else if (feature.FeatureID == '-1') return 'add';
-        else return 'display';
-    };
-
-    $scope.getTemplateImages = function (image) {
-        if (image.ImageID == '-1') return 'addPicture';
-        else return 'displayPicture';
-    };
-
-    $scope.getTemplateForProductStockPrice = function (ps) {
-
-        if (ps.ProductSizeMappingID == '-1') return 'addPricing';
-        else return 'displayPricing';
-
-    };
-
-    $scope.editFeature = function (feature) {
-        $scope.selected = angular.copy(feature);
-    };
-
-    $scope.addFeature = function () {
-        $scope.product.Features.push({
-            "FeatureID": "-1",
-            "Feature": ""
-        });
-
-        $scope.isAddFeature = true;
-    }
-
-    $scope.addImage = function () {
-        $scope.product.Images.push({
-            "ImageID": "-1",
-            "ImageLink": ""
-        });
-
-        $scope.isAddImage = true;
-    }
-
-    $scope.addProductStockPriceSize = function () {
-        $scope.productPriceStockMappings.push({
-            "ProductSizeMappingID": "-1",
-        });
-        $scope.isAddPSS = true;
-    }
-
-    $scope.reset = function (i) {
-        if (i == '1') $scope.selected = {};
-
-    };
-
-
-
-    $scope.saveEditedFeature = function (model) {
-        $http.post("/Product/EditProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                $scope.reset();
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-
-    };
-
-    $scope.saveAddedPrice = function (model) {
-        $http.post("/Product/AddProductStockPrice", {
-            ProductID: $scope.product.ProductID, SizeID: model.SizeID, SizeName: model.SizeName,
-            UnitID: model.UnitID, SizeTypeID: model.SizeTypeID, Stock: model.Stock, Cost: model.Cost,
-            Price: model.Price
-        }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                //$scope.reset(2);
-                alert(responseData.message);
-                LoadProduct();
-                $scope.isAddPSS = false;
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-
-    };
-
-    $scope.saveNewImage = function (model) {
-
-        var formData = new FormData();
-        formData.append("file", $scope.files[0]);
-        formData.append("ProductID", $scope.product.ProductID);
-
-
-        $http.post("/Product/AddNewProductImage", formData, {
-            transformRequest: angular.identity,
-            headers: { 'Content-Type': undefined }
-        }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();//  $scope.product.Images.splice(($scope.product.Images.length - 1), 1, { "ImageID": responseData.id, "ImageLink": responseData.ImageLink });
-                $scope.isAddImage = false;
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        })
-    };
-
-    $scope.removeImage = function () {
-        $scope.product.Images.splice(($scope.product.Images.length - 1), 1);
-        $scope.isAddImage = false;
-    };
-    $scope.uploadedFile = function (element) {
-        $scope.$apply(function ($scope) {
-            $scope.files = element.files;
-        });
-    };
-
-    $scope.removeNewFeature = function () {
-        $scope.product.Features.splice(($scope.product.Features.length - 1), 1);
-        $scope.isAddFeature = false;
-    }
-    $scope.removeNewProductSizeSettings = function () {
-        $scope.productPriceStockMappings.splice(($scope.productPriceStockMappings.length - 1), 1);
-        $scope.isAddPSS = false;
-    }
-
-    $scope.deleteImage = function (id) {
-        $http.post("/Product/RemoveProductImage", { ProductID: $scope.product.ProductID, ImageID: id }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    }
-
-    $scope.deleteProductStockPrice = function (ps) {
-        $http.post("/Product/DeleteProductSizeMapping", { ProductID: $scope.product.ProductID, SizeID: ps.SizeID }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-
-
-
-    $scope.saveAddedFeature = function (model) {
-        $http.post("/Product/AddProductFeature", { ProductID: $scope.product.ProductID, FeatureID: model.FeatureID, featureText: model.Feature }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();
-                $scope.isAddFeature = false;
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
-    };
-}]);
-
-
-
-
+        }
+        
