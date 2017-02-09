@@ -37,14 +37,37 @@ Results.cshtml
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
 <script src="~/Scripts/App/SearchResultsCtrl.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li class="active">Search Results</li>
+        </ul>
+    </div>
+</div>
 <div class="row" ng-controller="SearchResultsController">
-    <h2>Results</h2>
+    
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <h4>Seach Results for <strong>"{{searchedProduct}}"</strong></h4>
+        <hr />
+
+        <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" ng-repeat="product in searchedProductList">
+            <div class="productBox">
+                <div class="productImage" >
+                    <img src="{{product.Images[0].ImageLink}}" class="img img-responsive" alt="productImage" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
-ProductController.cs - API
+
+SearchController.cs - API
 -----------------------------
 
- public List<ProductModel> Search(string ProductName)
+   ProductHelper _productHelper = null;
+        public List<ProductModel> Get(string ProductName)
         {
             try
             {
@@ -57,8 +80,8 @@ ProductController.cs - API
 
             }
             finally
-            { 
-            
+            {
+
             }
 
             return null;
@@ -67,10 +90,10 @@ ProductController.cs - API
  SearchResultsCtrl.js
  ----------------------------
  
- app.controller("SearchResultsController", ['$scope','$http','$location', '$window', 'GlobalService', function ($scope,$http,$location,$window,GlobalService) {
+app.controller("SearchResultsController", ['$scope','$http','$location', '$window', 'GlobalService', function ($scope,$http,$location,$window,GlobalService) {
 
     $scope.searchedProductList;
-    
+    $scope.searchedProduct = $location.search()['search'];
     GetSearchedProduct();
 
     function GetSearchedProduct()
@@ -78,18 +101,18 @@ ProductController.cs - API
      
         $http({
             method: 'GET',
-            url: GlobalService.apiURL + "Product/Search",
-            data: { ProductName: $location.search()['search'] }
+            url: GlobalService.apiURL + "Search?ProductName="+$scope.searchedProduct
+            
         }).success(function (data, status, header, config) {
+            console.log(data);
             $scope.searchedProductList = data;
+            $scope.isFilterOn = true;
         });
-
-        console.log($scope.searchedProductList);
     }
-    //console.log(searchTerm);
+    
+ 
 }
 ]);
-
 ProductHelper.cs
 -----------------------------
   public List<ProductModel> GetSearchedProduct(string searchText)
@@ -112,4 +135,50 @@ ProductHelper.cs
            return lstProducts;
 
         }
-        
+
+Site.css
+-------------------
+.productBox {
+border: 1px solid #EFECEC;
+border-radius:3px;
+}
+.productImage {
+    margin:5%;
+height:250px
+}
+
+_layout
+----------------
+<div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-9">
+                        @Html.Partial("_PartialMessages")
+                        @Html.Partial("_PartialLogin")
+                        @RenderBody()
+                    </div>
+                    <div class="col-md-3">
+                        @if (User.IsInRole("Administrator"))
+                        { 
+                        @Html.Partial("_PartialVerticalAdminMenu")
+                        }
+                            @Html.Partial("_PartialOfferZone")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
+
+GlobalService.js
+-------------------------
+
+var app = angular.module("karrykartApp", ['ngSanitize', 'ui.bootstrap']);
+
+app.service('GlobalService', ['$http',function ($http) {
+    this.apiURL = 'http://localhost:53445/api/';
+    this.websiteURL = 'http://localhost:15557/';
+    this.isFilterOn = false;
+}]);
+
