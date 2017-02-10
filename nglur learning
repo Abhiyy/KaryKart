@@ -58,6 +58,17 @@ Results.cshtml
                 <div class="productImage" >
                     <img src="{{product.Images[0].ImageLink}}" class="img img-responsive" alt="productImage" />
                 </div>
+                <div class="productDescription">
+                    <a class="productName" href="#" ng-click="viewProduct({{product.ProductID}})">{{product.Name}}</a>
+                    <span class="productPrice">Starts from <i class="fa fa-inr"></i> {{product.Prices[0].Price}}</span>
+                </div>
+                <div class="row productActions">
+                  
+                        <a class="wishlistButton" title="Click me to be your wish" ng-click="addToWishList({{product.ProductID}})"><i class="fa fa-heart"></i></a>
+                        <button class="btn detailsButton" ng-click="viewProduct({{product.ProductID}})">Details <i class="fa fa-search"></i></button>
+                        <a class="addCartButton" title="Add to cart" ng-click="addToCart({{product.ProductID}})"> <i class="fa fa-shopping-bag"></i> </a>
+                   
+                    </div>
             </div>
         </div>
     </div>
@@ -143,11 +154,77 @@ Site.css
 .productBox {
 border: 1px solid #EFECEC;
 border-radius:3px;
+margin-bottom:1%;
+padding-bottom:1%;
 }
+.productBox:hover {
+border: 1px solid #007196;
+border-radius:3px;
+cursor:pointer;
+}
+
 .productImage {
-    margin:5%;
-height:250px
+margin:5%;
+height:200px
 }
+.productDescription {
+padding-top:5%;
+padding-bottom:3%;
+text-align:center;
+border-top:1px dashed #EFECEC;
+border-bottom:1px dashed #EFECEC;
+}
+.productName {
+color:#F67777;
+font-size:20px;
+}
+.productName:hover {
+text-decoration:underline;
+}
+.productPrice {
+position:relative;
+font-size:18px;
+display:inline-block;
+color:#004f6d
+}
+.productActions {
+text-align:left;
+text-align:center;
+margin-top:2%
+}
+.wishlistBox {
+text-align:left;
+margin-left:2%;
+}
+.DetailsBox {
+text-align:left;
+margin-left:0px;
+left:0;
+}
+.wishlistButton {
+border-radius:5px;
+color:#f61149;
+font-size:20px;
+float:left;
+margin-left:20px;
+}
+.detailsButton {
+background-color:#F67777;
+color:#fff;
+border-radius:5px
+}
+.detailsButton:hover {
+background-color:#fa5555;
+color:#fff;
+}
+.wishlistButton:hover {
+color:#a40041;
+}
+.addCartButton {
+color:#017a90;
+font-size:20px;
+float:right;
+margin-right:20px;
 
 _layout
 ----------------
