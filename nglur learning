@@ -261,3 +261,83 @@ app.service('GlobalService', ['$http',function ($http) {
     this.isFilterOn = false;
 }]);
 
+3 Aug 2017
+====================================================
+
+SearchResultsCtrl.js
+----------------------
+
+app.controller("SearchResultsController", ['$scope','$http','$location', '$window', 'GlobalService', function ($scope,$http,$location,$window,GlobalService) {
+
+    $scope.searchedProductList;
+    $scope.searchedProduct = $location.search()['search'];
+    GetSearchedProduct();
+
+    function GetSearchedProduct()
+    {
+     
+        $http({
+            method: 'GET',
+            url: GlobalService.apiURL + "Search?ProductName="+$scope.searchedProduct
+            
+        }).success(function (data, status, header, config) {
+            console.log(data);
+            $scope.searchedProductList = data;
+            $scope.isFilterOn = true;
+        });
+    }
+
+    $scope.viewProduct = function (ID) {
+        
+    };
+    
+ 
+}
+]);
+
+Results.cshtml
+--------------------
+
+@{
+    ViewBag.Title = "Results";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<script src="~/Scripts/App/SearchResultsCtrl.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li class="active">Search Results</li>
+        </ul>
+    </div>
+</div>
+<div class="row" ng-controller="SearchResultsController">
+    
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <h4>Seach Results for <strong>"{{searchedProduct}}"</strong></h4>
+        <hr />
+
+        <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" ng-repeat="product in searchedProductList">
+            <div class="productBox">
+                <div class="productImage" >
+                    <img src="{{product.Images[0].ImageLink}}" class="img img-responsive" alt="productImage" />
+                </div>
+                <div class="productDescription">
+                    <a class="productName" href="#" ng-click="viewProduct(product.ProductID)">{{product.Name}}</a>
+                    <span class="productPrice">Starts from <i class="fa fa-inr"></i> {{product.Prices[0].Price}}</span>
+                </div>
+                <div class="row productActions">
+                  
+                        <a class="wishlistButton" title="Click me to be your wish" ng-click="addToWishList(product.ProductID)"><i class="fa fa-heart"></i></a>
+                    <button class="btn detailsButton" ng-click="viewProduct(product.ProductID)">Details <i class="fa fa-search"></i></button>
+                        <a class="addCartButton" title="Add to cart" ng-click="addToCart(product.ProductID)"> <i class="fa fa-shopping-bag"></i> </a>
+                   
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
